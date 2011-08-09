@@ -1,0 +1,16 @@
+<%= semantic_form_for(@application_status) do |f| %>
+  <!--%%= error_count_display @< %=singular_table_name%>, t("actions.save", :model=> t($ARM + "< %=singular_table_name%>", :count=>1) ) %> -->
+
+
+  <!-- %%= error_list @singular_table_name %> -->
+  
+	<% f.inputs do %>
+				   <%= f.input :status  %>   
+		
+	<% end %>	
+	<%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+	
+	<% end %>
+

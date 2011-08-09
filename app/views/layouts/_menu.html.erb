@@ -1,0 +1,81 @@
+<script type="text/javascript">
+  /*
+ * This function facilitates the menu
+ * Note that this script depends on jquery.cookies.2.2.0_1.js (not jquery.cookie.js)
+ * This script keeps track of the last branch of the accordion to be used and ensures that the accordion remains open to the last selection in between requests.
+ * Script developed at http://jaaulde.com/test_bed/stickyaccordion/
+ */
+var ACCORDION_HEADER_HTML ="h3";
+var ACCORDION_ID_CSS ="#accordion";
+$(function(){
+        var cookieName = 'stickyAccordion';
+        // Accordion
+        $(ACCORDION_ID_CSS).accordion({ 
+          header: ACCORDION_HEADER_HTML ,
+          active: 
+            //read the cookie and get the last used index
+            ( $.cookies.get( cookieName ) || 0 ),
+          change: function( e, ui ){
+            //write a cookie to remember the h3 clicked
+						$.cookies.set( cookieName, $( this ).find( ACCORDION_HEADER_HTML ).index ( ui.newHeader[0] ) );
+					}
+        });
+      });
+
+</script>
+<div id="accordion">
+      <div>
+        <h3><a class ="accordionHeader" href="#"><%=t($M+"translations") %></a></h3>
+        <ul class="menu">
+          
+          
+          <%if true then%>
+            
+            
+            
+          <%end%>
+
+
+				</ul>
+      </div>
+      <div>
+        <h3><a class ="accordionHeader" href="#"><%=t($M+"lookups") %></a></h3>
+        <ul class="menu">
+				  <%if false then%>
+				  
+          <%end%>
+					<li><%= link_to t($M+"whiteboard_types"), whiteboard_types_path %></li>
+          <li><%= link_to t($M+"version_statuses"), version_statuses_path %></li>
+					
+				</ul>
+      </div>
+      <div>
+
+        <h3><a class ="accordionHeader" href="#"><%= t($M+"admin") %></a></h3> 
+        <ul class="menu">
+         <li><%= link_to t($M+"languages"), languages_path %></li>
+				<li><%= link_to t($M+"applications"), applications_path %></li>
+        <li><%= link_to( t($M +"application_versions"), application_versions_path) %></li>
+        <li><%= link_to( t($M +"redis_databases"), redis_databases_path) %></li>
+
+          
+				</ul>
+      </div>
+  <div>
+
+        <h3><a class ="accordionHeader" href="#"><%= t($M+"user_info") %></a></h3>
+        <ul class="menu">
+				  <li><%= link_to t($M+"home"), root_path %></li>
+          <%if false then%>
+				  <li><%= link_to t($M+"contact"), contact_path %></li>
+				  <li><%= link_to t($M+"help"), help_path %></li>
+				  <li><%= link_to t($M+"about"), about_path %></li>
+					<!-- <li><%= link_to t($M+"user_preferences"), "register" %></li> -->
+          <%end%>
+				</ul>
+      </div>
+    </div>
+<script type="text/javascript">
+  
+  
+</script>

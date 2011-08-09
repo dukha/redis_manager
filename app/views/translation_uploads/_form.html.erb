@@ -1,0 +1,19 @@
+<%= semantic_form_for(@translation_upload) do |f| %>
+  <!--%%= error_count_display @< %=singular_table_name%>, t("actions.save", :model=> t($ARM + "< %=singular_table_name%>", :count=>1) ) %> -->
+
+
+  <!-- %%= error_list @singular_table_name %> -->
+  
+	<% f.inputs do %>
+				   <%= f.input :translation_file_name  %>   
+				   <%= f.input :translation_file_content_type  %>   
+				   <%= f.input :translation_file_size  %>   
+				   <%= f.input :translation_file_updated_at  %>   
+		
+	<% end %>	
+	<%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+	
+	<% end %>
+

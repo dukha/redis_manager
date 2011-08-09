@@ -1,0 +1,117 @@
+en:
+  formtastic:
+    labels:
+      name: &fl_n Name
+      version: &fl_v Version
+      line_sequence: &fl_ls Line Number
+      yaml_partial_key: &fl_ypk Partial Key
+      yaml_code: &fl_yc Yaml Code
+      dot_key: &fl_dk Dot Separated Key
+      value: &fl_t Translation
+      marked_deleted: &fl_md Marked Deleted
+      description: &fl_d Description
+      english_translation_file_name: &fl_px File Name
+      status: &fl_s Status
+      translation: Translation
+      translation_file_id_eq: Translation File equals
+  actions:
+    create_and_upload: Create and Upload
+  menus:
+    translations: Translations
+    translation_files: Translation Files
+    translation_file_lines: English Translation
+    applications: Applications
+    application_versions: Applications Versions
+    languages: Translation Languages
+  headings:
+    application_subheading: Calm Translator M1
+  activerecord:
+    models:
+      application:
+        zero: Applications
+        one: Application
+        other: Applications
+      translation_file:
+        one: Translation File
+        other: Translation Files
+      translation_file_line:
+        one: Translation File Line
+        other: Translation Files Lines
+      application_status:
+        one: Application Status
+        other: Application Statuses
+      application_version:
+        one: Application Version
+        other: Application Versions
+      translation:
+        one: Translation
+        other: Translations
+      language:
+        one: Translation Language
+        other: Translation Languages
+      redis_database:
+        one: Redis Database
+        other: Redis Databases
+    attributes:
+      application:
+        name: *fl_n
+        version: *fl_v
+      translation_file:
+        prefix: *fl_px
+        application_version_id: Version
+        description: *fl_d
+      translation_file_line:
+        translation_file_id: File
+        line_sequence: *fl_ls
+        yaml_code: *fl_yc
+        yaml_partial_key: *fl_ypk
+        dot_key: *fl_dk
+        value: *fl_t
+        marked_deleted: *fl_md
+      version_status:
+        status: *fl_s
+      application_version:
+        application_id: Application
+        version: *fl_v
+        version_status_id: *fl_s
+      translation:
+        translation_file_id: File
+        language_id: Language
+        alias: Alias
+        anchor: Anchor
+        translatable: translatable
+        dot_key: Dot Separated Key
+      language:
+        name: Translation Language
+      redis_database:
+        redis_index: Redis Database Number
+        name: Redis Database Name
+        host: Host
+        port: Port
+  messages:
+    no_records_found: There were no records found in the database.
+    errors:
+      array_in_yaml_wrong_format: |+
+        Unsuccessful upload of translation file.
+        This file, %{file_name}, is using incorrect array format.
+        Change file format from
+          - array_element1
+          - array_element1
+        to
+            key<colon> [array_element1,array_element2..]
+        This problem is around line %{line_number} in the file .
+        Edit (or have someone technical  edit) the file and try uploading again.
+        Deleted this file from database.
+      incorrect_indentation_in_yaml_file: |+
+        Incorrect parsing of file.
+        All indentations must be with increments or decrements of 2 spaces.
+        Line number = %{line_number}
+      failed_to_save_version_in_application: Failed to save %{version} in application %{application}
+      invalid_email_format: Address "%{value}" is not a valid email address for %{attribute}. You can't have spaces and only 1 @
+      invalid_version_format: Verson "%{value}" is not a valid format. You can only have digits separated by "." e.g 7.8.9 or 33.2.04
+      invalid_redis_database_index: You have given a wrong value for the redis database number. Ask a system administrator to increase the available numbers if you wish to use %{value}
+  delete:
+    are_you_sure:
+        all_translations_also_deleted: |
+          Are you sure that you want to delete this file from the database?
+          All translations in this file will also be deleted (from the database).

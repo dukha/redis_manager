@@ -1,0 +1,86 @@
+<header>
+	<table id="headerlayout" ><tr>
+	<td class="logo" >
+	   <!-- %= link_to logo, root_path, :class => 'logo' %  -->
+		<%= logo %>
+	</td>
+	<td   colspan=2 >
+		   <div class="heading">
+			 <%= titler %>
+			 </div>
+			 <div class="subheading">
+			 	    <%=t("headings.application_subheading") %>
+			 	</div>
+	</td>
+	 
+	 </tr>
+	 <tr>
+	 	  
+			<td class="applanguagetd" colspan=3  >
+           
+      <% if user_signed_in? %>  
+     
+
+        <form method="get" action="/users/sign_out"  class="button_to_fake" id='signout'>
+          <div><input type="submit" value=<%=t("actions.sign_out")%> id="signoutbutton"/>
+          <input name="authenticity_token" type="hidden" value="w6vNLpWrzKTDWsn5XgKbt/HNQE89f3N1jezG8CdTo40=" />
+          </div>
+        </form>
+      
+      <% end %>  
+         <% @languages=Language.all %>
+         <%=collection_select :language, :iso_code, @languages, :iso_code, :name, {:selected=>I18n.locale} %>
+
+        <script type ="text/javascript">
+            //This script allows the user to use the selectbox to change language at any time
+            var selectList = "#language_iso_code";
+            $(selectList).change(function(){
+               var isoCode= $(selectList).val();
+               var newLanguage = $(selectList + ' option:selected').text();
+               //alert("<%= change_application_language_path %>");
+               $.ajax( {
+                       url:        "<%= change_application_language_path %>",
+                       type:       "GET", 
+                       dataType:   "json",
+                       data:       { iso_code:  isoCode },
+                       complete:    function() {
+                                       //This function is not needed
+                                    },
+                       success:    function(data, textStatus, xhr)   {
+                                        //t( ) from babilu gem
+                                        //alert(I18n.t("messages.application_language_change.success", {language: newLanguage}));
+                                        // @todo the above code needs to be rewritten inr ruby
+                                        path = window.location.pathname;
+                                        paths =path.split("/");
+                                        if(paths[1] == 'users'){
+                                          //This is a kludge. Devise doesn't seem to do the restful url with locale properly
+                                          paths.splice(1,0,isoCode);
+                                        }else{
+                                          paths[1] = isoCode; // do this on 2nd element as first is ""
+                                        }
+                                        newPath = paths.join("/");
+                                        newURL = window.location.protocol + "//" + window.location.host +  newPath;
+                                        window.location.href = newURL;
+                                        window.location.reload;
+
+
+
+                                    },
+                      error:      function(request, status, error) {
+                                    //This callback will handle errors on the server but not errors in the success callback
+                                    //@todo put the reponse text in a web page
+                                    alert(request.responseText);
+                                  },
+                     });//end ajax
+               
+               
+            });
+
+        </script>
+			 
+			
+      </td>
+
+	 </tr>
+	 </table>
+</header>

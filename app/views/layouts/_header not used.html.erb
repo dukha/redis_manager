@@ -1,0 +1,43 @@
+<header>
+	<table id="headerlayout" ><tr>
+	<td class="logo" >
+	   <!-- %= link_to logo, root_path, :class => 'logo' %  -->
+		<%= logo %>
+	</td>
+	<td   colspan=2 >
+		   <div class="heading">
+			 <%= titler %>
+			 </div>
+			 <div class="subheading">
+			 	    <%=t("headings.application_subheading") %>
+			 	</div>
+	</td>
+	 
+	 </tr>
+	 <tr>
+	 	  
+			<td class="applanguagetd" colspan=3  >
+           <!-- a href="/application_languages/73">change language</a  -->
+      <% #if user_signed_in? %>
+      
+
+			<form method="get" action="/users/sign_out"  class="button_to_fake" id='signout'>
+				<div>
+          <input type="submit" value=<%= "SSign outt"  %> id="signoutbutton"/>
+				  <input name="authenticity_token" type="hidden" value="<%=  form_authenticity_token %>" />
+				</div>
+			</form>		 
+      <!-- % else %  -->  
+        <!-- %= link_to "Sign up", new_user_registration_path %  -->  
+        <!--%= link_to "Sign in", new_user_session_path %  -->  
+      <% #qq  end %>
+    <!-- /div  -->  
+		
+			 <% #qq  @languages=Language.all %>
+       RECOPY HEADER from Merge after DEVISE
+			 <!--a id="firelanguagechange" href="/application_languages/en" ></  -->
+      </td>
+	 
+	 </tr>
+	 </table>
+</header>

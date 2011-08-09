@@ -1,0 +1,48 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "translation_upload", :count=>2) )%></p>
+
+<%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+
+    <th class ="dataheader"><%=t($ARA+'translation_upload.translation_file_name') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'translation_upload.translation_file_content_type') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'translation_upload.translation_file_size') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'translation_upload.translation_file_updated_at') %></th>
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @translation_uploads.each do |translation_upload| %>
+
+  <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
+  
+      <td class="<%= cell_class %>"><%= translation_upload.translation_file_name %></td>
+
+  
+      <td class="<%= cell_class %>"><%= translation_upload.translation_file_content_type %></td>
+
+  
+      <td class="<%= cell_class %>"><%= translation_upload.translation_file_size %></td>
+
+  
+      <td class="<%= cell_class %>"><%= translation_upload.translation_file_updated_at %></td>
+
+  
+    
+    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_translation_upload_path(translation_upload) %></td>
+    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  translation_upload , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "translation_upload", :count=>1)), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= twill_paginate %>
+
+<br />
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'translation_upload', :count=>1)), new_translation_upload_path %>

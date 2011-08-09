@@ -1,0 +1,171 @@
+html, body {
+  /*background-color:#eeeeee;*/
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+img.logo {
+  height: 40px;
+  padding: 3px;
+  float: left; }
+
+#headerlayout td {
+  /*border-style:solid;*/ }
+
+#headerlayout {
+  width: 90%; }
+
+.heading, .subheading {
+  color: #c6e5e7;
+  text-align: center;
+  vertical-align: middle; }
+
+.heading {
+  font-size: 30px;
+  font-weight: 800; }
+
+.subheading {
+  font-size: 14px;
+  font-weight: 200; }
+
+#signout, #languages {
+  float: right; }
+
+.applanguagetd {
+  text-align: right;
+  vertical-align: bottom; }
+
+#bigcontainer {
+  min-height: 100%;
+  position: relative; }
+
+#appheader {
+  margin: 2px;
+  height: 60px; }
+
+#midcontainer, #appmaintable {
+  margin: 2px;
+  padding-bottom: 70px;
+  width: 100%;
+  min-height: 100%; }
+
+#appmenutd {
+  margin: 2px;
+  width: 250px;
+  padding: 2px;
+  background-color: #E2F2FF; }
+
+#appmenutd, #appmaintd {
+  vertical-align: top; }
+
+#spacer {
+  position: relative; }
+
+#appmain {
+  position: absolute;
+  left: 258px;
+  margin: 2px;
+  padding: 2px;
+  width: 90%;
+  height: 500px; }
+
+#appfooter {
+  clear: left;
+  position: absolute;
+  width: 100%;
+  height: 70px;
+  margin: 2px;
+  bottom: 0; }
+
+#extruderMenu {
+  background-color: #cccccc; }
+
+footer {
+  font-size: small;
+  font-weight: 700; }
+
+#buttonpanel {
+  background-color: #444444;
+  position: relative;
+  left: 300px; }
+
+table.data {
+  border-color: #637897;
+  border-style: solid;
+  border-width: thin; }
+
+table.data {
+  /*border-collapse:collapse;*/ }
+
+tr.dataodd, tr.dataeven, span.file, span.web-browser, div.addChildrenLocation {
+  font-size: x-small;
+  font-weight: 550; }
+
+tr.dataodd {
+  background-color: #CAEAFF; }
+
+tr.dataheader {
+  background-color: #CCCCCC; }
+
+td.data, td.dataheader, td.linkheader, td.link {
+  padding: 5px; }
+
+ul.menu {
+  list-style-type: none;
+  /*padding:4px;*/
+  font-size: small;
+  padding: 0px;
+  margin: 0px; }
+
+table.whiteboard {
+  border-style: none; }
+
+td.whiteboardname {
+  vertical-align: top;
+  text-align: right;
+  font-size: smaller;
+  font-weight: 600; }
+
+td.whiteboardlink {
+  vertical-align: bottom; }
+
+td.whiteboard {
+  border-style: solid;
+  border-color: black;
+  border-width: thin;
+  padding: 10px;
+  margin-bottom: 4px;
+  width: 300px; }
+
+.pageheading {
+  font-weight: 700;
+  font-size: larger; }
+
+#firelanguagechange {
+  display: none; }
+
+/* for will_paginate */
+.next_page, .previous_page {
+  font-size: smaller;
+  font-weight: 600; }
+
+.pagination em, .pagination a {
+  font-size: smaller;
+  font-weight: 600; }
+
+/* @ deprecated for new rails 3 error handler (set up in application helper) */
+div.errorHeaderCount {
+  border-style: solid;
+  border-width: 2;
+  border-color: red;
+  font-size: larger;
+  font-weight: 600; }
+
+/* @ deprecated for new rails 3 error handler (set up in application helper) */
+ul.errorList {
+  border-style: solid;
+  border-width: 1;
+  border-color: red; }
+
+abbr[title="required"] {
+  color: red; }

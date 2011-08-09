@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @application.name %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @application.version %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= ApplicationStatus.find(@application.application_status_id).status %>
+</p>
+
+
+<%= link_to 'Edit', edit_application_path(@application) %> |
+<%= link_to 'Back', applications_path %>

@@ -1,0 +1,18 @@
+<%= semantic_form_for(@application) do |f| %>
+  
+<table><tr><td>
+	<%= f.inputs do %>
+		<% f.input :name, :as => :string%>
+	  <% if locals[:state] == "new" then %>
+	        <%= f.input :add_first_version, :as => :checkbox %>
+          <%= f.input :first_version_name, :as =>:string %>
+          <%= f.input :add_non_english_languages, :as => :checkbox %>
+		<% end %>
+	<% end %>
+    </td><td><div id="languagesDiv"></div> </td></tr></table>
+	<%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+	
+	<% end %>
+

@@ -1,0 +1,2 @@
+module TranslationUploadsHelper
+end

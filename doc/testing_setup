@@ -1,0 +1,27 @@
+In Gemfile
+group :development, :test do
+   gem 'rspec-rails', '2.5.0'
+   # webrat or capybara can be used to simulate a browser. rspec doesn't care which one.
+   gem 'capybara'
+
+   gem 'database_cleaner'
+   gem 'cucumber-rails'
+   # And So you can do Then show me the page
+   gem 'launchy'
+   gem 'autotest', '4.4.6'
+    # rspec advises not to install autotest-rails (but says nothing about autotest-rails-pure). rspec advises only autotest
+   gem 'autotest-rails-pure','4.1.2'
+   # test server for rspec
+   gem 'spork', '0.8.4'
+end
+
+
+In application.rb
+    config.generators do |g|
+      g.test_framework :rspec
+    end
+
+
+$ bundle install
+$ rails g rspec:install
+$ rails g cucumber:install --rspec --capybara

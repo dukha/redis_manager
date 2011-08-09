@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Translation file name:</b>
+  <%= @translation_upload.translation_file_name %>
+</p>
+
+<p>
+  <b>Translation file content type:</b>
+  <%= @translation_upload.translation_file_content_type %>
+</p>
+
+<p>
+  <b>Translation file size:</b>
+  <%= @translation_upload.translation_file_size %>
+</p>
+
+<p>
+  <b>Translation file updated at:</b>
+  <%= @translation_upload.translation_file_updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_translation_upload_path(@translation_upload) %> |
+<%= link_to 'Back', translation_uploads_path %>

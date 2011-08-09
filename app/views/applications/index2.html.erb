@@ -1,0 +1,37 @@
+<script type="text/javascript">
+    $(document).ready( function() {
+    $("#my_tree").treeview();
+      $("a.markLocationDeleted").click(function(event){
+        var dbId = $(this).attr("title");
+
+        $.ajax({
+          url:         "#{mark_location_deleted_path}",
+          type:        "POST",
+          dataType:    "json",
+          data:        {id: dbId,
+                    location: {marked_deleted: true}
+                   },
+          success:     function(data, textStatus, xhr){
+                         alert("Update complete");
+                       },
+          failure:     function(request, status, error){
+                         alert(request.responseText);
+                       }
+
+        });//end ajax
+        //event.preventDefault();
+      });//end click
+  } );//end ready
+  </script>
+
+
+
+
+
+<div class="pageheading">
+  <%=  t("headings.listing.heading", :model=>t($ARM + "location.other") )%>
+</div>
+
+
+<ul id = "my_tree" class="filetree"> <%= display_location(@root_node) %> </ul>
+

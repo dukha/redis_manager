@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Redis index:</b>
+  <%= @redis_database.redis_index %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @redis_database.name %>
+</p>
+
+<p>
+  <b>Server:</b>
+  <%= @redis_database.host %>
+</p>
+<p>
+  <b>Port:</b>
+  <%= @redis_database.port %>
+</p>
+
+
+<%= link_to 'Edit', edit_redis_database_path(@redis_database) %> |
+<%= link_to 'Back', redis_databases_path %>

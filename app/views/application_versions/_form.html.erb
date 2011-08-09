@@ -1,0 +1,13 @@
+<%= semantic_form_for(@application_version) do |f| %>
+  
+	<% f.inputs do %>
+				   <%= f.input :application_id, :as=>:select,:collection=> Application.all.collect {|p| [ p.name, p.id ]}      %>
+				   <%= f.input :version  %>   
+				   <%= f.input :version_status_id, :as=>:select,:collection=> VersionStatus.all.collect {|p| [ p.status, p.id ]}    %>
+		      
+	<% end %>	
+	<%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+<% end %>
+

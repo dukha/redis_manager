@@ -1,0 +1,33 @@
+<p class="pageheading"><%%=t("headings.listing.heading", :model=>t($ARM + "<%=singular_table_name%>", :count=>2) )%></p>
+
+<%%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+<% for attribute in attributes %>
+    <th class ="dataheader"><%%=t($ARA+'<%=singular_table_name%>.<%=attribute.name%>') %></th>
+<% end %>
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<%% cell_class = "data" %>
+<%% link_cell_class="link"%>  
+<%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+
+  <tr class = "<%%= cycle('dataeven', 'dataodd') %>" >
+  <% for attribute in attributes %>
+      <td class="<%%= cell_class %>"><%%= <%= singular_table_name%>.<%=attribute.name %> %></td>
+
+  <% end %>
+    
+    <td class="<%%= link_cell_class %>"><%%= link_to  t('actions.edit'), edit_<%=singular_table_name%>_path(<%= singular_table_name %>) %></td>
+    <td class="<%%= link_cell_class %>"><%%= link_to t('actions.destroy'),  <%=singular_table_name %> , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "<%=singular_table_name%>", :count=>1)), :method => :delete %></td>
+  </tr>
+<%% end %>
+</table>
+<%%= twill_paginate %>
+
+<br />
+<%%= link_to t('headings.new.heading', :model=> t($ARM + '<%=singular_table_name%>', :count=>1)), new_<%=singular_table_name%>_path %>

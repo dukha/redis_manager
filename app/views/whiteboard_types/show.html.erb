@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @whiteboard_type.name %>
+</p>
+
+<p>
+  <b>Translation code:</b>
+  <%= @whiteboard_type.translation_code %>
+</p>
+
+
+<%= link_to 'Edit', edit_whiteboard_type_path(@whiteboard_type) %> |
+<%= link_to 'Back', whiteboard_types_path %>

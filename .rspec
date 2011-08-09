@@ -1,0 +1,4 @@
+# distributed ruby switch indicates that the default testing mode is via spork
+--drb
+--color
+--format documentation --format progress

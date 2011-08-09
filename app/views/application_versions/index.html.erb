@@ -1,0 +1,46 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "application_version", :count=>2) )%></p>
+<% if ApplicationVersion.count==0 then %>
+  <%=t($MS + "no_records_found")%><br/>
+<%  else %>
+<%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+
+    <th class ="dataheader"><%=t($ARA+'application_version.application_id') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'application_version.version') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'application_version.version_status_id') %></th>
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @application_versions.each do |application_version| %>
+
+  <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
+  
+      <td class="<%= cell_class %>"><%= Application.find(application_version.application_id).name %></td>
+
+  
+      <td class="<%= cell_class %>"><%= application_version.version %></td>
+
+  
+      
+      <td class="<%= cell_class %>"><%=VersionStatus.find(application_version.version_status_id).status %></td>
+  
+    
+    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_application_version_path(application_version) %></td>
+    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  application_version , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "application_version", :count=>1)), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= twill_paginate %>
+
+<br />
+<% end %>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'application_version', :count=>1)), new_application_version_path %>
