@@ -56,8 +56,11 @@ $(function(){
          <li><%= link_to t($M+"languages"), languages_path %></li>
 				<li><%= link_to t($M+"applications"), applications_path %></li>
         <li><%= link_to( t($M +"application_versions"), application_versions_path) %></li>
-        <li><%= link_to( t($M +"redis_databases"), redis_databases_path) %></li>
-
+        <li><%= link_to( t($M +"translations"), translations_path) %></li>
+        <li><%= link_to( t($M +"translation_uploads"), translation_uploads_path) %></li>
+        <% if false then %>
+        <li><%= link_to( t($M +"redis_admins"), redis_admins_path) %></li>
+        <%end%>
           
 				</ul>
       </div>

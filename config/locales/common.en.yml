@@ -39,6 +39,7 @@ en:
     mark_deleted: Mark Deleted
     add_child: Add Child %{location_type}
     search: Search
+    select: Select %{model}
   messages:
     delete:
       are_you_sure: Deleting %{model}. Are you sure?

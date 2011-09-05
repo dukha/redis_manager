@@ -1,7 +1,7 @@
 # == Schema Information
 # Schema version: 20110808235031
 #
-# Table name: redis_databases
+# Table name: translations
 #
 #  id          :integer         not null, primary key
 #  redis_index :integer         not null
@@ -25,12 +25,22 @@
   :password
   :logger
 =end
-class RedisDatabase < ActiveRecord::Base
-  validates_with Validations::RedisDatabaseValidator
+require 'validations'
+include Validations
+class Translation < ActiveRecord::Base
+  belongs_to :application_version
+  validates :redis_db_index, :presence=>true
+  validates :application_version_id,:presence=>true
+  validates :host,:presence=>true
+  validates :port, :presence => true
+  validates  :redis_db_index, :redis_db => true
+  #validates_with Validations::TranslationValidator
   after_initialize :default_values
 
   
-
+  def name
+    return ApplicationVersion.find(application_version_id).name + "Redis Database Index: " + redis_db_index.to_s
+  end
   private
     def default_values
       self.port ||= 6379

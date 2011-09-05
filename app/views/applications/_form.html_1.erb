@@ -1,0 +1,38 @@
+<%= semantic_form_for(@application) do |f| %>
+  
+
+	<%= f.inputs do %>
+		<%= f.input :name %>
+	  
+	<% end %>
+
+  
+    
+     <form action="" >
+    <table class="data">
+      
+
+    <% row_class="data" %>
+    <% cell_class = "data" %>
+    <% link_cell_class="link"%>
+
+    <% @app_langs.each do |application_language| %>
+
+      <tr class = "<%= cycle('dataeven', 'dataodd', :name => row_class) %>" >
+        <td class="<%= cell_class %>"><input type="checkbox" id="<%=application_language.language_id%>" value="<%=application_language.write%>"></input></td>
+        <td class="<%= cell_class %>"><%= application_language.iso_code %></td>
+        <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_language_path(application_language.language_id) %></td>
+        
+      </tr>
+
+    <% end %>
+       
+    </table>
+    </form>
+    <div class="<%= link_cell_class %>"><%= link_to  t('actions.new_language'), new_language_path(@application) %></div>
+	<%= f.buttons do %>
+      <%= f.commit_button  %>
+  <% end %>
+	
+	<% end %>
+

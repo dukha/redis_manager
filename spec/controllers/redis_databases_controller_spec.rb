@@ -1,69 +1,69 @@
 require 'spec_helper'
 
-describe RedisDatabasesController do
+describe TranslationsController do
 
-  def mock_redis_database(stubs={})
-    @mock_redis_database ||= mock_model(RedisDatabase, stubs).as_null_object
+  def mock_translation(stubs={})
+    @mock_translation ||= mock_model(Translation, stubs).as_null_object
   end
 
   describe "GET index" do
-    it "assigns all redis_databases as @redis_databases" do
-      RedisDatabase.stub(:all) { [mock_redis_database] }
+    it "assigns all translations as @translations" do
+      Translation.stub(:all) { [mock_translation] }
       get :index
-      assigns(:redis_databases).should eq([mock_redis_database])
+      assigns(:translations).should eq([mock_translation])
     end
   end
 
   describe "GET show" do
-    it "assigns the requested redis_database as @redis_database" do
-      RedisDatabase.stub(:find).with("37") { mock_redis_database }
+    it "assigns the requested translation as @translation" do
+      Translation.stub(:find).with("37") { mock_translation }
       get :show, :id => "37"
-      assigns(:redis_database).should be(mock_redis_database)
+      assigns(:translation).should be(mock_translation)
     end
   end
 
   describe "GET new" do
-    it "assigns a new redis_database as @redis_database" do
-      RedisDatabase.stub(:new) { mock_redis_database }
+    it "assigns a new translation as @translation" do
+      Translation.stub(:new) { mock_translation }
       get :new
-      assigns(:redis_database).should be(mock_redis_database)
+      assigns(:translation).should be(mock_translation)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested redis_database as @redis_database" do
-      RedisDatabase.stub(:find).with("37") { mock_redis_database }
+    it "assigns the requested translation as @translation" do
+      Translation.stub(:find).with("37") { mock_translation }
       get :edit, :id => "37"
-      assigns(:redis_database).should be(mock_redis_database)
+      assigns(:translation).should be(mock_translation)
     end
   end
 
   describe "POST create" do
 
     describe "with valid params" do
-      it "assigns a newly created redis_database as @redis_database" do
-        RedisDatabase.stub(:new).with({'these' => 'params'}) { mock_redis_database(:save => true) }
-        post :create, :redis_database => {'these' => 'params'}
-        assigns(:redis_database).should be(mock_redis_database)
+      it "assigns a newly created translation as @translation" do
+        Translation.stub(:new).with({'these' => 'params'}) { mock_translation(:save => true) }
+        post :create, :translation => {'these' => 'params'}
+        assigns(:translation).should be(mock_translation)
       end
 
-      it "redirects to the created redis_database" do
-        RedisDatabase.stub(:new) { mock_redis_database(:save => true) }
-        post :create, :redis_database => {}
-        response.should redirect_to(redis_database_url(mock_redis_database))
+      it "redirects to the created translation" do
+        Translation.stub(:new) { mock_translation(:save => true) }
+        post :create, :translation => {}
+        response.should redirect_to(translation_url(mock_translation))
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved redis_database as @redis_database" do
-        RedisDatabase.stub(:new).with({'these' => 'params'}) { mock_redis_database(:save => false) }
-        post :create, :redis_database => {'these' => 'params'}
-        assigns(:redis_database).should be(mock_redis_database)
+      it "assigns a newly created but unsaved translation as @translation" do
+        Translation.stub(:new).with({'these' => 'params'}) { mock_translation(:save => false) }
+        post :create, :translation => {'these' => 'params'}
+        assigns(:translation).should be(mock_translation)
       end
 
       it "re-renders the 'new' template" do
-        RedisDatabase.stub(:new) { mock_redis_database(:save => false) }
-        post :create, :redis_database => {}
+        Translation.stub(:new) { mock_translation(:save => false) }
+        post :create, :translation => {}
         response.should render_template("new")
       end
     end
@@ -73,34 +73,34 @@ describe RedisDatabasesController do
   describe "PUT update" do
 
     describe "with valid params" do
-      it "updates the requested redis_database" do
-        RedisDatabase.should_receive(:find).with("37") { mock_redis_database }
-        mock_redis_database.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :redis_database => {'these' => 'params'}
+      it "updates the requested translation" do
+        Translation.should_receive(:find).with("37") { mock_translation }
+        mock_translation.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, :id => "37", :translation => {'these' => 'params'}
       end
 
-      it "assigns the requested redis_database as @redis_database" do
-        RedisDatabase.stub(:find) { mock_redis_database(:update_attributes => true) }
+      it "assigns the requested translation as @translation" do
+        Translation.stub(:find) { mock_translation(:update_attributes => true) }
         put :update, :id => "1"
-        assigns(:redis_database).should be(mock_redis_database)
+        assigns(:translation).should be(mock_translation)
       end
 
-      it "redirects to the redis_database" do
-        RedisDatabase.stub(:find) { mock_redis_database(:update_attributes => true) }
+      it "redirects to the translation" do
+        Translation.stub(:find) { mock_translation(:update_attributes => true) }
         put :update, :id => "1"
-        response.should redirect_to(redis_database_url(mock_redis_database))
+        response.should redirect_to(translation_url(mock_translation))
       end
     end
 
     describe "with invalid params" do
-      it "assigns the redis_database as @redis_database" do
-        RedisDatabase.stub(:find) { mock_redis_database(:update_attributes => false) }
+      it "assigns the translation as @translation" do
+        Translation.stub(:find) { mock_translation(:update_attributes => false) }
         put :update, :id => "1"
-        assigns(:redis_database).should be(mock_redis_database)
+        assigns(:translation).should be(mock_translation)
       end
 
       it "re-renders the 'edit' template" do
-        RedisDatabase.stub(:find) { mock_redis_database(:update_attributes => false) }
+        Translation.stub(:find) { mock_translation(:update_attributes => false) }
         put :update, :id => "1"
         response.should render_template("edit")
       end
@@ -109,16 +109,16 @@ describe RedisDatabasesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested redis_database" do
-      RedisDatabase.should_receive(:find).with("37") { mock_redis_database }
-      mock_redis_database.should_receive(:destroy)
+    it "destroys the requested translation" do
+      Translation.should_receive(:find).with("37") { mock_translation }
+      mock_translation.should_receive(:destroy)
       delete :destroy, :id => "37"
     end
 
-    it "redirects to the redis_databases list" do
-      RedisDatabase.stub(:find) { mock_redis_database }
+    it "redirects to the translations list" do
+      Translation.stub(:find) { mock_translation }
       delete :destroy, :id => "1"
-      response.should redirect_to(redis_databases_url)
+      response.should redirect_to(translations_url)
     end
   end
 

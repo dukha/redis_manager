@@ -1,7 +1,9 @@
 RedisManager::Application.routes.draw do
-  resources :redis_databases
+  
 
-  resources :translation_uploads
+  #resources :redis_admins
+
+ 
 
   scope "(/:locale)" do
    resources :languages
@@ -10,6 +12,11 @@ RedisManager::Application.routes.draw do
    resources :applications
    resources :application_versions
    resources :version_statuses
+   resources :translations
+
+   resources :translation_uploads
+   get "translation_uploads/file_to_redis/:id" => "translation_uploads#file_to_redis", :as => "to_redis"
+   get "translation_uploads/select_translation_to_redis/:id" => "translation_uploads#select_translation_to_redis", :as => "select_to_redis"
    #match "upload"
    root :to => "whiteboards#index"
   end

@@ -1,4 +1,4 @@
-class CreateRedisDatabases < ActiveRecord::Migration
+class CreateTranslations < ActiveRecord::Migration
   def self.up
     create_table :redis_databases do |t|
       t.integer :redis_index

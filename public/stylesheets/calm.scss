@@ -208,5 +208,61 @@ a.markLocationDeletedLink, a.editLocationLink, a.addChildLocationLink{
 }
 //An extra paragraph for the add children links
 div.addChildrenLocation{
+}
 
+select.dualBox1{
+  height:300px;
+  width:50px;
+}
+
+select.dualBox2{
+  height:300px;
+  width:50px;
+}
+$languageBoxWidth : 150px;
+$languageBoxHeight : 300px;
+
+#application_languages_available{
+  height:$languageBoxHeight;
+  width:$languageBoxWidth;
+}
+#selectedLanguagesBox{
+  height:$languageBoxHeight;
+   width: $languageBoxWidth;
+}
+#availableLanguageFilterSpan{
+  
+   width: $languageBoxWidth;
+}
+#selectedLanguagesFilterSpan{
+
+   width: $languageBoxWidth;
+}
+#availableLanguagesFilter{
+
+   width: 35px;
+}
+#selectedLanguagesFilter{
+
+   width: 35px;
+}
+#availableLanguagesFilterClear{
+
+
+}
+#selectedLanguagesFilterClear{
+
+}
+#availableLanguagesCounter{
+
+}
+#selectedLanguagesCounter{
+
+}
+button.toFrom{
+ width: 30px;
+}
+
+#translation_upload_translation{
+  width:400px;
 }

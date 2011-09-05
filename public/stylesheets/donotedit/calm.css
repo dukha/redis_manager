@@ -169,3 +169,37 @@ ul.errorList {
 
 abbr[title="required"] {
   color: red; }
+
+select.dualBox1 {
+  height: 300px;
+  width: 50px; }
+
+select.dualBox2 {
+  height: 300px;
+  width: 50px; }
+
+#application_languages_available {
+  height: 300px;
+  width: 150px; }
+
+#selectedLanguagesBox {
+  height: 300px;
+  width: 150px; }
+
+#availableLanguageFilterSpan {
+  width: 150px; }
+
+#selectedLanguagesFilterSpan {
+  width: 150px; }
+
+#availableLanguagesFilter {
+  width: 35px; }
+
+#selectedLanguagesFilter {
+  width: 35px; }
+
+button.toFrom {
+  width: 30px; }
+
+#translation_upload_translation {
+  width: 400px; }

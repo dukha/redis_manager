@@ -13,17 +13,19 @@
 
 class ApplicationVersion < ActiveRecord::Base
 
-  attr_accessible  :application_id, :version, :version_status_id
+  attr_accessible  :application_id, :major_version, :version_status_id
 
-  belongs_to :application, :class_name => "Application", :foreign_key => "application_id"
-  belongs_to :version_status, :class_name => "VersionStatus", :foreign_key=>"version_status_id"
-  has_many :language_application_versions, :dependent => :destroy
-  has_many :languages, :through => :language_application_versions
-  require 'validations'
-  include Validations
-  validates :version, :presence=>true, :version_format => true
+  belongs_to :application #, :class_name => "Application", :foreign_key => "application_id"
+  belongs_to :version_status #, :class_name => "VersionStatus", :foreign_key=>"version_status_id"
+  #has_one :redis_database
+  
+  #require 'validations'
+  #include Validations
+  validates  :major_version,  :presence=>true
   validates :version_status_id, :presence=>true
   validates :application_id, :presence=>true
+  
+  
 
 =begin
 @return a collection of all application names with versions
@@ -42,10 +44,11 @@ class ApplicationVersion < ActiveRecord::Base
   
   # return a concatenation of name and version suitable for display
   def application_name_with_version
-    return name + " / " +version
+    return application_name + " version " + major_version.to_s
   end
   def application_name
-    return Application.where("id = ?", application_id).name
+    #puts "xxxx" + Application.where(:id => application_id).name
+    return Application.where(:id => application_id).first.name
   end
   # moved to validations lib
   #def self.validate_version version

@@ -44,7 +44,7 @@ class ApplicationVersionsController < ApplicationController
   # POST /application_versions
   # POST /application_versions.xml
   def create
-    debugger
+    #debugger
     @application_version = ApplicationVersion.new(params[:application_version])
 
     respond_to do |format|
@@ -83,6 +83,7 @@ class ApplicationVersionsController < ApplicationController
     @application_version.destroy
 
     respond_to do |format|
+      flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
       format.html { redirect_to(application_versions_url) }
       format.xml  { head :ok }
     end

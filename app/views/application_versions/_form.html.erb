@@ -2,7 +2,7 @@
   
 	<% f.inputs do %>
 				   <%= f.input :application_id, :as=>:select,:collection=> Application.all.collect {|p| [ p.name, p.id ]}      %>
-				   <%= f.input :version  %>   
+				   <%= f.input :major_version  %>
 				   <%= f.input :version_status_id, :as=>:select,:collection=> VersionStatus.all.collect {|p| [ p.status, p.id ]}    %>
 		      
 	<% end %>	

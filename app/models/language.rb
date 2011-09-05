@@ -11,17 +11,20 @@
 #
 
 class Language < ActiveRecord::Base
+  has_many :applications_languages
+  has_many :applications, :through => :application_language
+
   validates :iso_code, :name, :presence => true,:uniqueness => true
   validates :name, :presence => true, :uniqueness => true
 
-  attr_accessible :iso_code, :name,  :calm_reg_language, :course_language, :left_to_right
+  attr_accessible :iso_code, :name #,  :calm_reg_language, :course_language, :left_to_right
   
   cattr_reader :per_page
   @@per_page = 10
 =begin
   helper method
 =end
-  def self.find_calm_languages
-    return Language.find_all_by_calm_reg_language(true)
-  end
+  #def self.find_calm_languages
+    #return Language.find_all_by_calm_reg_language(true)
+  #end
 end

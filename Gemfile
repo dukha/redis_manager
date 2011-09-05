@@ -60,8 +60,10 @@ gem 'paperclip', '2.3.11'
 gem "meta_where"
 # Allows QBE with activerecord
 gem "meta_search"
-gem "redis"
-
+gem "redis" #, :git => "git://github.com/ezmobius/redis-rb.git"
+# foreigner is a gem that allows the insertion of foreign keys into migrations.
+# Doesn't work with automigrate. Too bad.
+#gem "foreigner"
 group :development, :test do
   gem 'rspec-rails', '2.0.0'
   # webrat or capybara can be used to simulate a browser. rspec doesn't care which one.

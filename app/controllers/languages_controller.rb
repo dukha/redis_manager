@@ -79,7 +79,7 @@ class LanguagesController < ApplicationController
   def destroy
     @language = Language.find(params[:id])
     @language.destroy
-
+     flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
     respond_to do |format|
       format.html { redirect_to(languages_url) }
       format.xml  { head :ok }

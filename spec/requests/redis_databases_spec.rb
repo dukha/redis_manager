@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "RedisDatabases" do
-  describe "GET /redis_databases" do
+describe "Translations" do
+  describe "GET /translations" do
     it "works! (now write some real specs)" do
-      get redis_databases_path
+      get translations_path
     end
   end
 end

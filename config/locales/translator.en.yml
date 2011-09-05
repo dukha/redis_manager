@@ -14,17 +14,21 @@ en:
       status: &fl_s Status
       translation: Translation
       translation_file_id_eq: Translation File equals
+      max_redis_dbs: Maximum Number Redis Databases
+      filter: Filter
   actions:
     create_and_upload: Create and Upload
   menus:
     translations: Translations
-    translation_files: Translation Files
+    translation_uploads: Translation Uploads
     translation_file_lines: English Translation
     applications: Applications
     application_versions: Applications Versions
     languages: Translation Languages
+    redis_admins: Redis Administration
   headings:
     application_subheading: Calm Translator M1
+    redis_admin: Redis Admin
   activerecord:
     models:
       application:
@@ -34,10 +38,10 @@ en:
       translation_file:
         one: Translation File
         other: Translation Files
-      translation_file_line:
-        one: Translation File Line
-        other: Translation Files Lines
-      application_status:
+      translation_upload:
+        one: Translation Upload
+        other: Translation Uploads
+      version_status:
         one: Application Status
         other: Application Statuses
       application_version:
@@ -52,42 +56,55 @@ en:
       redis_database:
         one: Redis Database
         other: Redis Databases
+      redis_admin:
+        one: Redis Admin
+        other: Redis Admin
+      translation_upload:
+        one: Translation Upload
+        other: Translation Uploads
     attributes:
       application:
         name: *fl_n
         version: *fl_v
-      translation_file:
-        prefix: *fl_px
-        application_version_id: Version
-        description: *fl_d
-      translation_file_line:
-        translation_file_id: File
-        line_sequence: *fl_ls
-        yaml_code: *fl_yc
-        yaml_partial_key: *fl_ypk
-        dot_key: *fl_dk
-        value: *fl_t
-        marked_deleted: *fl_md
+        languages: Languages Selected
+        languages_available: Languages Available
+      #translation_file:
+        #prefix: *fl_px
+        #application_version_id: Version
+        #description: *fl_d
+      #translation_file_line:
+        #translation_file_id: File
+        #line_sequence: *fl_ls
+        #yaml_code: *fl_yc
+        #yaml_partial_key: *fl_ypk
+        #dot_key: *fl_dk
+        #value: *fl_t
+        #marked_deleted: *fl_md
       version_status:
         status: *fl_s
       application_version:
         application_id: Application
         version: *fl_v
         version_status_id: *fl_s
-      translation:
-        translation_file_id: File
-        language_id: Language
-        alias: Alias
-        anchor: Anchor
-        translatable: translatable
-        dot_key: Dot Separated Key
+        redis_db_index: Redis Database Index
+      #translation:
+        #translation_file_id: File
+        #language_id: Language
+        #alias: Alias
+        #anchor: Anchor
+        #translatable: translatable
+        #dot_key: Dot Separated Key
       language:
         name: Translation Language
-      redis_database:
+      translation:
         redis_index: Redis Database Number
+        application_version_id: Application Version
         name: Redis Database Name
         host: Host
         port: Port
+      translation_upload:
+        applications_language_id: Application and Language
+        translation: File Name
   messages:
     no_records_found: There were no records found in the database.
     errors:
@@ -110,6 +127,7 @@ en:
       invalid_email_format: Address "%{value}" is not a valid email address for %{attribute}. You can't have spaces and only 1 @
       invalid_version_format: Verson "%{value}" is not a valid format. You can only have digits separated by "." e.g 7.8.9 or 33.2.04
       invalid_redis_database_index: You have given a wrong value for the redis database number. Ask a system administrator to increase the available numbers if you wish to use %{value}
+      invalid_redis_db_index: You have tried to use a redis database number,  %{value}, that is invalid for the current redis installation. If you want to use this number then ask your system admin to increase the number of redis databases.
   delete:
     are_you_sure:
         all_translations_also_deleted: |

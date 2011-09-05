@@ -38,15 +38,16 @@ module Validations
      end
    end
 
-   class RedisDatabaseValidator < ActiveModel::Validator
+   class TranslationValidator < ActiveModel::Validator
      def validate(record)
          debugger
          #rescue_from Exception :with=> :bad_redis_index
          
          begin
-           db= Redis.new :password => $REDIS_PW, :host=>record.host, :db=>record.redis_index.to_s
+           db= Redis.new :password => $REDIS_PW, :host=>record.host, :db=>record.redis_db_index.to_s
            db.dbsize
-           record.errors[:base] << I18n.t($MSE + "invalid_redis_database_index", :value=>record.redis_index.to_s) #(options[:message] || "messages.errors." +")
+           # record.errors[:base] << I18n.t($MSE + "invalid_redis_database_index", :value=>record.redis_index.to_s) #(options[:message] || "messages.errors." +")
+           return true
          rescue => runtimeerror
            record.errors[:base] << runtimeerror
            return false
@@ -57,6 +58,22 @@ module Validations
        logger.error(exception.to_s)
        flash[:error] = msg
 
+     end
+   end
+   class RedisDbValidator< ActiveModel::EachValidator
+     def validate_each(object,attribute, value)
+       #max_dbs = RedisAdmin.first.max_redis_dbs
+       #unless value < ( max_dbs -1) then
+         #object.errors[attribute] << "Number of redis database must be between 0 and " + (max_dbs-1).to_s
+         #return false
+       #end
+       #return true
+       redis_db = Redis.new( :db=> value, :password=>$REDIS_PW, :port=>object.port, :host=> object.host)
+       redis_db.ping
+     rescue RuntimeError => e
+       object.errors[attribute] = I18n.t($MSE + "invalid_redis_db_index", :value=>value)  if e.message.index("invalid DB index")
+     else
+       raise e
      end
    end
 end

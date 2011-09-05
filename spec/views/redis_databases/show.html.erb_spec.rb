@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "redis_databases/show.html.erb" do
+describe "translations/show.html.erb" do
   before(:each) do
-    @redis_database = assign(:redis_database, stub_model(RedisDatabase,
+    @translation = assign(:translation, stub_model(Translation,
       :redis_index => 1,
       :name => "Name",
       :server => false

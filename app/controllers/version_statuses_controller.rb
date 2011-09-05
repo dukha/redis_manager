@@ -1,7 +1,7 @@
-class ApplicationStatusesController < ApplicationController
+class VersionStatusesController < ApplicationController
   # GET /version_statuses
   # GET /version_statuses.xml
-  before_filter :authenticate_user!
+  #before_filter :authenticate_user!
 
   @@model_translation_code =$ARM + "version_status.one"
   
@@ -80,7 +80,7 @@ class ApplicationStatusesController < ApplicationController
   def destroy
     @version_status = VersionStatus.find(params[:id])
     @version_status.destroy
-
+    flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
     respond_to do |format|
       format.html { redirect_to(version_statuses_url) }
       format.xml  { head :ok }

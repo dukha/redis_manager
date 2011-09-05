@@ -1,0 +1,48 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "translation", :count=>2) )%></p>
+<% if Translation.count==0 then %>
+  <%=t($MS + "no_records_found")%><br/>
+<%  else %>
+<%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+
+    <th class ="dataheader"><%=t($ARA+'translation.redis_db_index') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'translation.application_version_id') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'translation.host') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'translation.port') %></th>
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @translations.each do |translation| %>
+
+  <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
+  
+      <td class="<%= cell_class %>"><%= translation.redis_db_index %></td>
+
+  
+      <td class="<%= cell_class %>"><%= ApplicationVersion.find(translation.application_version_id).application_name_with_version %></td>
+
+  
+      <td class="<%= cell_class %>"><%= t(translation.host) %></td>
+      <td class="<%= cell_class %>"><%= translation.port %></td>
+
+  
+    
+    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_translation_path(translation) %></td>
+    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  translation , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "translation", :count=>1)), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= twill_paginate %>
+<%end%>
+<br />
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'translation', :count=>1)), new_translation_path %>

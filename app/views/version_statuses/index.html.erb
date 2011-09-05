@@ -24,8 +24,8 @@
 
   
     
-    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_application_status_path(application_status) %></td>
-    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  application_status , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "version_status", :count=>1)), :method => :delete %></td>
+    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_version_status_path(version_status) %></td>
+    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  version_status , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "version_status", :count=>1)), :method => :delete %></td>
   </tr>
 <% end %>
 </table>
@@ -33,4 +33,4 @@
 
 <br />
 <% end %>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'application_status', :count=>1)), new_application_status_path %>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'version_status', :count=>1)), new_version_status_path %>

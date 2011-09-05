@@ -1,4 +1,4 @@
 <p class="pageheading"><%= t("headings.new.heading", :model=>t($ARM + "translation_upload", :count=>1))%></p>
-<%= render 'form' %>
+<%= render 'form', :locals => {:state=>"new"} %>
 <%= link_to t('headings.new.heading', :model=> t($ARM + 'translation_upload', :count=>1)), new_translation_upload_path %> |
 <%= link_to t("actions.back"), translation_uploads_path %>
