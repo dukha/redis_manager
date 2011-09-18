@@ -77,14 +77,6 @@ module Validations
   Mods fix i18n and prevent duplicate error messages displaying
 =end
    class ExistenceValidator < ActiveModel::EachValidator
-
-        #def initialize(options)
-          # set the default message if its unspecified
-          #options[:message] ||= :existence
-          #options[:both]    = true unless options.key?(:both)
-          #super(options)
-        #end
-
         def validate_each(record, attribute, value)
           puts "valax =" + value.to_s
           #remove the _id from the attribute with the association. Convert to symbol
@@ -107,11 +99,11 @@ module Validations
           end
 
           if value.nil? || target_class.nil? || !target_class.exists?(value)
-            #errors = [] #[attribute]
+            #errors = [attribute]
 
             # add the error on both :relation and :relation_id
             #if options[:both]
-              # We are
+              
               if Rails::VERSION::MAJOR == 3 and Rails::VERSION::MINOR == 0 then
                 # rails 3.0
                 foreign_key = association.primary_key_name
@@ -120,15 +112,10 @@ module Validations
                 foreign_key = association.foreign_key
               end
 
-              #errors << (attribute.to_s.ends_with?("_id") ? normalized : foreign_key)
             #end
-            puts "valxx =" + value.to_s
+          
             record.errors[attribute]= I18n.t("activerecord.errors.messages.existence", :default=>"does not exist", :value=>value, :attribute=>attribute, :target=>target_class.name)
-            #errors.each do |error|
-              #record.errors.add(error, options[:message], :message => I18n.t("activerecord.errors.messages.existence", :default=>"does not exist", :value=>value, :attribute=>attribute, :target=>target_class.name))
-            #"does not exist")
-							#record.errors[attribute]= I18n.t("activerecord.errors.messages.existence", :default=>"does not exist", :value=>value, :attribute=>attribute, :target=>target_class.name)
-            #end
+            
           end
         end
      end
