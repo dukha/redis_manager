@@ -88,7 +88,7 @@ class LanguagesController < ApplicationController
 =begin
   From anywhere in the application the user can change language
 =end
-  def change_application_language
+  def change_calmapp_language
     #check that the iso_code is valid
     @language =Language.find_by_iso_code(params[:iso_code])
     #debugger

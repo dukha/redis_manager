@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110901223137) do
+ActiveRecord::Schema.define(:version => 20110915235234) do
 
  
   create_table "version_statuses", :force => true do |t|
@@ -43,53 +43,58 @@ ActiveRecord::Schema.define(:version => 20110901223137) do
   add_index :languages, :name, {:unique=>true, :name=> "iu_languages_name"}
   add_index :languages, :iso_code, {:unique=>true, :name=> "iu_languages_iso_code"}
 
-  create_table "applications", :force => true do |t|
+  create_table "calmapps", :force => true do |t|
     t.string     "name", :null=>false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table :applications_languages, :force=> true do |t|
-    t.references :application, :null=>false
+  create_table :calmapps_languages, :force=> true do |t|
+    t.references :calmapp, :null=>false
     t.references :language, :null=> false
   end
-  add_index :applications_languages, :application_id, :language_id, {:unique=>true, :name=>"iu_applications_languages_application_id_lanugae_id" }
+  add_index :calmapps_languages, [:calmapp_id, :language_id], {:unique=>true, :name=>"iu_calmapps_languages_calmapp_id_lanugae_id" }
 
-  create_table "application_versions", :force => true do |t|
-    t.references  :application, :null=>false
+  create_table "calmapp_versions", :force => true do |t|
+    t.references  :calmapp, :null=>false
     t.integer   "major_version", :null=>false
     t.integer  "version_status_id", :null=>false
     #t.references  :translation, :null=> false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-  add_index :application_versions, :application_id, :name => "i_application_versions_appliction_id"
-  add_index :application_versions, [:application_id, :major_version], {:unique => true, :name => "iu_application_versions_application_id_major_version"}
+  add_index :calmapp_versions, :calmapp_id, :name => "i_calmapp_versions_appliction_id"
+  add_index :calmapp_versions, [:calmapp_id, :major_version], {:unique => true, :name => "iu_calmapp_versions_calmapp_id_major_version"}
 
-  create_table "translation_uploads", :force => true do |t|
-    t.references :applications_language , :null=>false
-    t.string   "translation_file_name", :null=>false
-    t.string   "translation_file_content_type"
-    t.integer  "translation_file_size"
-    t.datetime "translation_file_updated_at"
+  create_table "uploads", :force => true do |t|
+    t.references :calmapps_language , :null=>false
+    t.string   "upload_file_name", :null=>false
+    t.string   "upload_file_content_type"
+    t.integer  "upload_file_size"
+    t.datetime "upload_file_updated_at"
     t.string   :description
     t.datetime "created_at"
     t.datetime "updated_at"
 
   end
 
-  add_index :translation_uploads, :translation_file_name, {:unique=>true, :name=> "iu_uploads_translation_file_name"}
+  add_index :uploads, :upload_file_name, {:unique=>true, :name=> "iu_uploads_upload_file_name"}
 
-  create_table :translations do |t|
-      t.references :application_version, :null=>false
+  create_table :redis_databases do |t|
+      t.references :calmapp_version, :null=>false
       t.integer :redis_db_index, :null=>false
       
       t.string :host, :null=>false
       t.integer :port, :null=> false
       t.timestamps
   end
-  
-  add_index :translations, [:redis_db_index, :host, :port], {:unique => true, :name=>"iu_translations_index_host_port"}
+  execute <<-SQL
+      ALTER TABLE redis_databases
+        ADD CONSTRAINT fk_redis_databases_calmapp_versions
+        FOREIGN KEY (calmapp_version_id)
+        REFERENCES calmapp_versions(id)
+    SQL
+  add_index :redis_databases, [:redis_db_index, :host, :port], {:unique => true, :name=>"iu_databases_index_host_port"}
 
  # create_table :redis_admins do |t|
      # t.integer :max_redis_dbs, :null=>false

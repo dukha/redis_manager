@@ -178,25 +178,31 @@ select.dualBox2 {
   height: 300px;
   width: 50px; }
 
-#application_languages_available {
+#availableLanguagesBox {
   height: 300px;
-  width: 150px; }
+  width: 200px; }
 
 #selectedLanguagesBox {
   height: 300px;
-  width: 150px; }
+  width: 200px; }
 
 #availableLanguageFilterSpan {
-  width: 150px; }
+  /*   width: ;*/ }
 
 #selectedLanguagesFilterSpan {
-  width: 150px; }
+  /*   width: $languageBoxWidth;*/ }
 
 #availableLanguagesFilter {
-  width: 35px; }
+  margin-top: 3px;
+  margin-bottom: 3px;
+  /*margin-right:$filtermarginright;*/
+  width: 200px; }
 
 #selectedLanguagesFilter {
-  width: 35px; }
+  margin-top: 3px;
+  margin-bottom: 3px;
+  /*margin-right:$filtermarginright;*/
+  width: 200px; }
 
 button.toFrom {
   width: 30px; }

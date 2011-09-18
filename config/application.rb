@@ -45,6 +45,12 @@ module RedisManager
       g.test_framework :rspec
     end
     config.autoload_paths << "#{config.root}/lib/"
+    # Use SQL instead of Active Record's schema dumper when creating the test database.
+    # This is necessary if your schema can't be completely dumped by the schema dumper,
+    # like if you have constraints or database-specific column types.
+    # The other choice is :ruby which is default.
+    # Configuring :sql means that for postgres, the schema will be created by pg_dump
+    config.active_record.schema_format :sql
   end
 
 

@@ -38,42 +38,98 @@ module Validations
      end
    end
 
-   class TranslationValidator < ActiveModel::Validator
-     def validate(record)
-         debugger
+   #class TranslationValidator < ActiveModel::Validator
+     #def validate(record)
+         #debugger
          #rescue_from Exception :with=> :bad_redis_index
          
-         begin
-           db= Redis.new :password => $REDIS_PW, :host=>record.host, :db=>record.redis_db_index.to_s
-           db.dbsize
-           # record.errors[:base] << I18n.t($MSE + "invalid_redis_database_index", :value=>record.redis_index.to_s) #(options[:message] || "messages.errors." +")
-           return true
-         rescue => runtimeerror
-           record.errors[:base] << runtimeerror
-           return false
-         end
-     end
-     def bad_redis_index( exception)
-       msg= exception.message.gsub("\n", '<br>').html_safe
-       logger.error(exception.to_s)
-       flash[:error] = msg
+         #begin
+           #db= Redis.new :password => $REDIS_PW, :host=>record.host, :db=>record.redis_db_index.to_s
+           #db.dbsize
+           
+           #return true
+         #rescue => runtimeerror
+           #record.errors[:base] << runtimeerror
+           #return false
+         #end
+     #end
+     #def bad_redis_index( exception)
+       #msg= exception.message.gsub("\n", '<br>').html_safe
+       #logger.error(exception.to_s)
+       #flash[:error] = msg
 
-     end
-   end
+     #end
+   #end
    class RedisDbValidator< ActiveModel::EachValidator
      def validate_each(object,attribute, value)
-       #max_dbs = RedisAdmin.first.max_redis_dbs
-       #unless value < ( max_dbs -1) then
-         #object.errors[attribute] << "Number of redis database must be between 0 and " + (max_dbs-1).to_s
-         #return false
-       #end
-       #return true
        redis_db = Redis.new( :db=> value, :password=>$REDIS_PW, :port=>object.port, :host=> object.host)
        redis_db.ping
      rescue RuntimeError => e
-       object.errors[attribute] = I18n.t($MSE + "invalid_redis_db_index", :value=>value)  if e.message.index("invalid DB index")
-     else
-       raise e
-     end
+       if e.message.index("invalid DB index")
+         object.errors[attribute] = I18n.t($MSE + "invalid_redis_db_index", :value=>value)
+       else
+         raise e
+       end #invalid index
+     end #def rescue
    end
+=begin
+  This class is copied and modified from validates_existence gem.
+  Mods fix i18n and prevent duplicate error messages displaying
+=end
+   class ExistenceValidator < ActiveModel::EachValidator
+
+        #def initialize(options)
+          # set the default message if its unspecified
+          #options[:message] ||= :existence
+          #options[:both]    = true unless options.key?(:both)
+          #super(options)
+        #end
+
+        def validate_each(record, attribute, value)
+          puts "valax =" + value.to_s
+          #remove the _id from the attribute with the association. Convert to symbol
+          normalized = attribute.to_s.sub(/_id$/, "").to_sym
+          #get the name of the association
+          association = record.class.reflect_on_association(normalized)
+
+          if association.nil? || !association.belongs_to?
+            raise ArgumentError, "Cannot validate existence on #{normalized}, not a :belongs_to association"
+          end
+
+          target_class = nil
+
+          # dealing with polymorphic belongs_to
+          if association.options[:polymorphic]
+            foreign_type = record.send(association.options[:foreign_type] || association.foreign_type)
+            target_class = foreign_type.constantize unless foreign_type.nil?
+          else
+            target_class = association.klass
+          end
+
+          if value.nil? || target_class.nil? || !target_class.exists?(value)
+            #errors = [] #[attribute]
+
+            # add the error on both :relation and :relation_id
+            #if options[:both]
+              # We are
+              if Rails::VERSION::MAJOR == 3 and Rails::VERSION::MINOR == 0 then
+                # rails 3.0
+                foreign_key = association.primary_key_name
+              elsif
+                # this is for rails 3.1 and may be rails 4??
+                foreign_key = association.foreign_key
+              end
+
+              #errors << (attribute.to_s.ends_with?("_id") ? normalized : foreign_key)
+            #end
+            puts "valxx =" + value.to_s
+            record.errors[attribute]= I18n.t("activerecord.errors.messages.existence", :default=>"does not exist", :value=>value, :attribute=>attribute, :target=>target_class.name)
+            #errors.each do |error|
+              #record.errors.add(error, options[:message], :message => I18n.t("activerecord.errors.messages.existence", :default=>"does not exist", :value=>value, :attribute=>attribute, :target=>target_class.name))
+            #"does not exist")
+							#record.errors[attribute]= I18n.t("activerecord.errors.messages.existence", :default=>"does not exist", :value=>value, :attribute=>attribute, :target=>target_class.name)
+            #end
+          end
+        end
+     end
 end

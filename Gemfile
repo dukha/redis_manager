@@ -60,6 +60,10 @@ gem 'paperclip', '2.3.11'
 gem "meta_where"
 # Allows QBE with activerecord
 gem "meta_search"
+# this gem checks RI in a belongs_to relationship (create th FK anyway)
+# Didn't have good i18n and seemed tio double up error messages, so copied the validation to our validations.rb and modified,
+#gem "validates_existence"
+
 gem "redis" #, :git => "git://github.com/ezmobius/redis-rb.git"
 # foreigner is a gem that allows the insertion of foreign keys into migrations.
 # Doesn't work with automigrate. Too bad.

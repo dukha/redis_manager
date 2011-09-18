@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   before_filter  :set_locale
+  #rescue_from ActiveRecord::RecordInvalid, :with => :record_invalid
+  rescue_from ActiveRecord::RecordInvalid do |exception|
+    #flash[:error] = exception.message
+    render :action => (exception.record.new_record? ? :new : :edit)
+  end
   rescue_from Exception, :with => :rescue_all_exceptions  if Rails.env == 'production'
   $application_name = "CALM Translator"
   $application_version ="0.0.0 M1"
@@ -56,6 +61,8 @@ This function, together with the scope in routes.rb allows the setting of urls l
         #render :text => "An internal error occurred. Sorry for inconvenience", :status => :internal_server_error
     end
 end
-
+ def record_invalid(exception)
+    flash[:error] = exception.message + " " + exception.record.to_s
+  end
 
 end

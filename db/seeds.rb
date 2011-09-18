@@ -22,7 +22,7 @@ en = Language.create!(:iso_code=> "en", :name=>"English")
 nl = Language.create!(:iso_code=> "nl", :name=>"Nederlands")
 log.info("Languages inserted")
 
-Application.delete_all
-reg = Application.create!( :name=>"calm_registrar")
-trans = Application.create!(:name=>"calm_translator")
-log.info("Applications inserted")
+Calmapp.delete_all
+reg = Calmapp.create!( :name=>"calm_registrar")
+trans = Calmapp.create!(:name=>"calm_translator")
+log.info("Calm applications inserted")

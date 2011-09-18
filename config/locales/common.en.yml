@@ -81,5 +81,9 @@ en:
       localadmin: Local Admin
       regionaladmin: Regional Administration
       user: User
-
+  activerecord:
+    models:
+      whiteboard_type:
+        one: Whiteboard Type
+        other: Whiteboard Types
  

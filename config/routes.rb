@@ -9,14 +9,17 @@ RedisManager::Application.routes.draw do
    resources :languages
    resources :whiteboard_types
    resources :whiteboards
-   resources :applications
-   resources :application_versions
+   resources :calmapps
+   resources :calmapp_versions
    resources :version_statuses
-   resources :translations
+   resources :redis_databases
 
-   resources :translation_uploads
-   get "translation_uploads/file_to_redis/:id" => "translation_uploads#file_to_redis", :as => "to_redis"
-   get "translation_uploads/select_translation_to_redis/:id" => "translation_uploads#select_translation_to_redis", :as => "select_to_redis"
+   resources :uploads
+   get "uploads/file_to_redis/:id" => "uploads#file_to_redis", :as => "to_redis"
+   get "uploads/select_translation_to_redis/:id" => "uploads#select_translation_to_redis", :as => "select_to_redis"
+
+   get "calmapps/all_in_one_new/" => "calmapps#all_in_one_new", :as => "all_in_one_new"
+   #get "calmapps/all_in_one_create" => "calmapps#all_in_one_create"
    #match "upload"
    root :to => "whiteboards#index"
   end

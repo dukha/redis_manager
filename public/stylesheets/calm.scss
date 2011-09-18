@@ -219,10 +219,12 @@ select.dualBox2{
   height:300px;
   width:50px;
 }
-$languageBoxWidth : 150px;
+$languageBoxWidth : 200px;
 $languageBoxHeight : 300px;
+$filtermargintopbottom: 3px;
+$filtermarginright:3px;
 
-#application_languages_available{
+#availableLanguagesBox{
   height:$languageBoxHeight;
   width:$languageBoxWidth;
 }
@@ -232,19 +234,23 @@ $languageBoxHeight : 300px;
 }
 #availableLanguageFilterSpan{
   
-   width: $languageBoxWidth;
+/*   width: ;*/
 }
 #selectedLanguagesFilterSpan{
 
-   width: $languageBoxWidth;
+/*   width: $languageBoxWidth;*/
 }
 #availableLanguagesFilter{
-
-   width: 35px;
+   margin-top:$filtermargintopbottom;
+   margin-bottom:$filtermargintopbottom;
+   /*margin-right:$filtermarginright;*/
+   width: $languageBoxWidth;
 }
 #selectedLanguagesFilter{
-
-   width: 35px;
+   margin-top:$filtermargintopbottom;
+   margin-bottom:$filtermargintopbottom;
+   /*margin-right:$filtermarginright;*/
+   width: $languageBoxWidth;
 }
 #availableLanguagesFilterClear{
 

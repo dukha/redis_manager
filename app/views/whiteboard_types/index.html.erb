@@ -21,7 +21,7 @@
     <td class="<%= cell_class %>" ><%= whiteboard_type.translation_code %></td>
     
     <td class="link_cell_class"><%= link_to t('actions.edit'), edit_whiteboard_type_path(whiteboard_type) %></td>
-    <td class="link_cell_class"><%= link_to t('actions.destroy'), whiteboard_type, :confirm => t('messages.delete.are_you_sure', :model => t($ARM + 'whiteboard_type.one')), :method => :delete %></td>
+    <td class="link_cell_class"><%= link_to t('actions.destroy'), whiteboard_type, :confirm => t('messages.delete.are_you_sure', :model => t($ARM + 'whiteboard_type', :count=>1)), :method => :delete %></td>
   </tr>
  	
 <% end %>
@@ -29,4 +29,4 @@
 <%= twill_paginate %>
 <br />
 <% end %>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'whiteboard_type.one')), new_whiteboard_type_path %>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'whiteboard_type', :count=>1)), new_whiteboard_type_path %>

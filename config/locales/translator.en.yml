@@ -1,55 +1,56 @@
 en:
   formtastic:
     labels:
-      name: &fl_n Name
-      version: &fl_v Version
-      line_sequence: &fl_ls Line Number
-      yaml_partial_key: &fl_ypk Partial Key
-      yaml_code: &fl_yc Yaml Code
-      dot_key: &fl_dk Dot Separated Key
-      value: &fl_t Translation
-      marked_deleted: &fl_md Marked Deleted
-      description: &fl_d Description
-      english_translation_file_name: &fl_px File Name
-      status: &fl_s Status
+      
+      #line_sequence: &fl_ls Line Number
+      #yaml_partial_key: &fl_ypk Partial Key
+      #yaml_code: &fl_yc Yaml Code
+      #dot_key: &fl_dk Dot Separated Key
+      #value: &fl_t Translation
+      #marked_deleted: &fl_md Marked Deleted
+      #description: &fl_d Description
+      #english_translation_file_name: &fl_px File Name
+      status: Status
       translation: Translation
       translation_file_id_eq: Translation File equals
       max_redis_dbs: Maximum Number Redis Databases
       filter: Filter
   actions:
     create_and_upload: Create and Upload
+    to_redis: Write to Database
   menus:
     translations: Translations
     translation_uploads: Translation Uploads
     translation_file_lines: English Translation
-    applications: Applications
-    application_versions: Applications Versions
+    calmapps: Calm Applications
+    calmapp_all_in_one_new: "New App, Version, Database"
+    calmapp_versions: Calm Application Versions
     languages: Translation Languages
-    redis_admins: Redis Administration
+    #redis_admins: Redis Administration
   headings:
     application_subheading: Calm Translator M1
-    redis_admin: Redis Admin
+    #redis_admin: Redis Admin
   activerecord:
+    #errors:
+      #messages:
+        
     models:
-      application:
-        zero: Applications
-        one: Application
-        other: Applications
-      translation_file:
-        one: Translation File
-        other: Translation Files
-      translation_upload:
-        one: Translation Upload
-        other: Translation Uploads
+      calmapp:
+        zero: Calm Applications
+        one: Calm Application
+        other: Calm Applications
+      #translation_file:
+        #one: Translation File
+        #other: Translation Files
+      upload:
+        one: Upload
+        other: Uploads
       version_status:
-        one: Application Status
-        other: Application Statuses
-      application_version:
-        one: Application Version
-        other: Application Versions
-      translation:
-        one: Translation
-        other: Translations
+        one: Application Version Status
+        other: Application Version Statuses
+      calmapp_version:
+        one: Calm Application Version
+        other: Calm Application Versions
       language:
         one: Translation Language
         other: Translation Languages
@@ -59,13 +60,12 @@ en:
       redis_admin:
         one: Redis Admin
         other: Redis Admin
-      translation_upload:
-        one: Translation Upload
-        other: Translation Uploads
+      upload:
+        one: Upload
+        other: Uploads
     attributes:
       application:
-        name: *fl_n
-        version: *fl_v
+        
         languages: Languages Selected
         languages_available: Languages Available
       #translation_file:
@@ -80,12 +80,12 @@ en:
         #dot_key: *fl_dk
         #value: *fl_t
         #marked_deleted: *fl_md
-      version_status:
-        status: *fl_s
-      application_version:
+      #version_status:
+        #status: *fl_s
+      calmapp_version:
         application_id: Application
-        version: *fl_v
-        version_status_id: *fl_s
+        version: Application Version
+        version_status_id: Version Status
         redis_db_index: Redis Database Index
       #translation:
         #translation_file_id: File
@@ -102,9 +102,13 @@ en:
         name: Redis Database Name
         host: Host
         port: Port
-      translation_upload:
-        applications_language_id: Application and Language
-        translation: File Name
+      upload:
+        calmapps_language_id: Application and Language
+        upload: File Name
+    #errors:
+      #messages:
+        #existence: "%{attribute} with %{value} does not exist in another context. Add it to the other context first."
+
   messages:
     no_records_found: There were no records found in the database.
     errors:
