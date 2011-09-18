@@ -1,0 +1,34 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "calmapp", :count=>10) )%></p>
+<% if Calmapp.count==0 then %>
+  <%=t($MS + "no_records_found")%><br/>
+<%  else %>
+<%= twill_paginate %>
+  <table class="data">
+    <tr class="dataheader">
+
+      <th class ="dataheader"><%=t($FL+'name') %></th>
+
+
+
+      <th class="linkheader"></th>
+      <th class="linkheader"></th>
+
+    </tr>
+
+  <% row_class="data" %>
+  <% cell_class = "data" %>
+  <% link_cell_class="link"%>
+  <% @calmapps.each do |calmapp| %>
+
+    <tr class = "<%= cycle('dataeven', 'dataodd', :name => row_class) %>" >
+      <td class="<%= cell_class %>"><%= calmapp.name %></td>
+      <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_calmapp_path(calmapp) %></td>
+      <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  calmapp , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "calmapp", :count=>1)), :method => :delete %></td>
+    </tr>
+
+  <% end %>
+  </table>
+  <%= will_paginate %>
+  <br/>
+<%end%>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'calmapp', :count=>1)), new_calmapp_path %>

@@ -1,0 +1,4 @@
+<p class="pageheading"><%=t("headings.edit.heading", :model=>t($ARM + "upload", :count=>1) )%></p>
+<%= render 'form', :locals => {:state=>"edit"} %>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'upload', :count=>1)), new_upload_path %> |
+<%= link_to t("actions.back"), uploads_path %>

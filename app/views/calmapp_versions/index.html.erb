@@ -1,0 +1,46 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "calmapp_version", :count=>2) )%></p>
+<% if CalmappVersion.count==0 then %>
+  <%=t($MS + "no_records_found")%><br/>
+<%  else %>
+<%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+
+    <th class ="dataheader"><%=t($ARA+'calmapp_version.calmapp_id') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'calmapp_version.version') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'calmapp_version.version_status_id') %></th>
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @calmapp_versions.each do |calmapp_version| %>
+
+  <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
+  
+      <td class="<%= cell_class %>"><%= Calmapp.find(calmapp_version.calmapp_id).name %></td>
+
+  
+      <td class="<%= cell_class %>"><%= calmapp_version.major_version %></td>
+
+  
+      
+      <td class="<%= cell_class %>"><%=VersionStatus.find(calmapp_version.version_status_id).status %></td>
+  
+    
+    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_calmapp_version_path(calmapp_version) %></td>
+    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  calmapp_version , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "calmapp_version", :count=>1)), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= twill_paginate %>
+
+<br />
+<% end %>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'calmapp_version', :count=>1)), new_calmapp_version_path %>

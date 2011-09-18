@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @calmapp.name %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @calmapp.version %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= ApplicationStatus.find(@calmapp.version_status_id).status %>
+</p>
+
+
+<%= link_to 'Edit', edit_calmapp_path(@calmapp) %> |
+<%= link_to 'Back', calmapps_path %>

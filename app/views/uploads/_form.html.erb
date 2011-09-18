@@ -1,0 +1,21 @@
+<!-- :multipart=> true is needed for the upload -->
+<%= semantic_form_for(@upload, :html => { :multipart => true }) do |f| %>
+<!-- Takes a locals input of :state indicating whether it is called from a new or edit page -->
+	<%= f.inputs do %>
+           
+
+				   <%= f.input :calmapps_language_id , :as=>:select, :collection=> CalmappsLanguage.all.collect{|al| [Calmapp.find(al.calmapp_id).name + " " + Language.find(al.language_id).name, al.id] } %>
+             
+           <% if locals[:state] == "new" then %>
+             <%= f.input :upload, :as => :file, :required=>true %>
+           <% end %>
+           <% if locals[:state] == "edit" then %>
+             <%= f.input :upload, :as=>:string, :input_html => {:disabled => true } %>
+		       <% end %>
+    <% end %>
+    <%= f.buttons do %>
+        <%= f.commit_button :create_and_upload %>
+    <% end %>
+
+	<% end %>
+

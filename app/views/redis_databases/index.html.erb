@@ -1,0 +1,48 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "redis_database", :count=>2) )%></p>
+<% if RedisDatabase.count==0 then %>
+  <%=t($MS + "no_records_found")%><br/>
+<%  else %>
+<%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+
+    <th class ="dataheader"><%=t($ARA+'redis_database.redis_db_index') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'redis_database.calmapp_version_id') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'redis_database.host') %></th>
+
+    <th class ="dataheader"><%=t($ARA+'redis_database.port') %></th>
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @redis_databases.each do |redis_database| %>
+
+  <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
+  
+      <td class="<%= cell_class %>"><%= redis_database.redis_db_index %></td>
+
+  
+      <td class="<%= cell_class %>"><%= CalmappVersion.find(redis_database.calmapp_version_id).calmapp_name_with_version %></td>
+
+  
+      <td class="<%= cell_class %>"><%= t(redis_database.host) %></td>
+      <td class="<%= cell_class %>"><%= redis_database.port %></td>
+
+  
+    
+    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_redis_database_path(redis_database) %></td>
+    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  redis_database , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "redis_database", :count=>1)), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= twill_paginate %>
+<%end%>
+<br />
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'redis_database', :count=>1)), new_redis_database_path %>

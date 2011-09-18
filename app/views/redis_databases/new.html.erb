@@ -1,0 +1,5 @@
+<p class="pageheading"><%= t("headings.new.heading", :model=>t($ARM + "redis_database", :count=>1))%></p>
+<%= render 'form' %>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'redis_database', :count=>1)), redis_databases_path %> |
+<%= link_to t("actions.back"), redis_databases_path %>
+
