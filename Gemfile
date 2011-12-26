@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.9'
 
 # postgresql connector
 gem 'pg', '0.10.1'
@@ -85,7 +85,8 @@ group :development, :test do
   gem 'spork'
 
   # will document model according to migrations (actually according to schema)
-  gem 'annotate-models', '1.0.4'
+  #gem 'annotate-models', '1.0.4'
+  gem 'annotate'
 =begin
  debug that works with ruby 1.9
  place

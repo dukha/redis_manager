@@ -1,6 +1,6 @@
-<p class="pageheading"><%=t("headings.new.heading", :model=>t($ARM + "whiteboard_type", :count=>1) )%></p>
+<%=theading('new', :model=> "whiteboard_type", :count=>1)%>
 
 <%= render 'form' %>
 
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'whiteboard_type', :count=>1)), new_whiteboard_type_path %> |
-<%= link_to t("actions.back"), whiteboard_types_path %>
+<%= tlink_to('new_model', new_whiteboard_type_path , :model=>  'whiteboard_type', :count=>1)%> |
+<%= tlink_to "back", whiteboard_types_path %>

@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "redis_database", :count=>2) )%></p>
+<%=theading("listing", :model=>"redis_database", :count=>10) %>
 <% if RedisDatabase.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
@@ -6,14 +6,15 @@
 <table class="data">
   <tr class="dataheader">
 
-    <th class ="dataheader"><%=t($ARA+'redis_database.redis_db_index') %></th>
+    <th class ="dataheader"><%=tlabel('redis_db_index', 'redis_database') %></th>
 
-    <th class ="dataheader"><%=t($ARA+'redis_database.calmapp_version_id') %></th>
+    <th class ="dataheader"><%=tlabel('calmapp_version_id', 'redis_database' ) %></th>
 
-    <th class ="dataheader"><%=t($ARA+'redis_database.host') %></th>
+    <th class ="dataheader"><%=tlabel('redis_instance_id', 'redis_database') %></th>
 
-    <th class ="dataheader"><%=t($ARA+'redis_database.port') %></th>
+    
 
+    <th class="linkheader"></th>
     <th class="linkheader"></th>
     <th class="linkheader"></th>
     
@@ -32,17 +33,19 @@
       <td class="<%= cell_class %>"><%= CalmappVersion.find(redis_database.calmapp_version_id).calmapp_name_with_version %></td>
 
   
-      <td class="<%= cell_class %>"><%= t(redis_database.host) %></td>
-      <td class="<%= cell_class %>"><%= redis_database.port %></td>
+      <td class="<%= cell_class %>"><%= RedisInstance.find(redis_database.redis_instance_id).host %></td>
+      
 
   
     
-    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_redis_database_path(redis_database) %></td>
-    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  redis_database , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "redis_database", :count=>1)), :method => :delete %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_redis_database_path(redis_database) %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to 'destroy',  redis_database , :confirm => 'delete.are_you_sure', :model => "redis_database", :value=>('Index: '+ redis_database.redis_db_index.to_s), :method => :delete %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to 'redis_to_yaml',  redis_database  %></td>
   </tr>
 <% end %>
 </table>
 <%= twill_paginate %>
 <%end%>
 <br />
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'redis_database', :count=>1)), new_redis_database_path %>
+
+<%= tlink_to 'new_model', new_redis_database_path, :model=> 'redis_database' %>

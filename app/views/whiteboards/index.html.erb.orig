@@ -1,0 +1,27 @@
+<%=theading('home', :model=>'whiteboards', :count=>10)%></p>
+
+<%= will_paginate %>
+<table id="whiteboard_table"class="whiteboard">
+<!-- we don't want table headers here because of the role that whiteboards plays as Home page -->
+<% @whiteboards.each do |whiteboard| %>
+
+  
+
+  <tr id="<%=  "whiteboard_row"+ whiteboard.id.to_s%>" class = "whiteboard">
+    
+    <td class="whiteboardname"><%= t($LU+"whiteboard_type." +WhiteboardType.find(whiteboard.whiteboard_type_id).translation_code) %></td>
+		<td class="whiteboard"><%= whiteboard.info %></td>
+		 
+    
+    <td id= "<%=  "whiteboard_cell_link"+whiteboard.id.to_s%>""   class="whiteboardlink"><%= link_to t('actions.edit'), edit_whiteboard_path(whiteboard), :id => "whiteboard"+whiteboard.id.to_s %></td>
+    
+  </tr>
+  	
+<% end %>
+</table>
+<%= will_paginate %>
+
+
+
+
+

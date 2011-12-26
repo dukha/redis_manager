@@ -1,42 +1,121 @@
-<p class="pageheading"><%= t("headings.new.heading", :model=>t($ARM + "calmapp", :count=>1))%></p>
-<%= semantic_form_for(@calmapp, @calmapp_version) do |f| %>
-	<%= f.inputs do %>
-    <%= f.input :name %>
-    <%=semantic_fields_for(@calmapp_version) do |v| %>
-        <%= v.input :major_version %>
-        <%= v.input :version_status_id %>
+<script type="text/javascript">
+  /*
+   * This script manages the checkboxes that show different parts of the page
+   * The values of the checkbox a placed into the calmapp model as virtual attributes and then used to determine
+   * if the associated models are added or not. ie if versions is not checked then no version is added !!!
+   *
+  */
+  var versionCbListItem ="#calmapp_new_version_input";
+  var versionCb =  "#calmapp_new_version";
+  var languagesCbListItem ="#calmapp_version_add_languages_input";
+  var languagesCb = "#calmapp_version_add_languages"
+  var redisDbCbListItem = "#calmapp_version_new_redis_db_input";
+  var redisDbCb = "#calmapp_version_new_redis_db";
+
+  var versionFieldsIds = ["#calmapp_version_major_version_input", "#calmapp_version_version_status_id_input",languagesCbListItem,redisDbCbListItem]; //, "#calmapp_version_add_languages_input", "#languagesTable", "#calmapp_new_redis_db_input"];
+  var languagesFieldsIds = [ "#languagesTable"];
+  var redisDbFieldsIds = [ "#redis_database_redis_db_index_input", "#redis_database_redis_instance_id_input"];
+  
+  $(document).ready(function(){
+    $(versionCb).click(function(){
+      //console.log("test")
+      if(this.checked){
+        setVersionFields(true);
+
+      }else{
+        //setlanguagesFields(false);
+        setVersionFields(false);
+        $(languagesCb).attr('checked', false) ;
+        setLanguagesFields(false);
+        $(redisDbCb).attr('checked', false) ;
+        setRedisDbFields(false);
+      }
+      return true;
+      
+    });//end version click
+    $(languagesCb).click(function(){
+      if(this.checked){
+        setLanguagesFields(true);
+      }else{
+       setLanguagesFields(false);
+      }
+      return true;
+    });//end languages click
+    $(redisDbCb).click(function(){
+      if(this.checked){
+        setRedisDbFields(true);
+      }else{
+        setRedisDbFields(false);
+      }
+      return true;
+    });//end Redis Db click
+    init();
+  });//end ready
+  function init(){
+    $(versionCb).attr('checked', false) ;
+    $(languagesCb).attr('checked', false) ;
+    $(redisDbCb).attr('checked', false) ;
+    setVersionFields(false);
+    setLanguagesFields(false);
+    setRedisDbFields(false);
+  }
+  function setVersionFields(show){
+      if(show){
+        for( i=0;i< versionFieldsIds.length;i++){
+           $(versionFieldsIds[i]).show();
+        }
+      }else{
+        for( i=0;i< versionFieldsIds.length;i++){
+          $(versionFieldsIds[i]).hide();
+        }
+      }
+  } //end toggleVersion
+  function setLanguagesFields(show){
+      if(show){
+        for( i=0;i< languagesFieldsIds.length;i++){
+           $(languagesFieldsIds[i]).show();
+        }
+      }else{
+        for( i=0;i< languagesFieldsIds.length;i++){
+          $(languagesFieldsIds[i]).hide();
+        }
+      }
+  } //end toggleLanguages
+  function setRedisDbFields(show){
+      if(show){
+        for( i=0;i< redisDbFieldsIds.length;i++){
+           $(redisDbFieldsIds[i]).show();
+        }
+      }else{
+        for( i=0;i< redisDbFieldsIds.length;i++){
+          $(redisDbFieldsIds[i]).hide();
+        }
+      }
+  } //end toggleRedis
+</script>
+
+
+
+
+<%= theading('new', :model=>'calmapp', :count=>1)%>
+<%= semantic_form_for(@calmapp, @calmapp_version, @redis_database) do |app| %>
+	<%= app.inputs do %>
+    <%= app.input :name%>
+    
+    <%  if ! @calmapp_version.nil?  then %>
+       <%= app.input :new_version, :as=>:boolean, :html_input=>{:checked=>true}%>
+       <%=render "shared/calmapp_version_form"%>
     <%end%>
-      <table>
-              <tr>
-                  <td>
-                    <fieldset class="inputs"> <label><%=t("activerecord.calmapps.languages_available")%></label><br>
-                          <span id="availableLanguagesFilterSpan"><!-- <%= t("formtastic.labels.filter")%> -->  <input type="text" id="availableLanguagesFilter" /><!--<button type="button" id="availableLanguageFilterClear">X</button></span>-->
-                          <ul><%=  f.input :languages_available, :label=>false, :input_html =>{:id =>"availableLanguagesBox"},  :as=>:select, :collection=>@calmapp.available_languages.collect {|l| [l.name, l.id ]},  :multiple=>"multiple"%></ul>
-                          <!--<span id="availableLanguagesCounter" class="countLabel"></span> --> </fieldset>
-                          <select id="box1Storage">
-                          </select>
-                  </td>
-                  <td>
-                    <ul><li><button id="to2" type="button" class="toFrom">&nbsp;>&nbsp;</button></li>
-                      <li><button id="allTo2" type="button" class="toFrom">&nbsp;>>&nbsp;</button></li>
-                      <li><button id="allTo1" type="button" class="toFrom">&nbsp;<<&nbsp;</button></li>
-                      <li><button id="to1" type="button" class="toFrom">&nbsp;<&nbsp;</button></li>
-                    </ul>
-                  </td>
-                  <td>
-                      <fieldset class="inputs"><%=t("activerecord.calmapps.languages")%><br>
-                      <span id="selectedLanguagesFilterSpan"><!--  <%= t("formtastic.labels.filter")%>-->  <input type="text" id="selectedLanguagesFilter" /><!--<button type="button" id="selectedLanguagesFilterClear">X</button></span> -->
-                      <ul><%=  f.input :languages, :label=>false, :as=>:select, :collection=>@calmapp.languages.collect {|l| [l.name,l.id]},  :multiple=>"multiple", :input_html => { :class => "dualBox2", :id => "selectedLanguagesBox" }  %></ul>
-                      <!--<span id="selectedLanguagesCounter" class="countLabel"></span></fieldset> -->
-                      <select id="box2Storage">
-                      </select>
-                  </td>
-              </tr>
-     </table>
+
+    <%if ! @redis_database.nil?  then %>
+       <%=render "shared/redis_database_form"%>
+    <%end%>
+     
+
    <%end%>
-   <%= f.buttons do %>
-      <%= f.commit_button :action=>"all_in_one_create", :button_html => {:id=>"submit"} %>
+   <%= app.buttons do %>
+      <%= app.commit_button %>
   <% end %>
 <%end%>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'calmapp', :count=>1)), new_calmapp_path %> |
-<%= link_to t("actions.back"), calmapps_path %>
+<%= tlink_to('new_model', new_calmapp_path, :model=> 'calmapp', :count=>1)  %> |
+<%= tlink_to("back", calmapps_path) %>

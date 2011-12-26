@@ -21,16 +21,17 @@
   <!-- %=javascript_include_tag"http://dev.jquery.com/view/trunk/plugins/treeview/jquery.treeview.js" % -->
   
   <%= stylesheet_link_tag  'application.css', 'formtastic.css', 'formtastic_changes.css', "ui-lightness/jquery-ui-1.8.6.custom.css",
-           'jquery.treeview.css',  'donotedit/calm.css',  'google.docs.css' %>
+           'jquery.treeview.css',  'donotedit/trans.css',  'google.docs.css' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
    <div id = "bigcontainer" style= "">
-    <% if false then %>
+    
     <div id="appheader" style= "border-color:red;">
+     
       <%= render 'layouts/header' %>
     </div>
-    <%end%>
+   
     <table id ="appmaintable" >
       <tr>
         <td id="appmenutd" class="maindisplay" >
@@ -43,9 +44,9 @@
         <!-- /td -->
 				<td id="appmaintd"  class="maindisplay">
 					<div id="container">
-			      <% flash.each do |name, msg| %>
+			    <% flash.each do |name, msg| %>
 			        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-			      <% end %>
+			      <% end %> 
 
 
 

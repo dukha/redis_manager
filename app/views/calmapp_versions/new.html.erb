@@ -1,4 +1,6 @@
-<p class="pageheading"><%= t("headings.new.heading", :model=>t($ARM + "calmapp_version", :count=>1))%></p>
+<%=theading('new', :model=> "calmapp_version", :count=>1)%>
 <%= render 'form', :locals => {:state =>"new"} %>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'calmapp_version', :count=>1)), new_calmapp_version_path %> |
-<%= link_to t("actions.back"), calmapp_versions_path %>
+
+
+<%= tlink_to('new_model', new_calmapp_version_path, :model=>  'calmapp_version', :count=>1) %> |
+<%= tlink_to "back", calmapp_versions_path %>

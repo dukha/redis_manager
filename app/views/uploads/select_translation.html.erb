@@ -1,15 +1,22 @@
-<p class="pageheading"><%=t("headings.edit.heading", :model=>t($ARM + "redis_database", :count=>1) )%></p>
+<%=theading('write_to_database', :model=> "redis_database", :count=>1 )%>
 
 
-<%= semantic_form_for @upload, :url => { :action => "select_translation_to_redis", :controller => "uploads"  } do |f| %>
-  <%=semantic_fields_for @redis_database do |t| %>>
-    <% t.inputs do  %>
-      <%= t.input :id, :as=>:select,:collection=> RedisDatabase.all.collect {|t| [ t.name, t.id ]} %>
+<%= semantic_form_for @upload, @redis_database, :url => to_redis_path(@upload)   do |u| %>
+ <%= u.inputs do %>
+  <%= u.input  :upload_file_name, :as=>:string, :input_html => {:disabled => true }%>
+  <%=semantic_fields_for @redis_database do |rdb| %>
+    <% rdb.inputs do  %>
+      <%= rdb.input :id, :label=> tlabel('redis_database', 'redis_database'), :required=>true, :as=>:select,:collection=> RedisDatabase.all.collect {|t| [ t.name, t.id ]} %>
     <% end %>
   <%end%>
+  
+  <%end%>
+<%= u.buttons do %>
+        <%= u.commit_button :to_redis %>
+<% end %>
 <%end%>
 
           
 
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'redis_database', :count=>1)), redis_databases_path %> |
-<%= link_to t("actions.back"), redis_databases_path %>
+<%= tlink_to('new_model', new_upload_path, :model=>  'upload', :count=>1) %> |
+<%= tlink_to( "back", uploads_path) %>

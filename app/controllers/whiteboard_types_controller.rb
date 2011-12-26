@@ -1,9 +1,11 @@
 class WhiteboardTypesController < ApplicationController
+  require 'translations_helper'
+  include TranslationsHelper
   # GET /whiteboard_types
   # GET /whiteboard_types.xml
   # before_filter :authenticate_user!
   @@model ="whiteboard_type"
-  @@model_translation_code =$ARM  +@@model +".one"
+  
   def index
     @whiteboard_types = WhiteboardType.paginate(:page => params[:page], :per_page=>15)
 
@@ -45,14 +47,14 @@ class WhiteboardTypesController < ApplicationController
   def create
     puts "aa:"
     @whiteboard_type = WhiteboardType.new(params[:whiteboard_type])
-    puts "xx:" #+ @whiteboard_type.to_s
+    #puts "xx:" #+ @whiteboard_type.to_s
     @whiteboard_type.save
     redirect_to(:action=>'index')
     puts "In WT"
 =begin
     respond_to do |format|
       if @whiteboard_type.save
-        flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code))
+        tflash('create', :success, {:model=>@@model))
         format.html { redirect_to(:action=>'index')} #, :notice => t('messages.create.success', :model=>@@model)) }
         format.xml  { render :xml => @whiteboard_type, :status => :created, :location => @whiteboard_type }
       else
@@ -70,7 +72,7 @@ class WhiteboardTypesController < ApplicationController
 
     respond_to do |format|
       if @whiteboard_type.update_attributes(params[:whiteboard_type])
-        flash[:success] = t('messages.update.success', :model=>t(@@model_translation_code))
+        tflash('update', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to(:action=>'index')} #, :notice => t('messages.update.success', :model=>@@model)) }
         format.xml  { head :ok }
       else
@@ -85,7 +87,7 @@ class WhiteboardTypesController < ApplicationController
   def destroy
     @whiteboard_type = WhiteboardType.find(params[:id])
     @whiteboard_type.destroy
-    flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
+    tflash('delete', :success, {:model=>@@model, :count=>1})
     respond_to do |format|
       format.html { redirect_to(whiteboard_types_url) }
       format.xml  { head :ok }

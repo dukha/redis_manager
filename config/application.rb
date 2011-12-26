@@ -44,7 +44,7 @@ module RedisManager
     config.generators do |g|
       g.test_framework :rspec
     end
-    config.autoload_paths << "#{config.root}/lib/"
+    config.autoload_paths += %W(#{config.root}/lib/)
     # Use SQL instead of Active Record's schema dumper when creating the test database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
     # like if you have constraints or database-specific column types.

@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.edit.heading", :model=>t($ARM + "calmapp", :count=>1) )%></p>
+<%=theading("edit", :model=>"calmapp", :count=>1) %>
 <%= render 'form' %>
-<%= link_to t('headings.new.heading', :model=> t($ARM +'calmapp', :count=>1)), new_calmapp_path %> |
-<%= link_to t("actions.back"), calmapps_path %>
+<%= tlink_to('new_model', new_calmapp_path, :model=> 'calmapp', :count=>1) %> |
+<%= tlink_to  "back", calmapps_path %>

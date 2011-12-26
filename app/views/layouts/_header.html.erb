@@ -17,19 +17,23 @@
 	 <tr>
 	 	  
 			<td class="applanguagetd" colspan=3  >
-           
+      <!-- These next 2 defs are just so that the header will work. Delete when devise is added. -->
+      <% def user_signed_in?; return false; end %>
+      <%def change_application_language_path; return ''; end%>
+
       <% if user_signed_in? %>  
      
 
         <form method="get" action="/users/sign_out"  class="button_to_fake" id='signout'>
-          <div><input type="submit" value=<%=t("actions.sign_out")%> id="signoutbutton"/>
+          <div><input type="submit" value=<%=t($FA + "sign_out")%> id="signoutbutton"/>
           <input name="authenticity_token" type="hidden" value="w6vNLpWrzKTDWsn5XgKbt/HNQE89f3N1jezG8CdTo40=" />
           </div>
         </form>
       
       <% end %>  
          <% @languages=Language.all %>
-         <%=collection_select :language, :iso_code, @languages, :iso_code, :name, {:selected=>I18n.locale} %>
+      <!-- the select below is disabled until devise is added. Delete when devise is added. -->
+         <%=collection_select :language, :iso_code, @languages, :iso_code, :name, {:selected=>I18n.locale}, {:disabled=>'disabled'} %>
 
         <script type ="text/javascript">
             //This script allows the user to use the selectbox to change language at any time

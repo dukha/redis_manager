@@ -1,0 +1,190 @@
+en:
+  formtastic:
+    labels:
+      redis_db_index: Redis Database Index
+      port: Linux Port
+      host: Computer with Database
+      name: Name
+      #calmapp: Calm Application
+      #line_sequence: &fl_ls Line Number
+      #yaml_partial_key: &fl_ypk Partial Key
+      #yaml_code: &fl_yc Yaml Code
+      #dot_key: &fl_dk Dot Separated Key
+      #value: &fl_t Translation
+      #marked_deleted: &fl_md Marked Deleted
+      #description: &fl_d Description
+      #english_translation_file_name: &fl_px File Name
+      status: Status
+      translation: Translation
+      translation_file_id_eq: Translation File equals
+      max_redis_dbs: Maximum Number Redis Databases
+      filter: Filter
+    hints:
+      calmapp_version:
+        major_version: Enter the major version here. This is an integer, 1,2,3 or 4 etc
+        add_languages: If this checkbox is not checked then no language will be written to the database
+      calmapp:
+        name: Enter the application name.
+        new_version: If this checkbox is not checked then no version will be written to the database
+        new_redis_db: If this checkbox is not checked then no redis database will be written to the database.
+      redis_database:
+        redis_db_index: This is the integer that is the database. Only 1 database per version. Leave the checkbox unchecked if not sure about the database index.
+      redis_database:
+        host: Enter the technical name of the computer where the Redis database server is running
+        port: Enter the computer port number used by the Redis database.
+        password: Enter the actual password for this Redis Instance. If you don't know it then don't add a new record or change an exisitng password.
+        
+    actions:
+      create_and_upload: Create and Upload
+      to_redis: Write to Database
+      redis_to_yaml: Save Database as YAML
+      #new_translation: New English Translation
+  menus:
+    translations: Translations
+    #translation_uploads: Translation Uploads
+    #translation_file_lines: English Translation
+    calmapps: Calm Applications
+    calmapp_all_in_one_new: "New App, Version, Database"
+    calmapp_versions: Calm Application Versions
+    uploads: Translation Uploads
+    redis_databases: Redis Databases
+    redis_instances: Redis Instances
+    languages: Translation Languages
+    version_statuses: Version Statuses
+    translations: Translations
+    translation_parameters: Translation Parameters
+    developers: Developers
+    developers_new_translation: Developers Translation
+    #redis_admins: Redis Administration
+  headings:
+    application_subheading: Calm Translator M1
+    write_to_database:
+      heading: Write File Contents to %{model}
+    translation_parameters:
+      heading: Translation Parameters
+    #redis_admin: Redis Admin
+  activerecord:
+    #errors:
+      #messages:
+        
+    models:
+      calmapp:
+        zero: Calm Applications
+        one: Calm Application
+        other: Calm Applications
+      #translation_file:
+        #one: Translation File
+        #other: Translation Files
+      upload:
+        one: Upload
+        other: Uploads
+      version_status:
+        one: Application Version Status
+        other: Application Version Statuses
+      calmapp_version:
+        one: Calm Application Version
+        other: Calm Application Versions
+      language:
+        one: Translation Language
+        other: Translation Languages
+      redis_database:
+        one: Redis Database
+        other: Redis Databases
+      redis_instance:
+        one: Redis Instance
+        other: Redis Instances
+      upload:
+        one: Upload
+        other: Uploads
+      translation:
+        one: Translation
+        other: Translations
+      translation_parameter:
+        one: Translation Parameter
+        other: Translation Parameters
+    attributes:
+      calmapp:
+        new_redis_db: Add Redis Database
+        new_version: Add First Version
+      translation_parameter:
+        language_id: Language
+        redis_database_id: Redis Database
+      translation:
+        dot_key_code: Key
+        translation: Translation
+      #translation_file:
+        #prefix: *fl_px
+        #application_version_id: Version
+        #description: *fl_d
+      #translation_file_line:
+        #translation_file_id: File
+        #line_sequence: *fl_ls
+        #yaml_code: *fl_yc
+        #yaml_partial_key: *fl_ypk
+        #dot_key: *fl_dk
+        #value: *fl_t
+        #marked_deleted: *fl_md
+      #version_status:
+        #status: *fl_s
+      calmapp_version:
+        calmapp_id: Calm App
+        major_version: Major Version
+        version_status_id: Version Status
+        #redis_db_index: Redis Database Index
+        languages: Languages Selected
+        languages_available: Languages Available
+      redis_database:
+        redis_db_index: Redis Database Index
+        calmapp_version_id: Calm App Version
+        redis_instance_id: Redis Instance
+        redis_database: Redis Database
+      redis_instance:
+        port: Linux Port
+        host: Computer with Database
+        password: Password
+
+      language:
+        name: Translation Language
+      upload:
+        upload: File Name
+        upload_file_name: Uploaded File Name
+        language: Language
+    
+  messages:
+    
+    errors:
+      array_in_yaml_wrong_format: |+
+        Unsuccessful upload of translation file.
+        This file, %{file_name}, is using incorrect array format.
+        Change file format from
+          - array_element1
+          - array_element1
+        to
+            key<colon> [array_element1,array_element2..]
+        This problem is around line %{line_number} in the file .
+        Edit (or have someone technical  edit) the file and try uploading again.
+        Deleted this file from database.
+      incorrect_indentation_in_yaml_file: |+
+        Incorrect parsing of file.
+        All indentations must be with increments or decrements of 2 spaces.
+        Line number = "%{line_number}"
+      failed_to_save_version_in_application: "Failed to save %{version} in application %{application}"
+      invalid_email_format: "Address '%{value}' is not a valid email address for %{attribute}. You can't have spaces and only 1 @"
+      invalid_version_format: "Verson '%{value}' is not a valid format. You can only have digits separated by '.' e.g 7.8.9 or 33.2.04"
+      invalid_redis_database_index: "You have given a wrong value for the redis database number. Ask a system administrator to increase the available numbers if you wish to use %{value}"
+      invalid_redis_db_index: "You have tried to use a redis database number,  %{value}, that is invalid for the current redis installation. If you want to use this number then ask your system admin to increase the number of redis databases."
+      invalid_redis_db_location: The computer that you have given (= %{value} ) for your Redis database cannot be found. Probably a typo but the computer could also be offline.
+      redis_connection_refused: "The computer that you have given for redis will not accept your connection request. It is possible that the port that you have given (= %{value} ) is incorrect."
+      invalid_redis_password: The password that your application gave is invalid. The redis password is obtained by the application from the main database via redis_instances. See your system admin for a resolution.
+      failed_to_save_file_written_to_redis: Could not record save file that was written to Redis database.
+      file_already_written_to_redis: "File '%{file_name}' is already written to redis database for %{redis_name}."
+    warnings:
+      translation_parameters_not_set: Before doing this you must set the translation parameters
+    successes:
+      file_to_redis: "Successfully written the contents of %{file} to redis."
+  delete:
+    are_you_sure:
+        all_translations_also_deleted: |
+          Are you sure that you want to delete this file from the database?
+          All translations in this file will also be deleted (from the database).
+  

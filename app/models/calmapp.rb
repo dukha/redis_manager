@@ -1,7 +1,7 @@
 # == Schema Information
-# Schema version: 20110629065550
+# Schema version: 20110918232413
 #
-# Table name: applications
+# Table name: calmapps
 #
 #  id         :integer         not null, primary key
 #  name       :string(255)     not null
@@ -16,11 +16,10 @@
 =end
 class Calmapp < ActiveRecord::Base
   
-  attr_accessor :languages_available
+  attr_accessor :new_version#,  :new_redis_db#, :add_languages
 
-  has_many :calmapp_versions, :dependent => :destroy
-  has_many :calmapps_languages, :dependent => :destroy
-  has_many :languages , :through => :calmapps_languages
+  has_many :calmapp_versions, :dependent => :restrict
+  
 =begin
   These attributes permit the adding of version and languages info in the calmapp screen in a new record
   add_first_version boolean indicating the user wants to add extra data
@@ -29,40 +28,36 @@ class Calmapp < ActiveRecord::Base
   language_ids is a collection of the language i's for the non english languages to be added
 =end
   #attr_accessor :add_first_version, :version_name, :add_non_english_languages, :language_ids
-  attr_accessible :name, :language_ids
+  attr_accessible :name, :new_version  #,  :new_redis_db  #, :language_ids
 
 
-  validates :languages, :associated => true
-  validates :calmapp_versions, :associated => true
+  #validates :languages, :associated => true
+  #validates :calmapp_versions, :associated => true
   validates :name, :presence=>true
   validates :name, :uniqueness=>true
   
-  def available_languages
-    #if id == nil  then #args[:idx] == "" then
-      #return Language.all
-    #else
-      return Language.all - languages
-    #end
-  end
-  def save_app_version_database(version=nil, redis_database=nil)
-    #require 'models/calmapp_version'
-    #include CalmappVersion
-    
-    Calmapp.transaction do
-      save!
-      if ! version.nil? then
-        CalmappVersion.transaction(:requires_new => true) do
-          version.calmapp_id=id
-          version.save!
+  
+  def save_app_version_database_languages(version=nil, redis_database=nil, languages=nil )
+      Calmapp.transaction do
+        save!
+        if ! version.nil? then
+          version.calmapp_id = id
+          if languages != nil then
+            version.languages=languages
+          end
+          the_version = calmapp_versions.create!(version.attributes)
+          if the_version then
+            if languages != nil then
+              the_version.languages=languages
+            end
+            
+            if ! redis_database.nil? then
+              # this line sets the has_one association and saves it to the database.
+              the_version.redis_database= redis_database
+            end
+          end
         end
-      end
-      if ! redis_database.nil? then
-        RedisDatabase.transaction(:requires_new => true) do
-          redis_database.calmapp_version_id=version_id
-          redis_database.save!
-        end
-      end
-    end # calmapp transaction
+      end # calmapp transaction
     return self
   end #save_app_version_database
 

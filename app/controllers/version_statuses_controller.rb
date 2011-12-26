@@ -1,9 +1,11 @@
 class VersionStatusesController < ApplicationController
+  require 'translations_helper'
+  include TranslationsHelper
   # GET /version_statuses
   # GET /version_statuses.xml
   #before_filter :authenticate_user!
 
-  @@model_translation_code =$ARM + "version_status.one"
+  @@model = "version_status"
   
   def index
     @version_statuses = VersionStatus.paginate(:page => params[:page], :per_page=>15)  #VersionStatus.all
@@ -48,7 +50,7 @@ class VersionStatusesController < ApplicationController
 
     respond_to do |format|
       if @version_status.save
-        flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code))          
+        tflash('create', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to( :action => "index")} #(@version_status #, :notice => 'version status was successfully created.') }
         format.xml  { render :xml => @version_status, :status => :created, :location => @version_status }
       else
@@ -65,7 +67,7 @@ class VersionStatusesController < ApplicationController
 
     respond_to do |format|
       if @version_status.update_attributes(params[:version_status])
-        flash[:success] = t('messages.update.success', :model=>t(@@model_translation_code))
+        tflash('update', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to( :action => "index")} #(@version_status, :notice => 'version status was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -80,7 +82,7 @@ class VersionStatusesController < ApplicationController
   def destroy
     @version_status = VersionStatus.find(params[:id])
     @version_status.destroy
-    flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
+    tflash('delete', :success, {:model=>@@model})
     respond_to do |format|
       format.html { redirect_to(version_statuses_url) }
       format.xml  { head :ok }

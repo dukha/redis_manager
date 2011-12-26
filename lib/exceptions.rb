@@ -8,6 +8,9 @@ Otherwise in config/application.rb
 config.autoload_paths += %W(#{config.root}/lib
 =end
 module Exceptions
+  require File.join(RAILS_ROOT, "app", "/helpers" "/translations_helper.rb" ) #'app/helpers/translations_helper.rb'
+  include TranslationsHelper
+
 =begin
   This class can be used as a documentation for using i18n with application exceptions
   It does nothing other than change the name of the parameter name for StandardError to
@@ -20,18 +23,19 @@ module Exceptions
     end
     
   end
-=begin
 
-=end
+
+
   class IncorrectArrayFormatInYamlFileException < AbstractInternationalizedStandardError
-    @@Translation_code = $MSE + "array_in_yaml_wrong_format"
-    def initialize  line_number, translation_file_id
+    #include TranslationsHelper
+    @@Translation_code = $MS + "array_in_yaml_wrong_format.error"#$MSE + "array_in_yaml_wrong_format"
+    def initialize  line_number, upload_id
       super(@@Translation_code)
       @line_number = line_number
       @translation_file_id =translation_file_id
     end
     def file_name
-        return TranslationFile.find(@translation_file_id).english_translation_file_name
+        return Upload.find(@upload_id).upload_file_name
     end
 
     def message
@@ -39,11 +43,10 @@ module Exceptions
       return m
     end
   end
-
+=begin
   class IncorrectIndentationInYamlLineException < AbstractInternationalizedStandardError
     @@Translation_code = $MSE + "incorrect_indentation_in_yaml_file"
     def initialize line_number
-      #debugger
       super @@Translation_code
       @line_number = line_number
     end
@@ -52,4 +55,25 @@ module Exceptions
       m  =   I18n.t(super,  :line_number=>@line_number)
     end
   end
+=end
+  class InvalidBelongsToAssociation < AbstractInternationalizedStandardError
+    #include TranslationsHelper
+    @@Translation_code = I18n.t($MSE + "existence")
+    def initialize record, attribute, value, target
+      super @@Translation_code
+      @record = record
+      @attribute = attribute
+      @value = value
+      @target = target
+    end
+
+    def record
+      @record
+    end
+    def message
+      @record.errors[@attribute]= I18n.t(super , :attribute => @attribute, :value=>@value, :target=>@target )
+      return @record.errors[@attribute]
+    end
+  end
+
 end

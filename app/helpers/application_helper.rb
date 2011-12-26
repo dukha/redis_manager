@@ -1,8 +1,10 @@
 module ApplicationHelper
   include WillPaginate::ViewHelpers
+  require 'translations_helper'
+  include TranslationsHelper
 =begin
   These global constants are used as partial keys in yaml translation files
-=end
+  Moved to translations_helper
   $A="actions."
   $AR="activerecord."
   $ARA=$AR + "attributes."
@@ -10,14 +12,15 @@ module ApplicationHelper
   $F="formtastic."
   $FL= $F+"labels."
   $FH=$F+"hints."
+  $FA = $F + "actions."
   $L="links."
   $LU="lookups."
   $M="menus."
   $MS="messages."
   $MSE=$MS+"errors."
   $REDIS_PW='123456'
-  
-
+  $TM="translation missing:"
+=end
   
   
   def titler
@@ -58,7 +61,7 @@ module ApplicationHelper
 =end
   #def error_count_display object,  action="save", model
      #if object.errors.any?
-       #translated_operation = t("actions." + action, :model=> t($ARM + model, :count=>1)) #t("actions.save", :model=> t($ARM + "whiteboard", :count=>1) )
+       #translated_operation = t("actions." + action, :model=> t($ARM + model, :count=>1}) #t("actions.save", :model=> t($ARM + "whiteboard", :count=>1) )
        #text =    t("commons.problem", :count=>object.errors.count)
        #return t("messages.operation.failure", :count_message=>text, :operation=> translated_operation)
      #end
@@ -83,7 +86,8 @@ module ApplicationHelper
    model_name is the name of the model e.g. "course_type"
   options are either "name" or "description". Defaults to name
 =end
-  def lookup_translation lookup_object =nil, model_name=nil, options = nil
+=begin
+  def tlookup lookup_object =nil, model_name=nil, options = nil
     #debugger
     if lookup_object == nil || lookup_object.id == nil || model_name==nil then
       return ""
@@ -97,12 +101,28 @@ module ApplicationHelper
       end
     end
   end
+=end
 =begin
-  This code will facilitate i18n in will_paginate
-  just substitute twill_paginate for will_paginate
-=end  
-  def twill_paginate(collection = nil, options = {})
-      will_paginate collection, {:previous_label => t('commons.previous'), :next_label => t('commons.next')}.merge(options)
+def t_pgerror exception
+    # remove the PGError designation
+    message.gsub("PGError:","")
+    if exception.is_a? ActiveRecord::RecordNotUnique
+      t_pgerror_non_unique
+    end
+    messages = message.split("\n")
+    opening_bracket1_index = messages[1].index("(")
+    closing_bracket1_index = messages[1].index(")", opening_bracket1_index )
+    opening_bracket2_index = messages[1].index("(", closing_bracket1_index)
+    closing_bracket2_index = messages[1].index(")", opening_bracket2_index )
+    msg= t("messages.non_unique_multivalue_key.error")
+    fieldlist = messages[1][(opening_bracket1_index+1)..(closing_bracket1_index-1)]
+    translated_fields = fieldlist.split(",").collect{|f| t($FL + f.strip)}
+
+    msg_detail = t("messages.non_unique_multivalue_key.detailed_error", :fieldlist=>"(" + translated_fields.join(", ") +")", :valuelist=>messages[1][opening_bracket2_index..closing_bracket2_index])
+    user_friendly_message= (msg + "<br>" + msg_detail).html_safe
   end
-  
+=end
+
+
+   
 end

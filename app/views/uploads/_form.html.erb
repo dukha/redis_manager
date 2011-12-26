@@ -4,7 +4,7 @@
 	<%= f.inputs do %>
            
 
-				   <%= f.input :calmapps_language_id , :as=>:select, :collection=> CalmappsLanguage.all.collect{|al| [Calmapp.find(al.calmapp_id).name + " " + Language.find(al.language_id).name, al.id] } %>
+				   <%= f.input :language_id , :as=>:select, :required=>true, :include_blank=> false, :collection=> Language.all.collect{|avl| [avl.name , avl.id] } %>
              
            <% if locals[:state] == "new" then %>
              <%= f.input :upload, :as => :file, :required=>true %>

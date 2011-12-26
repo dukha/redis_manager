@@ -5,81 +5,80 @@
  * This script keeps track of the last branch of the accordion to be used and ensures that the accordion remains open to the last selection in between requests.
  * Script developed at http://jaaulde.com/test_bed/stickyaccordion/
  */
-var ACCORDION_HEADER_HTML ="h3";
-var ACCORDION_ID_CSS ="#accordion";
-$(function(){
-        var cookieName = 'stickyAccordion';
-        // Accordion
-        $(ACCORDION_ID_CSS).accordion({ 
-          header: ACCORDION_HEADER_HTML ,
-          active: 
-            //read the cookie and get the last used index
-            ( $.cookies.get( cookieName ) || 0 ),
-          change: function( e, ui ){
-            //write a cookie to remember the h3 clicked
-						$.cookies.set( cookieName, $( this ).find( ACCORDION_HEADER_HTML ).index ( ui.newHeader[0] ) );
-					}
+  var ACCORDION_HEADER_HTML ="h3";
+  var ACCORDION_ID_CSS ="#accordion";
+  $(function(){
+          var cookieName = 'stickyAccordion';
+          // Accordion
+          $(ACCORDION_ID_CSS).accordion({ 
+            header: ACCORDION_HEADER_HTML ,
+            active: 
+              //read the cookie and get the last used index
+              ( $.cookies.get( cookieName ) || 0 ),
+            change: function( e, ui ){
+              //write a cookie to remember the h3 clicked
+  						$.cookies.set( cookieName, $( this ).find( ACCORDION_HEADER_HTML ).index ( ui.newHeader[0] ) );
+  					}
+          });
         });
-      });
 
 </script>
 <div id="accordion">
       <div>
-        <h3><a class ="accordionHeader" href="#"><%=t($M+"translations") %></a></h3>
+        <%=taccordion_header("translations") %>
         <ul class="menu">
-          
-          
-          <%if true then%>
-            
-            
-            
-          <%end%>
-
-
+           <li><%= tlink_to("translations", translations_path, :category=>:menu) %></li>
+           <!-- This should url should become edit_user_preference_path(current_user.id) when we get the login working -->
+           <li><%= tlink_to("translation_parameters", edit_user_preference_path(1), :category=>:menu) %></li>
+				</ul>
+      </div>
+  <div>
+      <%=taccordion_header("developers") %>
+        <ul class="menu">
+           <li><%= tlink_to("developers_new_translation", dev_new_translation_path, :category=>:menu) %></li>
+           <!-- This should url should become edit_user_preference_path(current_user.id) when we get the login working -->
+           <li><%= tlink_to("translation_parameters", edit_user_preference_path(1), :category=>:menu) %></li>
 				</ul>
       </div>
       <div>
-        <h3><a class ="accordionHeader" href="#"><%=t($M+"lookups") %></a></h3>
+        <%=taccordion_header("lookups") %>
         <ul class="menu">
 				  <%if false then%>
 				  
           <%end%>
-					<li><%= link_to t($M+"whiteboard_types"), whiteboard_types_path %></li>
-          <li><%= link_to t($M+"version_statuses"), version_statuses_path %></li>
+					<li><%= tlink_to("whiteboard_types", whiteboard_types_path, :category=>:menu) %></li>
+          <li><%= tlink_to("version_statuses", version_statuses_path, :category=>:menu) %></li>
 					
 				</ul>
       </div>
       <div>
 
-        <h3><a class ="accordionHeader" href="#"><%= t($M+"admin") %></a></h3> 
+        <%= taccordion_header("admin") %>
         <ul class="menu">
-         <li><%= link_to t($M+"languages"), languages_path %></li>
-				<li><%= link_to t($M+"calmapps"), calmapps_path %></li>
-        <li><%= link_to t($M+"calmapp_all_in_one_new"), all_in_one_new_path %></li>
-        <li><%= link_to( t($M +"calmapp_versions"), calmapp_versions_path) %></li>
-        <li><%= link_to( t($M +"redis_databases"), redis_databases_path) %></li>
-        <li><%= link_to( t($M +"uploads"), uploads_path) %></li>
+        <li><%= tlink_to("languages", languages_path, :category=>:menu) %></li>
+				<li><%= tlink_to("calmapps", calmapps_path, :category=>:menu) %></li>
+      <!--  <li>< %= tlink_to("calmapp_all_in_one_new", new_calmapp_path, :category=>:menu) %></li> -->
+        <li><%= tlink_to("calmapp_versions", calmapp_versions_path, :category=>:menu) %></li>
+        <li><%= tlink_to("redis_instances", redis_instances_path, :category=>:menu) %></li>
+        <li><%= tlink_to("redis_databases", redis_databases_path, :category=>:menu) %></li>
+        <li><%= tlink_to("uploads", uploads_path, :category=>:menu) %></li>
         <% if false then %>
-        <li><%= link_to( t($M +"redis_admins"), redis_admins_path) %></li>
+        <li><%= tlink_to("redis_admins", redis_admins_path, :category=>:menu) %></li>
         <%end%>
           
 				</ul>
       </div>
   <div>
 
-        <h3><a class ="accordionHeader" href="#"><%= t($M+"user_info") %></a></h3>
+        <%= taccordion_header("user_info") %>
         <ul class="menu">
-				  <li><%= link_to t($M+"home"), root_path %></li>
+				  <li><%= tlink_to("home", root_path, :category=>:menu) %></li>
           <%if false then%>
-				  <li><%= link_to t($M+"contact"), contact_path %></li>
-				  <li><%= link_to t($M+"help"), help_path %></li>
-				  <li><%= link_to t($M+"about"), about_path %></li>
-					<!-- <li><%= link_to t($M+"user_preferences"), "register" %></li> -->
+				  <li><%= tlink_to("contact", contact_path, :category=>:menu) %></li>
+				  <li><%= tlink_to("help", help_path, :category=>:menu) %></li>
+				  <li><%= tlink_to("about", about_path, :category=>:menu) %></li>
+					<!-- <li>< %= tlink_to("user_preferences", "register", :category=>:menu) %></li> -->
           <%end%>
 				</ul>
       </div>
     </div>
-<script type="text/javascript">
-  
-  
-</script>

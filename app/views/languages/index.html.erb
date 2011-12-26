@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "language.other") )%></p>
+<%=theading('listing', :model=>'language', :count=>10 )%>
 <% if Language.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
@@ -21,8 +21,8 @@
     <td class="<%= cell_class %>"><%= language.iso_code %></td>
     <td class="<%= cell_class %>"><%= language.name %></td>
     
-    <td class="<%= link_cell_class %>"><%= link_to t('actions.edit'), edit_language_path(language) %></td>
-    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'), language, :confirm => t('messages.delete.are_you_sure', :model => t($ARM + 'language.one')), :method => :delete %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to 'edit', edit_language_path(language) %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to 'destroy', language, :confirm => 'delete.are_you_sure', :model => 'language', :value=>language.name, :count=>1, :method => :delete %></td>
   </tr>
 	
 <% end %>
@@ -30,4 +30,4 @@
 <%= twill_paginate %>
 <br />
 <% end %>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'language.one')), new_language_path %>
+<%= tlink_to('new_model', new_language_path, :model=> 'language', :count=>1) %>

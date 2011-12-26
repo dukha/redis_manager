@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "whiteboard_type", :count=>2) )%></p>
+<%=t("listing", :model=>"whiteboard_type", :count=>10 )%>
 <% if WhiteboardType.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
@@ -21,7 +21,7 @@
     <td class="<%= cell_class %>" ><%= whiteboard_type.translation_code %></td>
     
     <td class="link_cell_class"><%= link_to t('actions.edit'), edit_whiteboard_type_path(whiteboard_type) %></td>
-    <td class="link_cell_class"><%= link_to t('actions.destroy'), whiteboard_type, :confirm => t('messages.delete.are_you_sure', :model => t($ARM + 'whiteboard_type', :count=>1)), :method => :delete %></td>
+    <td class="link_cell_class"><%= link_to t('actions.destroy'), whiteboard_type, :confirm => 'delete.are_you_sure', :value => tlookup_value(whiteboard_type), :model => 'whiteboard_type', :count=>1, :method => :delete %></td>
   </tr>
  	
 <% end %>
@@ -29,4 +29,4 @@
 <%= twill_paginate %>
 <br />
 <% end %>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'whiteboard_type', :count=>1)), new_whiteboard_type_path %>
+<%= tlink_to('new_model', new_whiteboard_type_path, :model=> 'whiteboard_type', :count=>1) %>

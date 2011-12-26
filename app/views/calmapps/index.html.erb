@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "calmapp", :count=>10) )%></p>
+<%=theading("listing", :model => "calmapp", :count=>10) %>
 <% if Calmapp.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
@@ -6,7 +6,7 @@
   <table class="data">
     <tr class="dataheader">
 
-      <th class ="dataheader"><%=t($FL+'name') %></th>
+      <th class ="dataheader"><%=tlabel('name') %></th>
 
 
 
@@ -22,8 +22,8 @@
 
     <tr class = "<%= cycle('dataeven', 'dataodd', :name => row_class) %>" >
       <td class="<%= cell_class %>"><%= calmapp.name %></td>
-      <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_calmapp_path(calmapp) %></td>
-      <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  calmapp , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "calmapp", :count=>1)), :method => :delete %></td>
+      <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_calmapp_path(calmapp) %></td>
+      <td class="<%= link_cell_class %>"><%= tlink_to 'destroy',  calmapp , :confirm => 'delete.are_you_sure', :model => "calmapp", :value=>calmapp.name, :method => :delete %></td>
     </tr>
 
   <% end %>
@@ -31,4 +31,4 @@
   <%= will_paginate %>
   <br/>
 <%end%>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'calmapp', :count=>1)), new_calmapp_path %>
+<%= tlink_to('new_model', new_calmapp_path, :model=> 'calmapp', :category=>:action) %>

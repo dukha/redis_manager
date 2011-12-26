@@ -1,0 +1,166 @@
+en:
+  formtastic:
+    labels:
+      redis_db_index: Redis Database Index
+      port: Linux Port
+      host: Computer with Database
+      name: Name
+      #calmapp: Calm Application
+      #line_sequence: &fl_ls Line Number
+      #yaml_partial_key: &fl_ypk Partial Key
+      #yaml_code: &fl_yc Yaml Code
+      #dot_key: &fl_dk Dot Separated Key
+      #value: &fl_t Translation
+      #marked_deleted: &fl_md Marked Deleted
+      #description: &fl_d Description
+      #english_translation_file_name: &fl_px File Name
+      status: Status
+      translation: Translation
+      translation_file_id_eq: Translation File equals
+      max_redis_dbs: Maximum Number Redis Databases
+      filter: Filter
+    hints:
+      calmapp_version:
+        major_version: Enter the major version here. This is an integer, 1,2,3 or 4 etc
+        add_languages: If this checkbox is not checked then no language will be written to the database
+      calmapp:
+        name: Enter the application name.
+        new_version: If this checkbox is not checked then no version will be written to the database
+        new_redis_db: If this checkbox is not checked then no redis database will be written to the database.
+      redis_database:
+        redis_db_index: This is the integer that is the database. Only 1 database per version. Leave the checkbox unchecked if not sure about the database index.
+        host: Enter the technical name of the computer where the Redis database server is running
+        port: Enter the computer port number used by the Redis database
+        
+    actions:
+      create_and_upload: Create and Upload
+      to_redis: Write to Database
+  menus:
+    translations: Translations
+    translation_uploads: Translation Uploads
+    translation_file_lines: English Translation
+    calmapps: Calm Applications
+    calmapp_all_in_one_new: "New App, Version, Database"
+    calmapp_versions: Calm Application Versions
+    languages: Translation Languages
+    #redis_admins: Redis Administration
+  headings:
+    application_subheading: Calm Translator M1
+    #redis_admin: Redis Admin
+  activerecord:
+    #errors:
+      #messages:
+        
+    models:
+      calmapp:
+        zero: Calm Applications
+        one: Calm Application
+        other: Calm Applications
+      #translation_file:
+        #one: Translation File
+        #other: Translation Files
+      upload:
+        one: Upload
+        other: Uploads
+      version_status:
+        one: Application Version Status
+        other: Application Version Statuses
+      calmapp_version:
+        one: Calm Application Version
+        other: Calm Application Versions
+      language:
+        one: Translation Language
+        other: Translation Languages
+      redis_database:
+        one: Redis Database
+        other: Redis Databases
+      redis_admin:
+        one: Redis Admin
+        other: Redis Admin
+      upload:
+        one: Upload
+        other: Uploads
+    attributes:
+      calmapp:
+        new_redis_db: Add Redis Database
+        new_version: Add First Version
+        
+      #translation_file:
+        #prefix: *fl_px
+        #application_version_id: Version
+        #description: *fl_d
+      #translation_file_line:
+        #translation_file_id: File
+        #line_sequence: *fl_ls
+        #yaml_code: *fl_yc
+        #yaml_partial_key: *fl_ypk
+        #dot_key: *fl_dk
+        #value: *fl_t
+        #marked_deleted: *fl_md
+      #version_status:
+        #status: *fl_s
+      calmapp_version:
+        calmapp_id: Calm App
+        major_version: Major Version
+        version_status_id: Version Status
+        #redis_db_index: Redis Database Index
+        languages: Languages Selected
+        languages_available: Languages Available
+      redis_database:
+        redis_db_index: Redis Database Index
+        calmapp_version_id: Calm App Version
+        port: Linux Port
+        host: Computer with Database
+      #translation:
+        #translation_file_id: File
+        #language_id: Language
+        #alias: Alias
+        #anchor: Anchor
+        #translatable: translatable
+        #dot_key: Dot Separated Key
+      language:
+        name: Translation Language
+      translation:
+        redis_index: Redis Database Number
+        application_version_id: Application Version
+        name: Redis Database Name
+        host: Host
+        port: Port
+      upload:
+        calmapps_language_id: Application and Language
+        upload: File Name
+    #errors:
+      #messages:
+        #existence: "%{attribute} with %{value} does not exist in another context. Add it to the other context first."
+
+  messages:
+    no_records_found: There were no records found in the database.
+    errors:
+      array_in_yaml_wrong_format: |+
+        Unsuccessful upload of translation file.
+        This file, %{file_name}, is using incorrect array format.
+        Change file format from
+          - array_element1
+          - array_element1
+        to
+            key<colon> [array_element1,array_element2..]
+        This problem is around line %{line_number} in the file .
+        Edit (or have someone technical  edit) the file and try uploading again.
+        Deleted this file from database.
+      incorrect_indentation_in_yaml_file: |+
+        Incorrect parsing of file.
+        All indentations must be with increments or decrements of 2 spaces.
+        Line number = %{line_number}
+      failed_to_save_version_in_application: Failed to save %{version} in application %{application}
+      invalid_email_format: Address "%{value}" is not a valid email address for %{attribute}. You can't have spaces and only 1 @
+      invalid_version_format: Verson "%{value}" is not a valid format. You can only have digits separated by "." e.g 7.8.9 or 33.2.04
+      invalid_redis_database_index: You have given a wrong value for the redis database number. Ask a system administrator to increase the available numbers if you wish to use %{value}
+      invalid_redis_db_index: You have tried to use a redis database number,  %{value}, that is invalid for the current redis installation. If you want to use this number then ask your system admin to increase the number of redis databases.
+      invalid_redis_db_location: The computer that you have given (= %{value} ) for your Redis database cannot be found. Probably a typo but the computer could also be offline.
+      redis_connection_refused: The computer that you have given for redis will not accept your connection request. It is possible that the port that you have given (= %{value} ) is incorrect.
+      invalid_redis_password: The password that your application gave is invalid. The redis password is hardcoded in the application. See your system admin for a resolution.
+  delete:
+    are_you_sure:
+        all_translations_also_deleted: |
+          Are you sure that you want to delete this file from the database?
+          All translations in this file will also be deleted (from the database).

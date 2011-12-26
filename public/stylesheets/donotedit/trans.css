@@ -179,11 +179,11 @@ select.dualBox2 {
   width: 50px; }
 
 #availableLanguagesBox {
-  height: 300px;
+  height: 200px;
   width: 200px; }
 
 #selectedLanguagesBox {
-  height: 300px;
+  height: 200px;
   width: 200px; }
 
 #availableLanguageFilterSpan {
@@ -209,3 +209,6 @@ button.toFrom {
 
 #translation_upload_translation {
   width: 400px; }
+
+#translation_dot_key_code, #translation_translation, #translation1_dot_key_code, #translation1_translation, #translation2_dot_key_code, #translation2_translation {
+  width: 500px; }

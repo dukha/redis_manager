@@ -1,0 +1,43 @@
+<%=theading("listing", :model=>"redis_instance", :count=>10) %>
+<% if RedisInstance.count==0 then %>
+  <%=t($MS + "no_records_found")%><br/>
+<%  else %>
+<%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+
+    
+
+    <th class ="dataheader"><%=tlabel('host', 'redis_instance') %></th>
+
+    <th class ="dataheader"><%=tlabel('port', 'redis_instance') %></th>
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @redis_instances.each do |redis_instance| %>
+
+  <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
+  
+      
+
+  
+      <td class="<%= cell_class %>"><%= t(redis_instance.host) %></td>
+      <td class="<%= cell_class %>"><%= redis_instance.port %></td>
+
+  
+    
+    <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_redis_instance_path(redis_instance) %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to 'destroy',  redis_instance , :confirm => 'delete.are_you_sure', :model => "redis_instance", :value=>('Index: '+ redis_instance.host), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= twill_paginate %>
+<%end%>
+<br />
+<%= tlink_to 'new_model', new_redis_instance_path, :model=> 'redis_instance' %>

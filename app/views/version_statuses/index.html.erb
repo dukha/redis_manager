@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "version_status", :count=>2) )%></p>
+<%=theading("listing", :model=>"version_status", :count=>10 )%>
 <% if VersionStatus.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
@@ -33,4 +33,4 @@
 
 <br />
 <% end %>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'version_status', :count=>1)), new_version_status_path %>
+<%= tlink_to('new_model', new_version_status_path, :model=> 'version_status', :count=>1) %>

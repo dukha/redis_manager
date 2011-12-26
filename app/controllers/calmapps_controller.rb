@@ -1,4 +1,6 @@
 class CalmappsController < ApplicationController
+  require 'translations_helper'
+  include TranslationsHelper
   #after_create do |record|
    # @calmapp_version.id = record.id
   #end
@@ -8,11 +10,13 @@ class CalmappsController < ApplicationController
   #before_filter :find_model,  :only => [:show, :edit, :update, :destroy]
   #before_filter :authenticate_user!
   # almost replaced with global handler
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
-
+  # Can't rescue record not found here
+  # as this will happen if there are no records when the first line of index executes
+  #rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  #include Exceptions
   
-  #@@model ="application"
-  @@model_translation_code =$ARM + "calmapp"
+  @@model ="calmapp"
+  @@model = "calmapp"
   def index
     #@applications = Calmapp.all
     @calmapps =  Calmapp.paginate(:page => params[:page], :per_page=>15)
@@ -38,10 +42,10 @@ class CalmappsController < ApplicationController
   end
   # GET /calmapps/new
   # GET /applications/new.xml
-  def all_in_one_new
+  #def all_in_one_new
     #debugger
-    puts "qqqq all in one"
-    @calmapp = Calmapp.new
+    #puts "qqqq all in one"
+    #@calmapp = Calmapp.new
     #@application.id=nil
     #@languages = Language.all
     #@app_langs=[]
@@ -59,17 +63,16 @@ class CalmappsController < ApplicationController
     #@application.languages=@languages
 
     #debugger
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @calmapp }
-    end
-  end
+    #respond_to do |format|
+      #format.html # new.html.erb
+      #format.xml  { render :xml => @calmapp }
+    #end
+  #end
 
-  def new
-    #debugger
-    puts "wwwww n new"
+  def new   
     @calmapp = Calmapp.new
     @calmapp_version = CalmappVersion.new
+    @redis_database = RedisDatabase.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @calmapp }
@@ -77,24 +80,68 @@ class CalmappsController < ApplicationController
   end
   def create
     @calmapp = Calmapp.new(params[:calmapp])
-    @calmapp_version =CalmappVersion.new(params[:calmapp_version]) 
-    if @calmapp.save_app_version_database(@calmapp_version) then
-       #@calmapp_version.calmapp_id = @calmapp.id
-       #if @calmapp_version.save then
-         flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code, :count=>1))
-         redirect_to(:action=> :index)  #@calmapp }#(:action=>:index, :controller => :calmapps) }
-         #format.xml  { render :xml => @calmapp, :status => :created, :location => @calmapp }
-       #else
-
-         #format.html { render :action => "new", :controller => "calmapp_versions" }
-       #end
+    #debugger
+    #When a checkbox comes back to the controller the params has a value of either '1' or '0' for true and false.
+    # Hence we have to test this differently here and 2 lines further
+    #debugger
+    if params[:calmapp][:new_version] != '0' then
+      @calmapp_version =CalmappVersion.new(params[:calmapp_version])
+      if params[:calmapp_version][:add_languages] != '0' then
+        @languages = params[:calmapp_version][:language_ids].collect{|li| Language.find(li)}
+      end
+      if params[:calmapp_version][:new_redis_db] != '0' then
+        @redis_database = RedisDatabase.new(params[:redis_database])
+      else
+        @redis_database =nil5
+      end
     else
-      #format.html {
-        flash[:error] = "Save of calmapp name = " + @calmapp.name + " version = " + @calmapp_version.major_version.to_s + ' failed.'
-        render :action => "new", :controller => "calmapps"
-      #}
-      #format.xml  { render :xml => @calmapp.errors, :status => :unprocessable_entity }
+      @calmapp_version = nil
+      @redis_database=nil
+      @languages=nil
     end
+    begin
+      #debugger5
+      @calmapp.save_app_version_database_languages(@calmapp_version, @redis_database, @languages)
+        #tflash('create', :success, {:model=>@@model, :count=>1})
+        tflash("create", :success, {:model=> @@model })
+        redirect_to(:action=> :index)  #@calmapp }#(:action=>:index, :controller => :calmapps) }
+
+
+      rescue ActiveRecord::InvalidForeignKey => invalid_fk
+        #debugger
+        puts invalid_fk.message
+        render :action => :new, :controller =>'calmapps'
+      #rescue ActiveRecord::RecordInvalid => invalid
+        #puts invalid.message
+        #tflash[:error] = invalid.message
+        #render :action=> :new
+         #InvalidRecord needs to be rescued so that ValidatesExistence will work properly. (otherwise all you get is a silent rollback).
+         #Needs to be fixed as you get many errors being trapped a 2nd time with this catchall @todo
+        #tflash[:error]= invalid.message  #+ " invalid " + invalid.class.name
+        #render :action => "new", :controller => "calmapps"
+      #rescue ActiveRecord::Rollback => rollback
+        #render :action => "new", :controller => "calmapps"
+        #tflash[:error]= rollback.message + " rollback " + rollback.class.name
+        #render :action => "new", :controller => "calmapps"
+
+
+      #rescue Exception => exception
+        #tflash[:error]= exception.message  + " general exception " + exception.class.name
+        #render :action => "new", :controller => "calmapps"
+
+      end
+
+    #def tflash_exception
+      #tflash[:error]= exception.message
+      #render :action => "new", :controller => "calmapps"
+    #end
+    #if @calmapp.save_app_version_database_languages(@calmapp_version, @redis_database, @languages) then
+     #    tflash('create', :success, {:model=>@@model, :count=>1})
+     #    redirect_to(:action=> :index)  #@calmapp }#(:action=>:index, :controller => :calmapps) }
+    #else
+    #    tflash[:error] = "Save of calmapp name = " + @calmapp.name + " version = " + @calmapp_version.major_version.to_s + ' failed.'
+    #    render :action => "new", :controller => "calmapps"
+    # end
   end
   # GET /calmapps/1/edit
   def edit
@@ -118,14 +165,14 @@ class CalmappsController < ApplicationController
           #@calmapp.version.create!( @application_version)
         
           #if @calmapp.version != nil then
-            flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code, :count=>1))
+            tflash('create', :success, {:model=>@@model, :count=>1})
             format.html { redirect_to(:action=>:index) }
             format.xml  { render :xml => @calmapp, :status => :created, :location => @calmapp }
           #else
-            #flash[:error] =  t(messages.errors.failed_to_save_version_in_application, :calmapp=>@application['name'], :version=>@calmapp_version['version'])
+            #tflash[:error] =  t(messages.errors.failed_to_save_version_in_application, :calmapp=>@application['name'], :version=>@calmapp_version['version'])
           #end
         #else
-          #flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code))
+          #tflash('create', :success, {:model=>@@model))
           #format.html { redirect_to( :action => "index")} #(@application_version #, :notice => 'Application version was successfully created.') }
           #format.xml  { render :xml => @calmapp_version, :status => :created, :location => @application_version }
         #end
@@ -147,7 +194,7 @@ class CalmappsController < ApplicationController
     respond_to do |format|
 
       if @calmapp.update_attributes(params[:calmapp])
-        flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code, :count=>1))
+        tflash('update', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to(:action=>:index) }
         format.xml  { head :ok }
       else
@@ -162,21 +209,23 @@ class CalmappsController < ApplicationController
   def destroy
     @calmapp = Calmapp.find(params[:id])
     @calmapp.destroy
-
+    tflash('delete', :success, {:model=>@@model, :count=>1})
     respond_to do |format|
-      flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
+      tflash('delete', :success, {:model=>@@model, :count=>1})
       format.html { redirect_to(calmapps_url) }
       format.xml  { head :ok }
     end
   end
 
   private
+=begin
     def record_not_found exception
-      flash[:warning] = t('messages.record_not_found', :model=>t(@@model_translation_code, :count=>1))
+      flash[:warning] = t('messages.record_not_found', :model=>t(@@model, :count=>1})
       flash[:error] = exception.message
       respond_to do |format|
         format.html { redirect_to(calmapps_url) }
         format.xml  { head :ok }
       end
     end
+=end
 end

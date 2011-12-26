@@ -1,9 +1,11 @@
 class LanguagesController < ApplicationController
+  require 'translations_helper'
+  include TranslationsHelper
   # GET /languages
   # GET /languages.xml
   #before_filter :authenticate_user!, :except=> :change_application_language
   @@model ="language"
-  @@model_translation_code = $ARM +  @@model +".one"
+  
   def index
     @languages = Language.paginate(:page => params[:page], :per_page=>15)
 
@@ -47,7 +49,7 @@ class LanguagesController < ApplicationController
 
     respond_to do |format|
       if @language.save
-        flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code))
+        tflash('create', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to(:action=>"index")} # , :notice => t('messages.create.success', :model=>@@model)) }
         format.xml  { render :xml => @language, :status => :created, :location => @language }
       else
@@ -64,7 +66,7 @@ class LanguagesController < ApplicationController
 
     respond_to do |format|
       if @language.update_attributes(params[:language])
-        flash[:success] = t('messages.update.success', :model=>t(@@model_translation_code))
+        tflash('update', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to(:action=>'index')} #, :notice => t('messages.update.success', :model=>@@model)) }
         format.xml  { head :ok }
       else
@@ -79,7 +81,7 @@ class LanguagesController < ApplicationController
   def destroy
     @language = Language.find(params[:id])
     @language.destroy
-     flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
+     tflash('delete', :success, {:model=>@@model, :count=>1})
     respond_to do |format|
       format.html { redirect_to(languages_url) }
       format.xml  { head :ok }

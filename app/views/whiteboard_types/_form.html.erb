@@ -6,7 +6,7 @@
 	  <%= f.input :translation_code %>
 <li class="string required" id="whiteboard_type_name_input">
   <label for="whiteboard_type_name"><%=t($FL+'name')%></label>
-  <input type="text" id="whiteboard_type_name" disabled="disabled" value="<%= lookup_translation( @whiteboard_type, "whiteboard_type", :name)  %>">
+  <input type="text" id="whiteboard_type_name" disabled="disabled" value="<%= tlookup_value( @whiteboard_type,  :name, "whiteboard_type")  %>">
              </input>
    <p class="inline-hints" ><%=  t($FH+ "translated_field" , :key=>$LU +"whiteboard_type" ) %></p>
 </li>

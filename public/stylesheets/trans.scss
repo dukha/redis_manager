@@ -5,6 +5,8 @@ $menuwidth:250px;
 $headingcolor:#C6E5E7;
 $indexfont-weight:550;
 $indexfont-size: x-small;
+$anchorcolor: #0000ff;
+$anchorhovercolor: #008000;
 html,body{
   	/*background-color:#eeeeee;*/
 		height:100%;
@@ -220,7 +222,7 @@ select.dualBox2{
   width:50px;
 }
 $languageBoxWidth : 200px;
-$languageBoxHeight : 300px;
+$languageBoxHeight : 200px;
 $filtermargintopbottom: 3px;
 $filtermarginright:3px;
 
@@ -271,4 +273,15 @@ button.toFrom{
 
 #translation_upload_translation{
   width:400px;
+}
+
+#translation_dot_key_code, #translation_translation,#translation1_dot_key_code, #translation1_translation,#translation2_dot_key_code, #translation2_translation{
+  width:500px;
+}
+
+ul.menu a{
+  color: $anchorcolor;
+}
+ul.menu a:hover{
+  color: $anchorhovercolor;
 }

@@ -11,10 +11,10 @@
 development:
   adapter: postgresql
   encoding: utf8
-  database: redis_manager_development
+  database: redis_manager_dev
   pool: 5
   username: mark
-  password: Igaturi
+  password: Igaturi0
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -40,12 +40,12 @@ test: &test
   database: redis_manager_test
   pool: 5
   username: mark
-  password: Igatpuri
+  password: Igatpuri0
 
 production:
   adapter: postgresql
   encoding: utf8
-  database: redis_manager_production
+  database: redis_manager_prod
   pool: 5
   username: Mark
-  password: Igatpuri
+  password: Igatpuri0

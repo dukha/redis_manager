@@ -1,0 +1,256 @@
+<script type="text/javascript">
+  var developerParamSelect = "#developer_param_key_helper";
+  var dotKeyControl0 = "#translation0_dot_key_code";
+  var dotKeyControl1 = "#translation1_dot_key_code";
+  var dotKeyControl2 = "#translation2_dot_key_code";
+  
+  var translationControl0 = "#translation0_translation";
+  var translationControl1 = "#translation1_translation";
+  var translationControl2 = "#translation2_translation";
+  
+  var translationTextControl0 = "#translation0_text_translation";
+  var translationTextControl1 = "#translation1_text_translation";
+  var translationTextControl2 = "#translation2_text_translation";
+  
+  var dotKeyListItem0 = "#translation0_dot_key_code_input";
+  var dotKeyListItem1 = "#translation1_dot_key_code_input";
+  var dotKeyListItem2 = "#translation2_dot_key_code_input";
+  
+  var translationListItem0 = "#translation0_translation_input";
+  var translationTextListItem0 = "#translation0_text_translation_input";
+  
+  var translationListItem1 = "#translation1_translation_input";
+  var translationTextListItem1 = "#translation1_text_translation_input";
+  
+  var translationListItem2 = "#translation2_translation_input";
+  var translationTextListItem2 = "#translation2_text_translation_input";
+  
+  var modelControl =  "#developer_param_model";
+  var attributeControl =  "#developer_param_attribute";
+  $().ready(function(){
+    setUpPage();
+    
+    $(developerParamSelect).change(function(){
+      setUpPage();
+    });  
+  }); //end ready
+  
+  function showDotKey0(show){
+    $(dotKeyListItem0).css("display", show?"list-item":"none");
+  }
+  function showDotKey1(show){
+    $(dotKeyListItem1).css("display", show?"list-item":"none");
+  }
+  function showDotKey2(show){
+    $(dotKeyListItem2).css("display", show?"list-item":"none");
+  }
+  
+  function showTranslation0(show){
+    $(translationListItem0).css("display", show?"list-item":"none");
+  }
+  function showTranslation1(show){
+    $(translationListItem1).css("display", show?"list-item":"none");
+  }
+  function showTranslation2(show){
+    $(translationListItem2).css("display", show?"list-item":"none");
+  }
+  
+  function showTextTranslation0(show){
+    $(translationTextListItem0).css("display", show?"list-item":"none");
+  }
+  function showTextTranslation1(show){
+    $(translationTextListItem1).css("display", show?"list-item":"none");
+  }
+  function showTextTranslation2(show){
+    $(translationTextListItem2).css("display", show?"list-item":"none");
+  }
+  
+  function setUpPage(){
+    $(dotKeyControl0).css("width", "400px");
+    $(translationControl0).css("width", "400px");
+    $(dotKeyControl1).css("width", "400px");
+    $(translationControl1).css("width", "400px");
+    $(dotKeyControl2).css("width", "400px");
+    $(translationControl2).css("width", "400px");
+    
+    var model = $(modelControl).val();
+    var attribute = $(attributeControl).val();
+    var dotKeysPrefill = helperToDotKey({selectedIndex: $(developerParamSelect).val(),
+                                             model: model,
+                                             attribute: attribute});
+       switch(dotKeysPrefill.length){
+         case 1:
+           showDotKey0(true);
+           if( dotKeysPrefill[0].indexOf("message") != -1){
+             //We are translating a message and so want to show the textbox not the input field
+             showTranslation0(false);
+             showTextTranslation0(true);
+           }else{
+             showTranslation0(true);
+             showTextTranslation0(false);
+           }
+           showDotKey1(false);
+           showTranslation1(false);
+           showTextTranslation1(false);
+           showDotKey2(false);
+           showTranslation2(false);
+           showTextTranslation2(false);
+           
+           $(dotKeyControl0).val(dotKeysPrefill[0]) 
+           $(dotKeyControl1).val("")
+           $(dotKeyControl2).val("")
+           
+           $(translationControl1).val("")
+           $(translationTextControl1).val("")
+           
+           $(translationControl2).val("")
+           $(translationTextControl2).val("")
+           break;
+         case 2:
+           showDotKey0(true);
+           showDotKey1(true);
+           showDotKey2(false);
+           showTranslation0(true);
+           showTranslation1(true);
+           showTranslation2(false);
+           showTextTranslation0(false);
+           showTextTranslation1(false);
+           showTextTranslation2(false);
+           
+           $(dotKeyControl0).val(dotKeysPrefill[0])
+           $(dotKeyControl1).val(dotKeysPrefill[1])
+           $(dotKeyControl2).val("")
+           $(translationControl2).val("")
+           $(translationTextControl2).val("")
+           break;
+         case 3:
+           showDotKey0(true);
+           showDotKey1(true);
+           showDotKey2(true);
+           showTranslation0(true);
+           showTranslation1(true);
+           showTranslation2(true);
+           showTextTranslation0(false);
+           showTextTranslation1(false);
+           showTextTranslation2(false);
+           $(dotKeyControl0).val(dotKeysPrefill[0])
+           $(dotKeyControl1).val(dotKeysPrefill[1])
+           $(dotKeyControl2).val(dotKeysPrefill[2])
+           break;
+         default:
+           $(dotKeyControl0).val("")
+           $(dotKeyControl1).val("")
+           $(dotKeyControl2).val("")
+           
+           $(translationControl0).val("")
+           $(translationControl1).val("")
+           $(translationControl2).val("")
+           
+           $(translationTextControl0).val("")
+           $(translationTextControl1).val("")
+           $(translationTextControl2).val("")
+           
+           break;
+       }
+    }
+  /*
+   * Fill in any syntax in dot key that is possible
+   */
+  function helperToDotKey(paramBag){
+    "use strict"
+    var paramBag = paramBag || {}
+    var selectedIndex = paramBag.selectedIndex || "-1";
+    var isoCode = paramBag.isoCode || "en";
+    isoCode = isoCode +  '.';
+    var model = paramBag.model || "[model]";
+    var attribute = paramBag.attribute || "[attribute]";  
+    var retVal = [];
+    retVal[0] = isoCode;
+    switch(selectedIndex){
+      case '-1': //no selection made
+        
+        break;
+      case '0': //label
+        retVal[0] = retVal[0] +  "<%=$ARA %>" + model + "." + attribute;       
+        break;
+      case '1': //label and hint
+        retVal[0] = retVal[0] +  "<%= $ARA%>"  +model + "." + attribute;
+        retVal[1] = isoCode + "<%=$FH%>"  +model + "." + attribute;
+        break;
+      case '2': //message
+        retVal[0] = retVal[0] +  "<%=$MS + "[message]"%>";
+        break;
+      case '3': // error message
+        retVal[0] = retVal[0] +  "<%=$MS + "[message]" + ".error"%>";
+        break;
+      case '4' : //info message
+        retVal[0] = retVal[0] +  "<%=$MS + "[message]" + ".info"%>";
+        break;
+      case '5': //success message
+        retVal[0] = retVal[0] +  "<%=$MS + "[message]" + ".success"%>";
+        break;
+      case '6': //warning message
+        retVal[0] = retVal[0] +  "<%=$MS + "[message]" + ".warning"%>";
+        break;
+      case '7':  //model
+        retVal[0] = retVal[0] +  "<%=$ARM%>" + model + ".one";
+        retVal[1] = isoCode  + "<%=$ARM%>" + model + ".other";
+        break;
+      case '8':  //model and menu
+       retVal[0] = retVal[0] +  "<%=$ARM%>" + model + ".one";
+       retVal[1] = isoCode + "<%=$ARM%>" + model + ".other";
+       retVal[2] = isoCode + "<%=$M%>" +model;
+       break;
+      case '9': //action
+       retVal[0] = retVal[0] +  "<%=$FA%>" + "[action]" ;
+       break;
+      case '10':// lookup
+        retVal[0] = retVal[0] +  "<%=$LU%>" + model + "." + attribute ;
+        retVal[1] = isoCode + "<%=$LU%>"  + model + "." + attribute +  ".description";
+        break;
+      default:
+        break;
+    }
+    return retVal
+  }
+</script>
+<%= theading('new', :model=>'translation', :count=>1)%>
+
+<%= semantic_form_for(@translation, @developer_param) do |f| %>
+  
+ 
+  <% f.inputs do %>
+   <%if @developer_param %>
+     <%= semantic_fields_for(@developer_param, :html=>{:width=>'100px'}) do |d| %>
+        <%= d.input :model %>
+        <%= d.input :attribute %>
+        <%=  d.input :key_helper, :as => :select, :collection => dot_key_helper() %>
+     <%end%>
+   <%end%>
+   <%= semantic_fields_for(@translation) do |t| %>
+     <%= t.input :dot_key_code0, :wrapper_html=>{:id=>"translation0_dot_key_code_input", :style=> "display:list-item;"}, :input_html=>{:id=> "translation0_dot_key_code"} %>
+     <%= t.input :translation0, :as => :string, :wrapper_html=>{:id=>"translation0_translation_input", :style=> "display:list-item;"}, :input_html=>{:id=> "translation0_translation"}%>
+     <%= t.input :translation_message0, :as=>:text, :wrapper_html=>{:id=>"translation0_text_translation_input", :style=> "display:none;"}, :input_html=>{:id=> "translation0_text_translation", :rows=>'5'}%> 
+   
+       <%= t.input :dot_key_code1, :wrapper_html=>{:id=>"translation1_dot_key_code_input", :style=> "display:none;"}, :input_html=>{:id=> "translation1_dot_key_code"}  %>
+       <%= t.input :translation1, :as => :string, :wrapper_html=>{:id=>"translation1_translation_input", :style=> "display:none;"}, :input_html=>{:id=> "translation1_translation"}%>
+       <%= t.input :translation_message1, :as=>:text, :wrapper_html=>{:id=>"translation1_text_translation_input", :style=> "display:none;"}, :input_html=>{:id=> "translation1_text_translation", :rows=>'5'}%>
+   
+     <%= t.input :dot_key_code2, :wrapper_html=>{:id=>"translation2_dot_key_code_input", :style=> "display:none;"}, :input_html=>{:id=> "translation2_dot_key_code"}  %>
+     <%= t.input :translation2, :as => :string, :wrapper_html=>{:id=>"translation2_translation_input", :style=> "display:none;"}, :input_html=>{:id=> "translation2_translation"}%>
+     <%= t.input :translation_message2, :as=>:text, :wrapper_html=>{:id=>"translation2_text_translation_input", :style=> "display:none;"}, :input_html=>{:id=> "translation2_text_translation",:rows=>'5'}%>
+   <%end%>
+
+           
+    
+  <% end %>
+
+
+  <%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+<% end %>
+<%= tlink_to('new_model', new_translation_path, :model=> 'translation', :count=>1) %> |
+<%= tlink_to "back", translations_path %>
+
+

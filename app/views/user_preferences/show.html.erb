@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<p>
+  <b>Name:</b>
+  <%= @user_preference.id%>
+</p>
+<p>
+  <b>Translation Language:</b>
+  <%= Language.find(@user_preference.translation_language_id%>
+</p>
+<p>
+  <b>Current Redis Database:</b>
+  <%= RedisDatabase.find(@user_preference.currentRedis_database_id)%>
+</p>
+<p>
+  <b>Translation Language:</b>
+  <%= Language.find(@user_preference.translation_language_id%>
+</p>
+
+
+
+
+
+<%= link_to 'Edit', edit_user_preference_path(@user_preference) %> |
+<%= link_to 'Back', user_preferences_path %>

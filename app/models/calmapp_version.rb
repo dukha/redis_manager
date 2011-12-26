@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 20110629065550
+# Schema version: 20110918232413
 #
-# Table name: application_versions
+# Table name: calmapp_versions
 #
 #  id                :integer         not null, primary key
-#  application_id    :integer         not null
-#  version           :string(255)     not null
+#  calmapp_id        :integer         not null
+#  major_version     :integer         not null
 #  version_status_id :integer         not null
 #  created_at        :datetime
 #  updated_at        :datetime
@@ -14,20 +14,26 @@
 class CalmappVersion < ActiveRecord::Base
   #require 'validations'
   include Validations
-  attr_accessible   :calmapp_id, :major_version, :version_status_id
-
+  #languages available is a virtual attribute to allow languages_available to be used in the new form
+  # :add_languages, :new_redis_db are virtual attributes for the user to indicate that a languages and redis database are to be added at the same time as a new version
+  attr_accessor :languages_available, :add_languages, :new_redis_db
+  attr_accessible   :calmapp_id, :major_version, :version_status_id, :redis_database, :language_ids, :new_redis_db
+  
   belongs_to :calmapp #, :class_name => "Application", :foreign_key => "calmapp_id"
   belongs_to :version_status #, :class_name => "VersionStatus", :foreign_key=>"version_status_id"
   has_one :redis_database
   
-  #require 'validations'
-  #include Validations
+ 
   validates  :major_version,  :presence=>true
-  validates :major_version, :numericality=> {:only_integer=>true}
+  validates :major_version, :numericality=> {:only_integer=>true, :allow_nil =>true}
   validates :version_status_id, :presence=>true
   validates :calmapp_id, :presence=>true
+
+  has_many :calmapp_versions_languages, :dependent => :destroy
+  has_many :languages , :through => :calmapp_versions_languages
+
   validates :version_status_id, :existence => true
-  #validates :redis_database, :existence => true
+  
   validates :calmapp_id, :existence=>true
   
 
@@ -61,4 +67,12 @@ class CalmappVersion < ActiveRecord::Base
   #def self.validate_version version
     ##return version.match( regex)
   #end
+
+  def available_languages
+    #if id == nil  then #args[:idx] == "" then
+      #return Language.all
+    #else
+      return Language.all - languages
+    #end
+  end
 end

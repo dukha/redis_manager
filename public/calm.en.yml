@@ -1,0 +1,303 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  formtastic:
+    labels:
+      # For some reason with Devise, "activerecord.attributes.user.username" etc do not work for translation even when hard coded.
+      # Formtastic stuff works with no coding
+      domain_id: &fl_di Sign in Domain
+      password: &fl_p Password
+      username: &fl_u UserName
+      name: &fl_n Name
+      description: &fl_d Description
+      translation_code: &fl_tc Translation Code
+      iso_code: &fl_ic ISO Language Code
+      parent_id: &fl_pi Parent Domain
+      name_english: &fl_en English name
+      old_code: &fl_oc Old Code
+      oldcode: *fl_oc
+      email: &fl_e Email
+      given_name: &fl_gn First Name
+      family_name: &fl_fn Last Name
+      dob: &fl_dob Date of Birth
+      calm_reg_language: &fl_crl Calm Language
+      course_language: &fl_cl 10D Course Language
+      left_to_right: &fl_ltr Direction Left to Right
+
+    hints:
+      language:
+        name: The name of the language in the characters used by that language e.g.日本
+        calm_reg_language:  " User can switch to this language in Calm"
+        course_language:  " Audio materials are available"
+      left_to_right:  " Language Direction Left to Right (e.g. like English but unlike Arabic and Hebrew)"
+      course_type:
+        last_day: For example a 10 day course finishes on day 11, so last day = 11
+      student_allocation:
+        name: Name of quota here, eg New Males, Males etc
+        quota: Number of students in this quota
+        initial_quota_incl_cancellations: Allow for cancellation by using an inital quota  
+      user:
+        passwordedit: Leave blank if the password is to remain unchanged
+        language: Choose the language that will be used for using the calm screens
+      courses:
+        course_type_id: Choose the course type from list
+        location_id: Choose the location from the list
+
+      user:
+        domain_id: This is the part of Calm where you want to work, e.g. Spain, Queensland
+      password: Enter password here
+      confirm_password: Enter password again
+      email: Enter valid email address where user can be contacted
+      begin_date: First day of the course
+      end_date: Last day of the course
+      old_students_only: (Click on this if no new students may attend the course e.g. Sati)
+      translated_field: "This field is edited through the translation file. Contact your CALM translator to add or change the translation. The translation key is \"%{key}\"."
+      username: Enter name that the user will use to sign letters (usually not just initials).
+      iso_code: The ISO code needs to be Googled if you don't know it
+      translation_code: This code is used as a key in translation. Once even 1 translation has been done, DO NOT EDIT IT.
+      given_name: The name that is given at birth by parents.
+      family_name: The family name
+
+
+  activerecord:
+    attributes:
+      whiteboard:
+        info: Information for User
+        whiteboard_type_id: Type
+      course_type:
+        last_day: &fl_ld Last Day of Course
+        old_students_only: &fl_oso Old Students Only
+      role:
+        name: &fl_rn Role Name
+        role_type_id: Role
+        location_type: Location
+      location:
+        name: &fl_ln Location Name
+      student_allocation:
+        quota: &fl_q Quota
+        initial_quota_incl_cancellations: &fl_iq Initial Quota (including possible cancellation)
+      course:
+        course_type_id: &fl_ccti Course Type
+        location_id: &fl_cli Venue
+        begin_date: &fl_bd Begin Date
+        end_date: &fl_ed End Date
+      student:
+        given_name: *fl_gn
+        family_name: *fl_fn
+        dob: *fl_dob
+      quota_schema:
+        quotas: Quotas
+      language:
+        iso_code: *fl_ic
+        name: *fl_n
+        calm_reg_language: *fl_crl
+        course_language: *fl_cl
+        left_to_right: *fl_ltr
+      user:
+        name: *fl_u
+        email: *fl_e
+      whiteboard_type:
+        name: *fl_n
+      registration:
+    models:
+      course_type:
+        one: Course Type
+        other: Course Types
+      course:
+        one: Course
+        other: Courses
+      location:
+        one: Location
+        other: Locations
+      quota:
+        one: Quota
+        other: Quotas
+      quota_schema:
+        one: Quota Schema
+        other: Quota Schemas
+      area:
+        one: Area
+        other: Areas
+      region:
+        one: Region
+        other: Regions
+      venue:
+        one: Venue
+        other: Venues
+      organisation:
+        one: Organisation
+        other: Organisations
+      language:
+        one: Language
+        other: Languages
+      user:
+        one: &ar_u1 User
+        other: &ar_u2 Users
+      whiteboard_type:
+        one: Whiteboard Type
+        other: Whiteboard Types
+      whiteboard:
+        one: Whiteboard
+        other: Whiteboards
+      registration:
+        one: User
+        other: Users
+      user_role:
+        one: User Role
+        other: User Roles
+      role_type:
+        one: Role Type
+        other: Role Types
+      role:
+        one: Role
+        other: Roles
+      location:
+        one: Location
+        other: Locations
+      student_allocation:
+        one: Quota
+        other: Quotas
+      registration:
+        one: User
+        other: Users
+      server:
+        one: Server
+        other: Servers
+      root:
+        one: Root
+        other: Roots
+  errors:
+    messages:
+      role:
+        unique_location_type_rol_type: Role Type annd Location Type must be together unique.
+  headings:    
+    application_subheading: Calm Translator M1
+  menus:
+    courses: Courses
+    current_courses_list: Current Courses List
+    current_course: Current Course
+    add_course: Add Course
+    lookups:  Lookups
+    course_types: Course Types
+    languages: Languages
+    whiteboard_types: Whiteboard Types
+    locations: Locations
+    quotas: Quotas
+    quota_schemas: Quota Schemas
+    user_info: User Information
+    home: Home
+    contact: Contact Calm
+    help: Help
+    about: About Calm
+    user_preferences: User Preferences(Change Password)
+    admin: Admin
+    new_user: New User
+    change_password: Change Password
+    admin: Admin
+    location_tree: Locations
+    student_allocations: Quotas
+    roles: Roles
+    role_types: Role Types
+    user_roles: User Roles
+    users: Users
+  lookups:
+    course_type:
+      10day: 10 Day Course
+      1day: 1 Day Course
+      3day: 3 Day Course
+      sati8day: Satipatthana Sutta Course (8 Day)
+      sati9day: Satipatthana Sutta Course (9 Day)
+      childteen1day: Children and Teenagers 1 Day Course
+      teenager1day: Teenagers 1`Day
+      children1Day: Childrens 1 Day
+      children2day: Childrens 2 Day
+      exec: Executive 10 Day course
+      work: Work Period
+      openday: Open day is a day to introduce the public to the centre,
+      special10day: Special 10 Day
+      other: Other
+      20day: 20 Day Course
+      30day: 30 Day Course
+      45day: 45 Day Course
+      60day: 60 Day Course
+      45day15dayanapana: 45 Day Course (15 Days Anapana)
+      tsc15day: Teachers Self Course 15 Day
+      tsc10day: Teachers Self Course (10 Days)
+      
+      description:
+        10day: 10 Day Course
+        1day: 1 Day Course (Old Students Only)
+        3day: 3 Day Course (Old Students only)
+        sati9day: Satipatthana Sutta 9 Day Course (Old Students only). Finishes on morning of day 9.
+        sati8day: Satipatthana Sutta Course (9 Day)
+        childteen1day: Children's and Teenagers 1 Day Course (Ages 8-16)
+        teenager1day: Teenagers 1 Day Course (Ages 13-18)
+        children1Day: Childrens 1 Day Course (ages 8-12)
+        children2day: Childrens 2 Day course (Ages 8-12)
+        exec: 10 Day Course for people in executive positions
+        work: A period for performing work on a site of meditation (Old Students only),
+        openday: Open Day
+        special10day: Special 10 Day Course (Serious Old Students only)
+        other: Other
+        20day: 20 Day Course (Old Students only)
+        30day: 30 Day Course (Old Students only)
+        45day: 45 Day Course (Old Students only)
+        60day: 60 Day Course (Old Students only)
+        45day15dayanapana: 45 Day course commencing with 15 days of anapana(Old Students only)
+        tsc15day: Teachers Self Course 15 days (Old Students only)
+        tsc10day: Teachers Self Course 15 days (Old Students only)
+    
+    location:
+      name:
+        world: Calm World
+        au-server: "Calm server australia"
+        eu-server: "Calm server europe"
+        australia: Australia
+        belgië: Belgium
+        españa: Spain
+      type:
+          # note the caps : a restriction from model inheritance
+        Root: Root
+        Server: Server
+        Area: Area
+        Region: Region
+        Organisation: Organisation
+        Venue: Venue
+    role_type:
+      admin: Admin
+      registrar: Registrar
+      superuser: Superuser
+      newsletter_editor: Newsletter Editor
+      newsletter_sender: Newsletter Sender
+      world_admin: System Administrator
+      server_admin: Server Administrator
+      translator: Translator
+      os_db_editor: Old Student Database Editor
+      os_db_reader: Old Student Database Reader
+      installer: Installer
+      translation_installer: Translation Installer
+      rl_reader: RL Reader
+      rl_editor: RL Editor
+      at: AT
+      os_updater: Old Student Updates Personal Data
+      description:
+        admin: "Admin = Registrar plus Can add a venue in his/her authorised organisation, add a course at a venue, edit letters."
+        registrar: "Registrar = Can access only what is necessary to process an application. Only for Organisation, Venue."
+        superuser: "Superuser = Admin plus add,drop users, delete from os or application database."
+        newsletter_editor: "Newsletter Editor = Can create, edit,  newsletter for an organisation."
+        newsletter_sender: "Newsletter Sender = Can send newsletter"
+        world_admin: "System Administrator = Can change everything in all locations"
+        server_admin: "Server Administrator = Can change everything in all locations on a server. Can reboot server, reboot calm instances on the server"
+        translator: "Translator = Can create, edit translation data for Calm"
+        os_db_editor: "Old Student database Editor = Can maintain OS database, but not delete records."
+        os_db_reader: "Old Student Database Reader =Used by registrar application to match names of old students to existing records."
+        installer:  "Installer = Can install a new Calm instance."
+        translation_installer: "Translation Installer = Can install newly edited translations to live Calm instances. Run I18n.reload! or reboot an instance"
+        rl_reader: "RL Reader = Used by registrar application to read names but not comments in RL."
+        rl_editor: "RL Editor = Can read and edit names and comments in RL"
+        at: "AT = Can update, create delete in RL. Can view applications for a region."
+        os_updater: "OS =Can update own data in OS database e.g. email address, newsletter subscriptions"
+        sl_reader: "SL Reader = Can read the special list but not comments. Used by rl_editor or calm-reg application."
+        sl_editor: "SL Editor = Can read and edit the special list including comments."
+

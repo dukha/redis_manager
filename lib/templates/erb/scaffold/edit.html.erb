@@ -1,4 +1,4 @@
-<p class="pageheading"><%%=t("headings.edit.heading", :model=>t($ARM + "<%=singular_table_name%>", :count=>1) )%></p>
+<%%=theading('edit', :model=>'<%=singular_table_name%>', :count=>1 )%>
 <%%= render 'form' %>
-<%%= link_to t('headings.new.heading', :model=> t($ARM + '<%=singular_table_name%>', :count=>1)), new_<%=singular_table_name%>_path %> |
-<%%= link_to t("actions.back"), <%= plural_table_name %>_path %>
+<%%= tlink_to('new_model', new_<%=singular_table_name%>_path, :model=>'<%=singular_table_name%>', :count=>1) %> |
+<%%= tlink_to 'back', <%= plural_table_name %>_path %>

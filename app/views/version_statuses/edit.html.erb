@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.edit.heading", :model=>t($ARM + "version_status", :count=>1) )%></p>
+<%=theading("edit", :model=>"version_status", :count=>1) %>
 <%= render 'form' %>
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'version_status', :count=>1)), new_version_status_path %> |
-<%= link_to t("actions.back"), version_statuses_path %>
+<%= tlink_to('new_model' , new_version_status_path,:model=>  'version_status', :count=>1) %> |
+<%= tlink_to("back", version_statuses_path) %>

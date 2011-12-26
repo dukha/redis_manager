@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.whiteboards")%></p>
+<%=theading('home', :model=>'whiteboards', :count=>10)%></p>
 
 <%= will_paginate %>
 <table id="whiteboard_table"class="whiteboard">
@@ -13,15 +13,10 @@
 		<td class="whiteboard"><%= whiteboard.info %></td>
 		 
     
-    <td id= "<%=  "whiteboard_cell_link"+whiteboard.id.to_s%>""   class="whiteboardlink"><%= link_to t('actions.edit'), edit_whiteboard_path(whiteboard), :id => "whiteboard"+whiteboard.id.to_s %></td>
+    <td class="whiteboardlink"><%= tlink_to 'edit', edit_whiteboard_path(whiteboard) %></td>
     
   </tr>
   	
 <% end %>
 </table>
 <%= will_paginate %>
-
-
-
-
-

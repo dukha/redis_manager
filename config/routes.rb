@@ -1,5 +1,5 @@
 RedisManager::Application.routes.draw do
-  
+ 
 
   #resources :redis_admins
 
@@ -13,12 +13,20 @@ RedisManager::Application.routes.draw do
    resources :calmapp_versions
    resources :version_statuses
    resources :redis_databases
-
+   resources :redis_instances
+   resources :user_preferences, :only=>[:edit, :show]
+   resources :translations, :except=>:show#, :only=> [:new, :index]
+   match "translations/dev_new" => "translations#dev_new", :as => "dev_new_translation"
+   match "translations/dev_create" => "translations#dev_create", :as => "dev_create_translation"
+   #match "redis_translations/edito" => "redis_translations#edito", :as => "edito_translation"
+   resources :translation_parameters, :only=> [ :new, :index]
+   #match "translation_parameters/save" => "translation_parameters#save", :as => "save_translation_params"
    resources :uploads
-   get "uploads/file_to_redis/:id" => "uploads#file_to_redis", :as => "to_redis"
-   get "uploads/select_translation_to_redis/:id" => "uploads#select_translation_to_redis", :as => "select_to_redis"
+   match "uploads/file_to_redis/:id" => "uploads#file_to_redis", :as => "to_redis"
+   match "uploads/select_translation_to_redis/:id" => "uploads#select_translation_to_redis", :as => "select_to_redis"
 
-   get "calmapps/all_in_one_new/" => "calmapps#all_in_one_new", :as => "all_in_one_new"
+   match "redis_databases/redis_to_yaml/:id" => "redis_databases#redis_to_yaml", :as => "redis_to_yaml"
+   #get "calmapps/all_in_one_new/" => "calmapps#all_in_one_new", :as => "all_in_one_new"
    #get "calmapps/all_in_one_create" => "calmapps#all_in_one_create"
    #match "upload"
    root :to => "whiteboards#index"

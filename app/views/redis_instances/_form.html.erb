@@ -1,0 +1,18 @@
+<%= semantic_form_for(@redis_instance) do |f| %>
+  
+  
+	<% f.inputs do %>
+           
+				     
+				   <%= f.input :host  %>
+           <%= f.input :port  %>
+           <%= f.input :password,  :as => :password%>
+		
+	<% end %>
+
+
+	<%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+<% end %>
+

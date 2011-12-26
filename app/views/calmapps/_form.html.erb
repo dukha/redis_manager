@@ -1,70 +1,7 @@
-<script language="javascript" type="text/javascript">
-        //<!-- This script sets up dualBoxes with the appropriate ids -->
-        $(function() {
-            $.configureBoxes({box1View : "availableLanguagesBox",
-                              box2View : "selectedLanguagesBox",
-                              box1Filter : "availableLanguagesFilter",
-                              box2Filter : "selectedLanguagesFilter",
-                              box1Clear : "availableLanguagesFilterClear",
-                              box2Clear : "selectedLanguagesFilterClear",
-                              box1Counter : "availableLanguagesCounter",
-                              box2Counter :  "selectedLanguagesCounter"  });
-        });
-         //This funcion ensures that all values in the receiving listbox are extracted and written. They must be selected for this.
-         $(document).ready(function(){
-           //$('#submit').submit(function(event){
-           //  setBox2AllSelected();
-           //  return true;
-           //}
-           //);//end submit
-          deleteBlanksFromSelectBox('#availableLanguagesBox');
-         });//end ready
-         
-         //box2 ='#selectedLanguages';
-           //selectAll(box2);
-         //}
-         //function selectAll(boxId){
-           //for( i=0; i<(boxId).length;i++){
-             //boxId.options[i].selected=true;
-           //}
-         //}
-         //This function is necesary to remove a blank that formtastic leaves in the first listbox.
-         function deleteBlanksFromSelectBox(boxId){
-           $(boxId + " :empty").remove();
-         }
-    </script>
-
-
 <%= semantic_form_for(@calmapp) do |f| %>
 	<%= f.inputs do %>
     <%= f.input :name %>
-      <table>
-              <tr>
-                  <td>
-                    <fieldset class="inputs"> <label><%=t("activerecord.calmapps.languages_available")%></label><br>
-                          <span id="availableLanguagesFilterSpan"><!-- <%= t("formtastic.labels.filter")%> -->  <input type="text" id="availableLanguagesFilter" /><!--<button type="button" id="availableLanguageFilterClear">X</button></span>-->
-                          <ul><%=  f.input :languages_available, :label=>false, :input_html =>{:id =>"availableLanguagesBox"},  :as=>:select, :collection=>@calmapp.available_languages.collect {|l| [l.name, l.id ]},  :multiple=>"multiple"%></ul>
-                          <!--<span id="availableLanguagesCounter" class="countLabel"></span> --> </fieldset>
-                          <select id="box1Storage">
-                          </select>
-                  </td>
-                  <td>
-                    <ul><li><button id="to2" type="button" class="toFrom">&nbsp;>&nbsp;</button></li>
-                      <li><button id="allTo2" type="button" class="toFrom">&nbsp;>>&nbsp;</button></li>
-                      <li><button id="allTo1" type="button" class="toFrom">&nbsp;<<&nbsp;</button></li>
-                      <li><button id="to1" type="button" class="toFrom">&nbsp;<&nbsp;</button></li>
-                    </ul>
-                  </td>
-                  <td>
-                      <fieldset class="inputs"><%=t("activerecord.calmapps.languages")%><br>
-                      <span id="selectedLanguagesFilterSpan"><!--  <%= t("formtastic.labels.filter")%>-->  <input type="text" id="selectedLanguagesFilter" /><!--<button type="button" id="selectedLanguagesFilterClear">X</button></span> -->
-                      <ul><%=  f.input :languages, :label=>false, :as=>:select, :collection=>@calmapp.languages.collect {|l| [l.name,l.id]},  :multiple=>"multiple", :input_html => { :class => "dualBox2", :id => "selectedLanguagesBox" }  %></ul>
-                      <!--<span id="selectedLanguagesCounter" class="countLabel"></span></fieldset> -->
-                      <select id="box2Storage">
-                      </select>
-                  </td>
-              </tr>
-     </table>
+   
    <%end%>
 	<%= f.buttons do %>
       <%= f.commit_button :button_html => {:id=>"submit"} %>

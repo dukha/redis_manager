@@ -1,0 +1,103 @@
+# This file should be used as common to all calm applictions
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  commons:
+    noo: No
+    yess: Yes
+    next: Next >>
+    previous: << Previous
+    no_data: Nil
+    error:
+      one: "%{count} error"
+      other: "%{count} errors"
+    problem:
+      one: "%{count} problem"
+      other: "%{count} problems"
+  formtastic:
+    actions:
+      sign_in: &fa_si SignIn
+      sign_out: &fa_so SignOut
+      show: Show
+      hide: Hide
+      edit: Edit
+      destroy: &ad Delete
+      delete: *ad
+      new: New
+      back: Back
+      create_model: Add %{model}
+      save: Save %{model}
+      update: Update %{model}
+      new_model: New %{model}
+      submit: Submit
+      show_description: Show Description
+      hide_description: Hide Description
+      log_in: *fa_si
+      log_out: *fa_so
+      mark_deleted: Mark Deleted
+      add_child: Add Child %{location_type}
+      search: Search
+      select: Select %{model}
+  #actions:
+  menus:
+    admin: Admin
+    lookups: Configuration
+    user_info: User Preferences
+    home: Home
+    whiteboards: Whiteboards
+    whiteboard_types: Whiteboard Types
+  messages:
+    delete:
+      are_you_sure: Deleting %{model} %{value}. Are you sure?
+      success: The %{model} was successfully deleted.
+      failure: The %{model} was not able to be deleted
+    create:
+      success: The %{model} was successfully created.
+      failure: The %{model} was not created
+    update:
+      success: The %{model} was successfully updated.
+      failure: The %{model} was unable to be updated
+    operation:
+      failure: Failed to %{operation}  ; %{count_message}.
+    no_records_found: There were no records found in the database.
+    application_language_change:
+      success: The application language will be changed to %{language} on next refresh or new page.
+
+    capslock_on: You are attempting to type username or password with the capslock on. Remember that username and password are case sensitive.
+    record_not_found: Unable to find the records to (view, update or delete)
+    non_unique_singlevalue_key:
+      error: "A field value must be unique."
+      detailed_error: "%{fieldlist} is aleady in the database with this value %{valuelist}. Choose a different value to complete this task."
+    non_unique_multivalue_key:
+      error: "Two or more field values must be unique in combination."
+      detailed_error: "These fields %{fieldlist} are aleady in the database with these values %{valuelist}. Choose at least 1 different value to complete this task."
+    errors:
+      existence: "%{attribute} = %{value}  does not already exist in %{target}. Add a record to  %{target} or choose another %{target} example. "
+  links:
+    no_unlock_instructions: Didn't receive unlocking instructions?
+    no_confirmation_instructions: Didn't receive confirmation instructions?
+    forgotten_password: Forgot your password?
+    cancel_registration: Cancel account
+    unhappy: Unhappy?
+  headings:
+    new:
+      heading: New %{model}
+      user: Register New User
+    edit:
+      heading: Editing %{model}
+      user: Edit User   
+    listing:
+      heading: "%{model}"
+    home: Home - Whiteboard
+  lookups:
+    whiteboard_type:
+      system: System
+      localadmin: Local Admin
+      regionaladmin: Regional Administration
+      user: User
+  activerecord:
+    models:
+      whiteboard_type:
+        one: Whiteboard Type
+        other: Whiteboard Types
+ 

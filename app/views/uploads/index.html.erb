@@ -1,4 +1,4 @@
-<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "upload", :count=>2) )%></p>
+<%=theading("listing", :model=>"upload", :count=>10 )%></p>
 <% if Upload.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
@@ -6,10 +6,10 @@
 <table class="data">
   <tr class="dataheader">
 
-    <th class ="dataheader"><%=t($ARA+'upload.upload_file_name') %></th>
+    <th class ="dataheader"><%=tlabel('upload_file_name', 'upload') %></th>
 
-    <th class ="dataheader"><%=t($ARA+'upload.calmapp_language') %></th>
-
+    <th class ="dataheader"><%=tlabel('language', 'upload') %></th>
+   
     
 
     <th class="linkheader"></th>
@@ -25,24 +25,16 @@
 
   <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
   
-      <td class="<%= cell_class %>"><%= upload.upload_file_name %></td>
-
-  
-      <td class="<%= cell_class %>"><%= CalmappsLanguage.find(upload.calmapps_language_id).name %></td>
-      
-
-  
-      
-
-  
+    <td class="<%= cell_class %>"><%= upload.upload_file_name %></td>
+    <td class="<%= cell_class %>"><%= upload.language.name %></td>
     
-    <td class="<%= link_cell_class %>"><%= link_to  t('actions.edit'), edit_upload_path(upload) %></td>
-    <td class="<%= link_cell_class %>"><%= link_to t('actions.destroy'),  upload , :confirm => t('messages.delete.are_you_sure', :model => t($ARM + "upload", :count=>1)), :method => :delete %></td>
-    <td class="<%= link_cell_class %>"><%= link_to  t('actions.to_redis'), select_to_redis_path(upload) %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_upload_path(upload) %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to 'destroy',  upload , :confirm => 'delete.are_you_sure', :model => "upload", :value=>("'" + upload.upload_file_name + "'"), :count=>1, :method => :delete %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to  'to_redis', select_to_redis_path(upload) %></td>
   </tr>
 <% end %>
 </table>
 <%= twill_paginate %>
 <%end%>
 <br />
-<%= link_to t('headings.new.heading', :model=> t($ARM + 'upload', :count=>1)), new_upload_path %>
+<%= tlink_to('new_model', new_upload_path, :model=> 'upload', :count=>1) %>

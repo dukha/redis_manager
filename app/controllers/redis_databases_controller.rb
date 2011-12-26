@@ -1,8 +1,10 @@
 class RedisDatabasesController < ApplicationController
+  require 'translations_helper'
+  include TranslationsHelper
   # GET /translations
   # GET /translations.xml
   #before_filter :authenticate_user!
-  @@model_translation_code =$ARM  +"redis_database.one"
+  @@model ="redis_database"
   def index
     @redis_databases = RedisDatabase.paginate(:page => params[:page], :per_page=>15)
 
@@ -19,7 +21,8 @@ class RedisDatabasesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @redis_database }
+      format.yml { render :yml => @redis_database.redis_to_yaml }
+      #format.xml  { render :xml => @redis_database }
     end
   end
 
@@ -48,7 +51,7 @@ class RedisDatabasesController < ApplicationController
     respond_to do |format|
       #if @redis_database.create_redis_db
         if @redis_database.save
-          flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code))
+          tflash('create', :success, {:model=>@@model, :count=>1})
           format.html { redirect_to(:action=>:index) }
           format.xml  { render :xml => @redis_database, :status => :created, :location => @redis_database }
         else
@@ -68,7 +71,7 @@ class RedisDatabasesController < ApplicationController
 
     respond_to do |format|
       if @redis_database.update_attributes(params[:redis_database])
-        flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code))
+        tflash('update', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to(:action=>:index) }
         format.xml  { head :ok }
       else
@@ -83,12 +86,20 @@ class RedisDatabasesController < ApplicationController
   def destroy
     @redis_database = RedisDatabase.find(params[:id])
     @redis_database.destroy
-    flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
+    tflash('delete', :success, {:model=>@@model, :count=>1})
     respond_to do |format|
       format.html { redirect_to(redis_databases_url) }
       format.xml  { head :ok }
     end
   end
 
-  
+  def redis_to_yaml_get_file
+     @redis_database= RedisDatabase.find(params[:id])
+     render "select_yaml_file"
+  end
+  def redis_to_yaml
+    @redis_database= RedisDatabase.find(params[:id])
+    @file = File.new params[:file]
+    @redis_database.redis_to_yaml @file
+  end
 end

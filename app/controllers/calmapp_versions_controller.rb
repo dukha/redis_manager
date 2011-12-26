@@ -1,9 +1,11 @@
 class CalmappVersionsController < ApplicationController
+  require 'translations_helper'
+  include TranslationsHelper
   # GET /application_versions
   # GET /application_versions.xml
   #before_filter :authenticate_user!
 
-  @@model_translation_code =$ARM + "calmapp_version"
+  @@model="calmapp_version"
   
   def index
     @calmapp_versions = CalmappVersion.paginate(:page => params[:page], :per_page=>15)  #CalmappVersion.all
@@ -49,7 +51,7 @@ class CalmappVersionsController < ApplicationController
 
     respond_to do |format|
       if @calmapp_version.save
-        flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code, :count=>1))
+        tflash('create', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to( :action => "index")} #(@calmapp_version #, :notice => 'Application version was successfully created.') }
         format.xml  { render :xml => @calmapp_version, :status => :created, :location => @calmapp_version }
       else
@@ -66,7 +68,7 @@ class CalmappVersionsController < ApplicationController
 
     respond_to do |format|
       if @calmapp_version.update_attributes(params[:calmapp_version])
-        flash[:success] = t('messages.update.success', :model=>t(@@model_translation_code, :count=>1))
+        tflash('update', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to( :action => "index")} #(@calmapp_version, :notice => 'Application version was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -83,7 +85,7 @@ class CalmappVersionsController < ApplicationController
     @calmapp_version.destroy
 
     respond_to do |format|
-      flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code, :count=>1))
+      tflash('delete', :success, {:model=>@@model, :count=>1})
       format.html { redirect_to(calmapp_versions_url) }
       format.xml  { head :ok }
     end

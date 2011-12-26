@@ -2,8 +2,10 @@ class UploadsController < ApplicationController
   # GET /uploads
   # GET /uploads.xml
   #before_filter :authenticate_user!
+  require 'translations_helper'
+  include TranslationsHelper
   
-  @@model_translation_code = $ARM +  "upload" +".one"
+  @@model =  "upload" 
   def index
     @uploads = Upload.paginate(:page => params[:page], :per_page=>15)
 
@@ -47,7 +49,7 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       if @upload.save
-        flash[:success] = t('messages.create.success', :model=>t(@@model_translation_code))
+        tflash('create', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to(:action=>'index') }
         format.xml  { render :xml => @upload, :status => :created, :location => @upload }
       else
@@ -64,7 +66,7 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       if @upload.update_attributes(params[:upload])
-        flash[:success] = t('messages.update.success', :model=>t(@@model_translation_code))
+        tflash('update', :success, {:model=>@@model, :count=>1})
         format.html { redirect_to(:action=>'index') }
         format.xml  { head :ok }
       else
@@ -79,33 +81,54 @@ class UploadsController < ApplicationController
   def destroy
     @upload = Upload.find(params[:id])
     
-    File.delete @upload.translation.path
+    File.delete @upload.upload.path
 
     @upload.destroy
 
     respond_to do |format|
-      flash[:success]= t('messages.delete.success', :model=>t(@@model_translation_code))
+      tflash('delete', :success, {:model=>@@model, :count=>1})
       format.html { redirect_to(uploads_url) }
       format.xml  { head :ok }
     end
   end
+
   def select_translation_to_redis
     @upload = Upload.find(params[:id])
     @redis_database = RedisDatabase.new
-    debugger
+    #debugger
     render "select_translation"
     #@translation_names =  Translation.all
 
   end
+
   def file_to_redis
      #translation_upload_id = params[:id]
      #translation_id = params[:translation_id]
      #debugger
-     @upload = Upload.find(params[:upload])
+     @upload = Upload.find(params[:id])
+     @redis_database =RedisDatabase.find(params[:redis_database][:id])
+     if ! UploadsRedisDatabase.uploads_redis_db_exists? params[:id], params[:redis_database][:id] then
+       @upload.write_to_redis @redis_database
+       @uploads_redis_database= UploadsRedisDatabase.new
+       @uploads_redis_database.upload_id =params[:id]
+       @uploads_redis_database.redis_database_id=params[:redis_database][:id]
+       if @uploads_redis_database.save then
+         tflash("file_to_redis", :success, {:file=> @upload.upload_file_name})
+         redirect_to(:action=>'index', :controller=>'uploads')
+       else
+         tflash('failed_to_save_file_written_to_redis', :error )
+         render 'select_translation'
+       end #save
+     else
+      tflash('file_already_written_to_redis', :error, {:file_name=>@upload.upload_file_name, :redis_name=>@redis_database.calmapp_version.name})
+      render 'select_translation'
+     end # not exists
+     
+     #debugger
      #file = @translation_upload.translation.path
      #@translation = Translation.find(params[:translation_id])
      #@translation_upload.write_to_redis(@translation)
-     format.html { redirect_to(:action=>'index') }
+       
 
   end
 end

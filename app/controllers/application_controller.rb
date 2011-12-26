@@ -1,20 +1,76 @@
 class ApplicationController < ActionController::Base
+  #require 'translations_helper'
+  #include TranslationsHelper
   
-  
+  include Exceptions
   protect_from_forgery
   before_filter  :set_locale
   #rescue_from ActiveRecord::RecordInvalid, :with => :record_invalid
   rescue_from ActiveRecord::RecordInvalid do |exception|
-    #flash[:error] = exception.message
+    #tflash[:error] = exception.message
     render :action => (exception.record.new_record? ? :new : :edit)
   end
+  rescue_from   InvalidBelongsToAssociation do |exception|
+      #tflash[:error] = exception.message
+
+      render :action => (exception.record.new_record? ? :new : :edit)
+  end
+
+  rescue_from ActiveRecord::RecordNotUnique do |not_unique|
+     message = not_unique.message
+    if pgerror? not_unique then
+        # We have a postgres non_unique error. This should only happen for multicolumn unique indexes
+        # which cannot be properly trapped by active record.
+        # We make a translatable more user friendly index
+        message.gsub("PGError:","")
+        messages = message.split("\n")
+        opening_bracket1_index = messages[1].index("(")
+        closing_bracket1_index = messages[1].index(")", opening_bracket1_index )
+        opening_bracket2_index = messages[1].index("(", closing_bracket1_index)
+        closing_bracket2_index = messages[1].index(")", opening_bracket2_index )
+
+        fieldlist = messages[1][(opening_bracket1_index+1)..(closing_bracket1_index-1)]
+        model= nil
+
+        if messages.length > 2 then
+          messages[2].downcase!()
+          tokens = messages[2].split(" ")
+          #tokens[0] should be ':'
+          if tokens[1] == 'insert' && tokens[2] == 'into' then
+            model=tokens[3].delete("\"").singularize
+          elsif
+            if tokens[1] == 'update' then
+              model= tokens[2].delete("\"").singularize
+            end
+          end
+        end
+        debugger
+        translated_fields = fieldlist.split(",").collect{|f| tlabel(f.strip, model)}
+        single_value = (translated_fields.split.length == 1)
+        if  single_value then
+          key_qualifier="non_unique_singlevalue_key."
+        else
+          key_qualifier="non_unique_multivalue_key."
+        end
+
+        msg= single_value ?  "" : (t("messages." + key_qualifier + "error") + "<br>")
+        msg_detail = t("messages." + key_qualifier + "detailed_error", :fieldlist=>"(" + translated_fields.join(", ") +")", :valuelist=>messages[1][opening_bracket2_index..closing_bracket2_index])
+        user_friendly_message= (msg  + msg_detail).html_safe
+      else
+        user_friendly_message = message
+      end
+      #user_friendly_message
+      #puts user_friendly_message
+      flash[:error]= user_friendly_message
+      debugger
+      render :action => ((messages.length > 2) && (messages[2].index("INSERT INTO"))) ? :new : :edit
+      #render :action => "new", :controller => "calmapps"
+  end
   rescue_from Exception, :with => :rescue_all_exceptions  if Rails.env == 'production'
+
   $application_name = "CALM Translator"
   $application_version ="0.0.0 M1"
-  # rescue_from CanCan::AccessDenied do |exception|
-  #   flash[:error] = "Access denied!"
-  #   redirect_to root_url
-  # end
+  
 
   # Is Authorization.current_user the same as current_user???
   #qq before_filter {|contr| Authorization.current_user = contr.current_user}
@@ -42,7 +98,9 @@ This function, together with the scope in routes.rb allows the setting of urls l
     request.env['HTTP_ACCEPT_LANGUAGE'].split(",").first
   end
 
-
+def pgerror? exception
+    exception.message.start_with? "PGError:"
+end
  
 
 =begin
@@ -61,8 +119,9 @@ This function, together with the scope in routes.rb allows the setting of urls l
         #render :text => "An internal error occurred. Sorry for inconvenience", :status => :internal_server_error
     end
 end
+=begin
  def record_invalid(exception)
     flash[:error] = exception.message + " " + exception.record.to_s
   end
-
+=end
 end
