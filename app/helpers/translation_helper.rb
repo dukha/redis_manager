@@ -74,4 +74,45 @@ module TranslationHelper
     end
     return rev_val
   end
+  
+  #This is just for display: Move to Helper
+  def dot_key_code_wrapped dot_key_code
+    if dot_key_code.nil? || dot_key_code.length < 20 then
+      return dot_key_code
+    else
+      arr= dot_key_code.split('.')
+      chars=0
+      sep = '.'
+      str = nil
+      #puts 'a:' + arr.to_s
+      arr.each do |part|
+        #debugger
+        #puts 'p:' + part
+        chars += part.length
+        if chars > 20 then
+          sep='.<br>'
+          chars =0
+        end
+        #puts 'c:' + chars.to_s
+        if str.nil? then
+          str = part
+        else
+          str += (sep + part)
+        end
+        #puts 's:' + str
+      end
+        #puts 'se:' + str
+        return str.html_safe
+      #line = dot_key_code[20..(dot_key_code.length - 1)]
+      #index = line.replace( line.index('.')
+    end
+  end
+  
+  def dot_key_code_last_key dot_key_code
+    return dot_key_code.split('.').last
+  end
+  def dot_key_code_no_lang dot_key_code
+    arr = dot_key_code.split('.')
+    return arr[1..(arr.length-1)].join('.')
+  end
 end

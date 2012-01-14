@@ -78,6 +78,7 @@ module TranslationsHelper
   # e.g. <%=theading("listing", :model=> "course_type",:count => 2) %>
   # translation_code can be "new, "edit" or "listing" or "home"  according to yaml paths
   def theading(translation_code, options = {})
+    #debugger
     if options[:class] then
       klass = options[:class]
     else

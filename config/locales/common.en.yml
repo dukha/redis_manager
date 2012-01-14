@@ -125,6 +125,8 @@ en:
     permission:
       permission_denied: 
         error: Sorry, you are not allowed to access that page.  
+    all_rolledback:
+      warning: "All %{model} on this page rolled back"    
   links:
     no_unlock_instructions: Didn't receive unlocking instructions?
     no_confirmation_instructions: Didn't receive confirmation instructions?

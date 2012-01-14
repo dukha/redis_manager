@@ -33,13 +33,13 @@
 
   
       <td class="<%= cell_class%>" style="display:<%=full_key_display%>;"><%= translation.dot_key_code %></td>
-      <td class="<%= cell_class %>" style="display:<%=wrapped_key_display%>;"><%= translation.dot_key_code_wrapped %></td>
-      <td class="<%= cell_class %>" style="display:<%=short_key_display%>; "><%= translation.dot_key_code_last_key %></td>
+      <td class="<%= cell_class %>" style="display:<%=wrapped_key_display%>;"><%= dot_key_code_wrapped(translation.dot_key_code) %></td>
+      <td class="<%= cell_class %>" style="display:<%=short_key_display%>; "><%= dot_key_code_last_key(translation.dot_key_code) %></td>
       <td class="<%= cell_class %>"><%= translation.translation %></td>
 
   
     
-   <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edito_translation_path + '?dot_key_code_no_lang=' +translation.dot_key_code_no_lang %></td>
+  <!-- <td class="< %= link_cell_class %>">< %= tlink_to  'edit', edito_translation_path + '?dot_key_code_no_lang=' +dot_key_code_no_lang(translation.dot_key_code) %></td> -->
     <!-- <td class="< %= link_cell_class %>">< %= tlink_to 'destroy',  translation , :confirm => 'delete.are_you_sure', :model => "translation", :value=>('Index: '+ translation.dot_key), :method => :delete %></td> -->
   </tr>
 <% end %>

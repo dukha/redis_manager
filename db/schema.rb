@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221002557) do
+ActiveRecord::Schema.define(:version => 20120108233922) do
 
  
   create_table "version_statuses", :force => true do |t|
@@ -253,4 +253,5 @@ ActiveRecord::Schema.define(:version => 20111221002557) do
     #t.reference :user, :null=> false
     t.timestamps
   end
+  add_index :translations, :dot_key_code, {:unique=>true, :name => "iu_translations_dot_key_code"}
 end

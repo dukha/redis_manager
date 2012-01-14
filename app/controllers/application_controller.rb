@@ -15,14 +15,14 @@ class ApplicationController < ActionController::Base
 
       render :action => (exception.record.new_record? ? :new : :edit)
   end
-
+  #Rescuing a violation of DB unique contstaint 
   rescue_from ActiveRecord::RecordNotUnique do |not_unique|
      message = not_unique.message
     if pgerror? not_unique then
         # We have a postgres non_unique error. This should only happen for multicolumn unique indexes
         # which cannot be properly trapped by active record.
         # We make a translatable more user friendly index
-        message.gsub("PGError:","")
+        message.gsub!("PGError:","")
         messages = message.split("\n")
         opening_bracket1_index = messages[1].index("(")
         closing_bracket1_index = messages[1].index(")", opening_bracket1_index )
@@ -53,9 +53,9 @@ class ApplicationController < ActionController::Base
           key_qualifier="non_unique_multivalue_key."
         end
 
-        msg= single_value ?  "" : (t("messages." + key_qualifier + "error") + "<br>")
-        msg_detail = t("messages." + key_qualifier + "detailed_error", :fieldlist=>"(" + translated_fields.join(", ") +")", :valuelist=>messages[1][opening_bracket2_index..closing_bracket2_index])
-        user_friendly_message= (msg  + msg_detail).html_safe
+        #msg= single_value ?  "" : (t("messages." + key_qualifier + "error") + "<br>")
+        msg_detail = t("messages." + key_qualifier + "error", :fieldlist=>"(" + translated_fields.join(", ") +")", :valuelist=>messages[1][opening_bracket2_index..closing_bracket2_index])
+        user_friendly_message= (msg_detail).html_safe
       else
         user_friendly_message = message
       end
