@@ -38,12 +38,15 @@ class TranslationsController < ApplicationController
   def create
      #debugger
     
-    #debugger
+    debugger
     translations = []
+    translations_redis = []
     if params[:translation][:dot_key_code0] != '' && params[:translation][:translation0] != '' then
       @translation0 = Translation.new
       @translation0.dot_key_code = params[:translation][:dot_key_code0]
       @translation0.translation = params[:translation][:translation0]
+      @translation0.calmapp_version_id = UserPreference.calmapp_version.id
+       #@translation_redis0 = TranslationRedis.new(@translation0.dot_key_code, @translation0.translation)
       #if @translation0.save then
        #  result0 = :success
       #else
@@ -57,6 +60,8 @@ class TranslationsController < ApplicationController
       @translation1 = Translation.new
       @translation1.dot_key_code = params[:translation][:dot_key_code1]
       @translation1.translation = params[:translation][:translation1]
+      @translation1.calmapp_version_id = UserPreference.calmapp_version.id
+      #@translation_redis1 = TranslationRedis.new(@translation1.dot_key_code, @translation1.translation)
       #if @translation1.save then
          #result1 = :success
       #else
@@ -69,6 +74,8 @@ class TranslationsController < ApplicationController
       @translation2 = Translation.new
       @translation2.dot_key_code = params[:translation][:dot_key_code2]
       @translation2.translation = params[:translation][:translation2]
+      @translation2.calmapp_version_id = UserPreference.calmapp_version.id
+       #@translation_redis2 = TranslationRedis.new(@translation2.dot_key_code, @translation2.translation)
        #if @translation2.save then
          #result2 = :success
       #else
@@ -79,50 +86,23 @@ class TranslationsController < ApplicationController
     end
     # Need to do this do use a transaction
     @rolledback=false
+    debugger
     Translation.save_multiple translations
     #This is actually called twice in case of rollback
-    if !@rolledback
-      
-      reload_dev_new()
-      tflash('create', :success, {:model=>@@model, :count=>1})
+    if !@rolledback then
+      translations.each do |t|
+        translations_redis << TranslationRedis.new_from_class(t)
+      end  
+      if TranslationRedis.save_multiple translations_redis then 
+        reload_dev_new()
+        tflash('create_relationaldb_redis', :success, {:code=>@dot_key_code0 + ' ' + @dot_key_code1 + ' ' +@dot_key_code2})
+      else
+        # We need to delete the records from the rdb here
+        tflash('create_relationaldb_redis', :warning, {:code=>@dot_key_code0 + ' ' + @dot_key_code1 + ' ' +@dot_key_code2})
+      end  
     end
     render "dev_new"  
-    #@developer_param = DeveloperParam.new
-    #@developer_param.model=params[:developer_param][:model]
-    #@translation= Translation.new
-=begin    
-    if (!result0.nil? && result0 == :error) || (!result1.nil? && result1 == :error) || (!result2.nil? && result2 == :error)
-      # go back to same screen
-      
-      @translation.dot_key_code0=params[:translation][:dot_key_code0]
-      @translation.dot_key_code1=params[:translation][:dot_key_code1]
-      @translation.dot_key_code2=params[:translation][:dot_key_code2]
-      
-      @translation.translation0=params[:translation][:translation0]
-      @translation.translation1=params[:translation][:translation1]
-      @translation.translation2=params[:translation][:translation2]
-      
-      
-      @developer_param.attribute=params[:developer_param][:attribute]
-      @developer_param.key_helper=params[:developer_param][:key_helper]
-      render "dev_new"  
-    else
-      render :action => "dev_new"  
-    end
-=end
-  
-=begin
-    respond_to do |format|
-      if @translation.save
-        tflash('create', :success, {:model=>@@model, :count=>1})
-        format.html { redirect_to( :action => "index")} #(@translation #, :notice => 'version status was successfully created.') }
-        format.xml  { render :xml => @translation_redis, :status => :created, :location => @translation_redis }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @translation_redis.errors, :status => :unprocessable_entity }
-      end
-    end
-=end
+ 
   end
   
   def update
@@ -145,7 +125,7 @@ class TranslationsController < ApplicationController
     
     # This method called when the rails uniqueness validation is violated
     def record_invalid exception
-      debugger
+      #debugger
       flash.now[:error] =exception.message
       #flash.now[:warning] = t($MS + "all_rolledback")
       tflash("all_rolledback", :warning, {:model=>@@model, :count=>10}, true )

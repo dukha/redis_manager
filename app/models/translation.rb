@@ -7,7 +7,7 @@ class Translation < ActiveRecord::Base
   attr_accessor  :dot_key_code0, :translation0, :translation_message0, :dot_key_code1, :translation1, :translation_message1, :dot_key_code2, :translation2,  :translation_message2#, :developer_params
   
   def self.save_multiple translation_array
-    debugger
+    #debugger
     transaction do 
       translation_array.each do |t|
         t.save!

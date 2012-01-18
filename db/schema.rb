@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108233922) do
+ActiveRecord::Schema.define(:version => 20120117013708) do
 
  
   create_table "version_statuses", :force => true do |t|
@@ -248,10 +248,24 @@ ActiveRecord::Schema.define(:version => 20120108233922) do
   create_table :translations do |t|
     t.string :dot_key_code, :null=> false 
     t.text :translation,    :null=> false
+    t.references :calmapp_version, :null=> false
     # origin is the name of the file if it was bulk loaded from a yaml file
     t.string :origin
     #t.reference :user, :null=> false
     t.timestamps
   end
   add_index :translations, :dot_key_code, {:unique=>true, :name => "iu_translations_dot_key_code"}
+  
+  execute <<-SQL
+       Alter table translations
+        drop constraint  IF EXISTS  fk_translations_calmapp_versions
+    SQL
+    
+   execute <<-SQL
+      ALTER TABLE translations
+        ADD CONSTRAINT fk_translations_calmapp_versions
+        FOREIGN KEY (calmapp_version_id)
+        REFERENCES calmapp_versions(id)
+        ON DELETE RESTRICT
+    SQL
 end

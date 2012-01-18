@@ -6,16 +6,16 @@ class TranslationRedis
   #fix everything below to work with translation_parameters in session.
   attr_reader :redis_connection
   #attr_accessor :redis_database, :dot_key_code, :translation, :translation_message0, :translation_message1, :translation_message2#, :language, :dot_key_code_wrapped, :dot_key_code_last_key
-  attr_accessor :redis_database#, #:dot_key_code0, :translation0, :dot_key_code1, :translation1, :dot_key_code2, :translation2, :translation_message0, :translation_message1, :translation_message2, :developer_params
+  #attr_accessor :redis_database#, #:dot_key_code0, :translation0, :dot_key_code1, :translation1, :dot_key_code2, :translation2, :translation_message0, :translation_message1, :translation_message2, :developer_params
   validates  :dot_key_code, :presence => true
   validates :translation, :presence => true
   #attr_accessible :dot_key_code, :translation,:dot_key_code_wrapped, :dot_key_code_last_key, :dot_key_no_lang
   def self.all
     #redis_database = session[]
     #language=
-    redis= redis_database.connect
+    redis= UserPreference.redis_database.connect
     arr = Array.new
-    search = (language ? (language.iso_code+"*") : "*"  )
+    search = (UserPreference.language_iso_code ? (UserPreference.language_iso_code + "*") : "*"  )
     redis.key '*'.each do |k|
       arr.push  TranslationRedis.new(k, redis.get( k))
     end
@@ -23,14 +23,15 @@ class TranslationRedis
   end
   
   def self.new_from_class translation
-    new(translation.dot_key_code, translation.translation)
+    new(translation.dot_key_code, translation.translation, translation.calmapp_version_id)
   end
   
-  def initialize dot_key, trans
+  def initialize dot_key, trans, app_version_id
     super
     #puts "in init"
     @dot_key_code=dot_key
     @translation=trans
+    @calmapp_version_id=app_version_id
     #puts dot_key_code
     
   end
@@ -46,7 +47,7 @@ class TranslationRedis
      dot_key='*' if dot_key.nil?
 
      #if dot_key.index('*') then
-     keys = redis_connection.keys(language.iso_code + '.' + dot_key)
+     keys = redis_connection.keys(UserPreference.language_iso_code + '.' + dot_key)
      #end
      translations = []
      if keys.empty? and !dot_key.index('*') then
@@ -65,12 +66,24 @@ class TranslationRedis
      end
      return ((translations.length == 1) ? translations.first : translations)
   end
-  
+  def self.save_multiple translations_redis=[]
+    translations_redis.each do |tr|
+      tr.save!
+    end
+    #This should only return true if all are saved in redis
+    return true
+  end
   def save!
     #puts @dot_key_code + " x " + @translation
-    valid?
-    redis_connection.set(@dot_key_code, @translation)
-     
+    debugger
+    #if valid? then
+      # @todo valid? doesn't seem to work. Only trying to valid presence of the 2 attributes: should return true???
+      #@todo Also need a redis_connection.exists? here. Have to write it ourselves
+      puts "Is redis record valid? " + valid?.to_s
+      redis_connection.set(@dot_key_code, @translation)
+      puts "Wrote " + @dot_key_code +" = " + redis_connection.get( @dot_key_code)
+      
+   # end 
   end
   
   def persisted?
@@ -89,16 +102,8 @@ class TranslationRedis
   def translation
     @redis_translation
   end
-  def self.current_user_id
-    return 1
-  end
-  def self.language
-    return UserPreference.find(current_user_id).translation_language.iso_code
-  end
   
-  def self.redis_database
-    return UserPreference.find(current_user_id).current_redis_database
-  end
+  
 =begin
   def redis_database= rd
      puts "redis database set"
@@ -133,6 +138,7 @@ class TranslationRedis
   end
   
   private
+     #Returns the current Redis database (an instance of Redis)
     def redis_connection
       #puts "in rc"
       if ! @redis_connection then
@@ -145,9 +151,10 @@ class TranslationRedis
   
   
   private
+   #Returns the current Redis database (an instance of Redis)
     def connect
       #if ! redis_connection then
-      @redis_connection= TranslationRedis.redis_database.connect
+      @redis_connection= UserPreference.redis_database.connect
       #end
       @redis_connection
     end

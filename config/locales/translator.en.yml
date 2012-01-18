@@ -176,7 +176,9 @@ en:
     create_translation:
       success: "Sucessfully created translation for '%{code}' = '%{translation}'."  
       error: "Failed to create '%{code}' = '%{translation}'. "
-  delete:
+    create_relationaldb_redis:
+      success: "Sucessfully created translation for '%{code}' in both redis and relational database."
+      warning: "Failed to create '%{code}'  in redis. "
     are_you_sure:
         all_translations_also_deleted:
           warning: |

@@ -184,7 +184,7 @@ just substitute twill_paginate for will_paginate
   end
 
   def tmessage(subkey, interpolations={})
-    debugger
+    #debugger
     I18n.t($MS + subkey, interpolations)
   end
   

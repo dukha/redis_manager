@@ -219,7 +219,7 @@
 <%= semantic_form_for(@translation, @developer_param) do |f| %>
   
  
-  <% f.inputs do %>
+  <%= f.inputs do %>
    <%if @developer_param %>
      <%= semantic_fields_for(@developer_param, :html=>{:width=>'100px'}) do |d| %>
         <%= d.input :model %>

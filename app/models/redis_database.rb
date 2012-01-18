@@ -35,7 +35,7 @@ class RedisDatabase < ActiveRecord::Base
   def name
     return CalmappVersion.find(calmapp_version_id).name + " / Redis Database Index: " + redis_db_index.to_s
   end
-
+  # returns an instance of Redis class
   def connect
     #@connection is a singleton: only 1 connection per database" will need testing in a multiuser situation
     if ! @connection then
