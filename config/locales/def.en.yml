@@ -133,9 +133,9 @@ en:
         too_long: "%{attribute} is too long (maximum is %{count} characters)"
         too_short: "%{attribute} is too short (minimum is %{count} characters)"
         wrong_length: "%{attribute} is the wrong length (should be %{count} characters)"
-        taken: "%{value} has already been taken"
-        not_a_number: "%{attribute} with value '%{value}' is not a number. '%{value}' is not a number."
-        not_an_integer: "%{attribute} with value '%{value}'  must be an integer. '%{value}' is not an integer."
+        taken: "%{attribute} has already been taken"
+        not_a_number: "%{attribute} is not a number"
+        not_an_integer: "%{attribute}  must be an integer"
         greater_than: "%{attribute} must be greater than %{count}"
         greater_than_or_equal_to: "%{attribute} must be greater than or equal to %{count}"
         equal_to: "%{attribute} must be equal to %{count}"
@@ -143,8 +143,7 @@ en:
         less_than_or_equal_to: "%{attribute} must be less than or equal to %{count}"
         odd: "%{attribute} must be odd"
         even: "%{attribute} must be even"
-        record_invalid: "Validation failed; %{errors}"
-        
+        record_invalid: Validation failed; %{errors}
 
 
 
@@ -156,7 +155,7 @@ en:
       # For example,
       # models:
       # user:
-      # blank: "This is a custom blank message for %{model}: %{attribute}"
+      # blank: "This is a custom blank message for %{model}: xx%{attribute}"
       # attributes:
       # login:
       # blank: "This is a custom blank message for User login"
@@ -182,9 +181,10 @@ en:
       # Use the strftime parameters for formats.
       # When no format has been given, it uses default.
       # You can provide other formats here if you like!
-      default: "%d-%m-%Y"
-      short: "%b %d"
-      long: "%B %d, %Y"
+      default: "%d-%b-%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+      #db: "%Y-%b-%d"
       
     day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
     abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
@@ -193,10 +193,11 @@ en:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
     # Used in date_select and datime_select.
-    order:
-      - :year
-      -  :month
-      -  :day
+
+#expected the node content, but found ':'
+#  in "<unicode string>", line 196, column 14:
+#        order: [ :year, :month, :day ]
+#    order: [ :year, :month, :day ]
 
   time:
     formats:

@@ -8,7 +8,7 @@ Otherwise in config/application.rb
 config.autoload_paths += %W(#{config.root}/lib
 =end
 module Exceptions
-  require File.join(RAILS_ROOT, "app", "/helpers" "/translations_helper.rb" ) #'app/helpers/translations_helper.rb'
+  require File.join(Rails.root, "app", "/helpers" "/translations_helper.rb" ) #'app/helpers/translations_helper.rb'
   include TranslationsHelper
 
 =begin

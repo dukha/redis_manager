@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
-gem 'rails', '3.0.9'
+gem 'rails', '3.1.3'
 
 # postgresql connector
-gem 'pg', '0.10.1'
+gem 'pg', '~>0.12.1'
 
 # layout of all forms
 gem 'formtastic', '1.2.3'
@@ -11,7 +11,7 @@ gem 'formtastic', '1.2.3'
 gem 'nifty-generators', '0.4.6'
 
 # authentication
-gem 'devise', '1.1.5' # needs to go to 1.2.1 but waiting until we know how to do step 2 of upgrade
+gem 'devise', '~>1.4.7' # needs to go to 1.2.1 but waiting until we know how to do step 2 of upgrade
 
 #xml parser
 gem 'nokogiri', '1.5.0'
@@ -20,7 +20,7 @@ gem 'nokogiri', '1.5.0'
 gem 'json', '1.5.1'
 
 # authorisation
-gem 'declarative_authorization', '0.5.2'
+gem 'declarative_authorization', '0.5.3'
 
 # paginate all index views
 gem 'will_paginate','3.0.pre2'
@@ -28,7 +28,7 @@ gem 'will_paginate','3.0.pre2'
 
 
 # using jquery for ajax, not prototype > rails g jquery:install
-gem 'jquery-rails', '0.2.7'
+gem 'jquery-rails', '~>1.0.12' #, '0.2.7'
 
 #helps with I18n not used at present
 gem 'routing-filter', '0.2.3'
@@ -41,9 +41,9 @@ gem 'acts_as_tree','0.1.1'
  to start sass to automatically update calm.scss (when you save calm.scss) to donotedit/calm.css
  $>sass --watch calm.scss:donotedit/calm.scss
 =end
-gem 'haml', '3.0.25'
+#gem 'haml', '3.0.25'
 # converts ruby objects to js objects
-gem 'lucy', '0.2.1'
+#gem 'lucy', '0.2.1'
 =begin
  depends on lucy. Allows you to use rails translations in js
  e.g. I18n.t('activerecord.errors.template.header', {count:4, model:'pony'}) // "4 errors prohibited this pony from being saved"
@@ -57,9 +57,9 @@ gem 'paperclip', '2.3.11'
 
 #gem 'psych'
 #Eliminates need to use sql by give extra functions/operators for querying in activerecord
-gem "meta_where"
+#gem "meta_where"
 # Allows QBE with activerecord
-gem "meta_search"
+#gem "meta_search"
 # this gem checks RI in a belongs_to relationship (create th FK anyway)
 # Didn't have good i18n and seemed tio double up error messages, so copied the validation to our validations.rb and modified,
 #gem "validates_existence"
