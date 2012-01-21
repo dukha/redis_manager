@@ -156,19 +156,20 @@ en:
       whiteboard_type:
         one: Whiteboard Type
         other: Whiteboard Types
-    attributes:
-      location:
-        name:
-          world: Calm World
-          au-server: "Calm server australia"
-          eu-server: "Calm server europe"
-          australia: Australia
-          belgië: Belgium
-          españa: Spain 
-        type:
-          World: World
-          Server: Computer
-          Area: Area
-          Organisation: Organisation
-          Venue: Venue 
+#Nested attributes are no longer supported as of rails 3.1
+#    attributes:
+#      location:
+#        name:
+#          world: Calm World
+#          au-server: "Calm server australia"
+#          eu-server: "Calm server europe"
+#          australia: Australia
+#          belgië: Belgium
+#          españa: Spain 
+#        type:
+#          World: World
+#          Server: Computer
+#          Area: Area
+#          Organisation: Organisation
+#          Venue: Venue 
  

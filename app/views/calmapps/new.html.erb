@@ -98,7 +98,7 @@
 
 
 <%= theading('new', :model=>'calmapp', :count=>1)%>
-<%= semantic_form_for(@calmapp, @calmapp_version, @redis_database) do |app| %>
+<%= semantic_form_for(@calmapp) do |app| %>
 	<%= app.inputs do %>
     <%= app.input :name%>
     

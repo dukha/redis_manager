@@ -5,7 +5,7 @@ gem 'rails', '3.1.3'
 gem 'pg', '~>0.12.1'
 
 # layout of all forms
-gem 'formtastic', '1.2.3'
+gem 'formtastic'#, '1.2.3'
 
 # used for layout only of application
 gem 'nifty-generators', '0.4.6'
@@ -51,7 +51,7 @@ gem 'acts_as_tree','0.1.1'
  This file contains a copy of all translations in the application
  Beware of including the faker gem as this has lots of translation files: you'll be getting lots of garbage translations in real locales that you don't want
 =end
-gem 'babilu', '0.2.2'
+#gem 'babilu', '0.2.2'
 # paperclip uploads a file and writes the file name etc to the database
 gem 'paperclip', '2.3.11'
 
@@ -68,6 +68,10 @@ gem "redis" #, :git => "git://github.com/ezmobius/redis-rb.git"
 # foreigner is a gem that allows the insertion of foreign keys into migrations.
 # Doesn't work with automigrate. Too bad.
 #gem "foreigner"
+# for 3.1
+gem 'execjs'
+gem 'therubyracer'
+
 group :development, :test do
   gem 'rspec-rails', '2.0.0'
   # webrat or capybara can be used to simulate a browser. rspec doesn't care which one.
@@ -109,11 +113,15 @@ display/undisplay
   # generate test data
   gem 'factory_girl_rails', '1.0.1'
 
+end # end group dev, test
+group :assets do
+    gem 'sass-rails', " ~> 3.1.0"
+    gem 'coffee-rails', "~> 3.1.0"
+    gem 'uglifier'
 end
-
-group :development do
+#group :development do
   
   # for shared deployment
-  gem 'heroku', '1.19.1'
+  #gem 'heroku', '1.19.1'
 
-end
+#end

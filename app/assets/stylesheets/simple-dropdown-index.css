@@ -1,0 +1,82 @@
+/* Works with jquery.dropdown-calm-calm.js 
+ * When you download then the file is called SimplejQuerydropdown-calm-calms/css/style.css
+ * Renamed for clarity in calm. The dropdown-calm-calm class renamed as calm-dropdown-calm-calm
+ */
+
+/* Keep the style that we are using for big picture
+
+* 									{ margin: 0; padding: 0; }
+body								{ font: 14px Helvetica, Sans-Serif; } 
+#page-wrap							{ width: 800px; margin: 25px auto; } 
+a									{ text-decoration: none; }
+ul									{ list-style: none; }
+p                                   { margin: 15px 0; }
+ul.dropdown-calm                  { list-style: none; }
+*/
+/*a                 { text-decoration: none; }*/
+
+/* 
+	LEVEL ONE
+*/
+ul.dropdown-calm                         { position: relative; 
+                                           list-style: none;
+                                           padding-left: 0px;
+                                           margin-top:0px;
+                                           margin-bottom:0px;
+                                          }
+ul.dropdown-calm li                      { font-weight: bold; 
+                                           float: left; 
+                                          /* zoom: 1;*/ 
+                                           background: #ccc; }
+ul.dropdown-calm a:hover		            { color: #000; }
+ul.dropdown-calm a:active                { color: #ffa500; }
+ul.dropdown-calm li a                    { /*display: block;*/ 
+                                           padding: 4px 8px;
+                                          /* border-right: 1px solid #333;*/
+	 								                         color: #222;
+	 								                         text-decoration: none; }
+/*ul.dropdown-calm li:last-child a         { border-right: none; } /* Doesn't work in IE * / */
+ul.dropdown-calm li.hover,
+ul.dropdown-calm li:hover                { background: #F3D673; 
+                                           /*color: black;*/ 
+                                           position: relative; }
+/*ul.dropdown-calm li.hover a              { color: black; }*/
+
+ul.context-sub-menu            {
+                                  z-index:20;
+                                  
+                               }
+
+/* 
+	LEVEL TWO
+*/
+ul.dropdown-calm ul 						{ /*width: 220px;*/ 
+                                  visibility: hidden; 
+                                  position: absolute; 
+                                  top: 100%; 
+                                  left: 0;
+                                  margin:0;
+                                  padding:0; 
+                                  list-style: none; }
+ul.dropdown-calm ul li 					{ font-weight: normal; 
+                                  /*background: #f6f6f6;*/ 
+                                  background: #F3D673;
+                                  /*color: #ffffff;*/
+                                  
+                                  /*border-bottom: 1px solid #ccc; */
+									                float: none; }
+									  
+                                    /* IE 6 & 7 Needs Inline Block */
+ul.dropdown-calm ul li a					{ border-right: none; 
+                                    width: 100%; 
+                                    display: inline-block; 
+                                    color: #0000ff;
+                                    text-decoration: underline
+                                    } 
+ul.dropdown-calm ul li a:hover     {color:#008000 
+                                    }
+/* 
+	LEVEL THREE This is not used in calm
+*/
+ul.dropdown-calm ul ul 					{ left: 100%; top: 0;  list-style: none; }
+ul.dropdown-calm li:hover > ul 			{ visibility: visible; }

@@ -45,7 +45,8 @@ module TranslationsHelper
 
    def tlink_to(translation_code, url, options = {})
      #count = options[:count]
-     options[:count] = 1 if options[:count].nil?
+     #debugger
+     options[:count] = 1 if options[:model] && options[:count].nil?
      model = options[:model]
      if !model.nil?
        # kludge for backward compatibility: won't work all the time
@@ -58,16 +59,21 @@ module TranslationsHelper
        options[:model]= tr_model
      end
      if options[:category].nil? or options[:category]== :action then
+       #if options[:method]=="delete" then
+         #link_destroy()
+      # end
        tlabel = I18n.t($FA + translation_code, options )
      elsif options[:category]== :menu then
        tlabel = tmenu( translation_code)
      else
        tlabel = t(translation_code)
      end
-       if options[:title] then
-         options[:title] = t(options[:title])
-       end
+       #if options[:title] then
+         #options[:title] = t(options[:title])
+       #end
        if options[:confirm] then
+         # can't use :count for a translation of a message unless it is expected.
+         options.delete(:count)
          options[:confirm] = tmessage( options[:confirm], options) 
        end
 
@@ -78,23 +84,23 @@ module TranslationsHelper
   # e.g. <%=theading("listing", :model=> "course_type",:count => 2) %>
   # translation_code can be "new, "edit" or "listing" or "home"  according to yaml paths
   def theading(translation_code, options = {})
-    #debugger
     if options[:class] then
       klass = options[:class]
     else
       klass= "pageheading"
     end
     #debugger
-    #count = options[:count]
-    options[:count] = 1 if options[:count].nil?
+    count = options[:count]
+    options[:count] = 1 if count.nil?
     model = options[:model]
-    #debugger
+
     if !model.nil?
       tr_model = tmodel(model, options) 
 
       ret_val = I18n.t("headings.#{translation_code}.heading", :model => tr_model)
     else
-      ret_val = "translation missing:" + translation_code + options.to_s
+      #ret_val = "translation missing:" + translation_code + options.to_s
+      
     end
     ret_val = "<p class='"+ klass + "'>"+ret_val + "</p>"
     return ret_val.html_safe

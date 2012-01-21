@@ -11,12 +11,13 @@ module LayoutHelper
   def show_title?
     @show_title
   end
-
+=begin
   def stylesheet(*args)
-    content_for(:head) { stylesheet_link_tag(*args) }
+    content_for(:head) { stylesheet_link_tag('application.css') }
   end
 
   def javascript(*args)
-    content_for(:head) { javascript_include_tag(*args) }
+    content_for(:head) { javascript_include_tag('application.js') }
   end
+=end
 end

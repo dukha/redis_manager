@@ -92,7 +92,7 @@ class CalmappsController < ApplicationController
       if params[:calmapp_version][:new_redis_db] != '0' then
         @redis_database = RedisDatabase.new(params[:redis_database])
       else
-        @redis_database =nil5
+        @redis_database =nil
       end
     else
       @calmapp_version = nil

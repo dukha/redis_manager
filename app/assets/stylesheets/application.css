@@ -1,0 +1,100 @@
+/*
+*= require ui-lightness/jquery-ui-1.8.6.custom.css
+*= require formtastic.css
+*= require formtastic_changes.css
+*= require simple-dropdown-index.css
+*= require_self
+*= require trans
+*/
+
+/* form nifty */
+body {
+  background-color: #4B7399;
+  font-family: Verdana, Helvetica, Arial;
+  font-size: 14px;
+}
+
+a img {
+  border: none;
+}
+
+a {
+  color: #0000FF;
+}
+
+.clear {
+  clear: both;
+  height: 0;
+  overflow: hidden;
+}
+
+#container {
+  width: 75%;
+  margin: 0 auto;
+  background-color: #FFF;
+  padding: 20px 40px;
+  border: solid 1px black;
+  margin-top: 20px;
+}
+/* added caps_lock status so that it matches flash_alert */
+#flash_notice, #flash_error, #flash_alert, #flash_success, #caps_lock_status, #flash_warning {
+  padding: 5px 8px;
+  margin: 10px 0;
+	width:80%;
+}
+#flash_warning{
+  background-color: #FFD700;
+  border: solid 1px #C66;
+}
+#flash_notice, #flash_success {
+  background-color: #CFC;
+  border: solid 1px #6C6;
+}
+/* added caps_lock status so that it matches flash_alert */
+#flash_error, #flash_alert,#caps_lock_status {
+  background-color: #FCC;
+  border: solid 1px #C66;
+}
+
+.fieldWithErrors {
+  display: inline;
+}
+
+.error_messages {
+  width: 400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  font-size: 12px;
+}
+
+.error_messages h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: 12px;
+  margin: 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+.error_messages p {
+  margin: 8px 10px;
+}
+
+.error_messages ul {
+  margin: 0;
+}
+#user_nav{
+	color: #ffffff;
+	width:90%;
+	text-align:right;
+}
+#user_nav a{
+	color:#ffffff;
+}
+#username{
+	font-style:italic;
+}

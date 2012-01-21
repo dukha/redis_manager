@@ -2,26 +2,28 @@
 <html>
 <head>
   <title>Calm Translator</title>
-   <%=  javascript_include_tag :defaults %>
-  <%=javascript_include_tag  "jquery-ui.min.js" %><!--"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js" -->
-  <!--locales.js is needed to render rails translations from js -->
-  <%=javascript_include_tag 'locales.js' %>
-  <!-- not used yet -->
-	<%=javascript_include_tag "jquery.tablesorter.js" %>
-  <!-- jquery.cookies.2.2.0 is needed for user initiated change of language-->
-  <%=javascript_include_tag "jquery.cookies.2.2.0_1.js" %>
+  <%=  javascript_include_tag 'application.js' %>
+  <!--
+   
+  < %= javascript_include_tag  "jquery-ui.min.js" % ><!--"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js" -->
+  <!--locales.js is needed to render rails translations from js -- >
+  < %=javascript_include_tag 'locales.js' %>
+  <!-- not used yet -- > 
+	< %=javascript_include_tag "jquery.tablesorter.js" %>
+  <!-- jquery.cookies.2.2.0 is needed for user initiated change of language-- >
+  < %=javascript_include_tag "jquery.cookies.2.2.0_1.js" %>
 
-  <!-- Used for M-N models  data -->
-  <%=javascript_include_tag "jQuery.dualListBox-1.3.js" %>
+  <!-- Used for M-N models  data -- >
+  < %=javascript_include_tag "jQuery.dualListBox-1.3.js" %>
 
-  <!-- easy read and write of a cookie Used by treeview-->
-  <%=javascript_include_tag "jquery.cookie.js" %>
-  <!-- used to display a tree model of data -->
-  <%=javascript_include_tag "jquery.treeview.js" %>
+  <!-- easy read and write of a cookie Used by treeview- ->
+  < %=javascript_include_tag "jquery.cookie.js" % >
+  <!-- used to display a tree model of data -- >
+  < %=javascript_include_tag "jquery.treeview.js" % > -->
   <!-- %=javascript_include_tag"http://dev.jquery.com/view/trunk/plugins/treeview/jquery.treeview.js" % -->
   
-  <%= stylesheet_link_tag  'application.css', 'formtastic.css', 'formtastic_changes.css', "ui-lightness/jquery-ui-1.8.6.custom.css",
-           'jquery.treeview.css',  'donotedit/trans.css',  'google.docs.css' %>
+  <%= stylesheet_link_tag  'application.css' %> <!--, 'formtastic.css', 'formtastic_changes.css', "ui-lightness/jquery-ui-1.8.6.custom.css",
+           'jquery.treeview.css',  'donotedit/trans.css',  'google.docs.css' %> -->
   <%= csrf_meta_tag %>
 </head>
 <body>

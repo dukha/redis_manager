@@ -4,3 +4,5 @@ log/*.log
 tmp/
 public/uploads/
 public/javascripts/
+.sass-cache/ 
+.gitignore~

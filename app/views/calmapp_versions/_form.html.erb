@@ -1,6 +1,6 @@
 <%= semantic_form_for(@calmapp_version) do |f| %>
   
-	<% f.inputs do %>
+	<%= f.inputs do %>
 				   <%= f.input :calmapp_id, :as=>:select,:collection=> Calmapp.all.collect {|p| [ p.name, p.id ]}      %>
 				   <%= f.input :major_version  %>
 				   <%= f.input :version_status_id, :as=>:select,:collection=> VersionStatus.all.collect {|p| [ p.status, p.id ]}    %>

@@ -28,42 +28,48 @@ module ButtonLinkHelper
     html.html_safe
   end
   
-  # link_edit edit_course_type_path(course_type) if permitted_to? :update, :course_types
-  # <td class='link'><a href="/de/course_types/26/edit">Bearbeiten</a></td>
-  def link_edit url, resource, options={}
+ # Usage : <%= link_edit edit_course_type_path(course_type), :course_types  %>
+ #Usage in dropdown menu : <%=link_edit(edit_course_path(course), :courses, {:category=>'menu'}, 'li' )%> 
+  def link_edit url, resource, options={}, html_container='td'
      html = " "
      #debugger
     if permitted_to? :update, make_resource(resource)
-      html = "<td class='link'>"+ 
-        tlink_to("edit", url)+
-        '</td>'
+      a =  tlink_to("edit", url, options)
+      #debugger
+      html = wrap_in_html_container(a, html_container, 'link')
     end
     html.html_safe
   end
  
   # link_destroy course_type, :course_types
   # <td class='link'><a href="/de/course_types/31" data-confirm="Sind Sie sicher?" data-method="delete" rel="nofollow">Löschen</a></td>
-  def link_destroy obj, resource, options={}
+  # Usage in dropdown menu : <%=link_destroy(course, :courses, {:category=>'menu'}, 'li') %> 
+  def link_destroy obj, resource, options={}, html_container='td'
      html = " "
+     #debugger
      if permitted_to? :destroy, make_resource(resource)
         if options[:confirm].nil? then
-          options[:confirm] = 'delete.are_you_sure'
+          options[:confirm] = 'delete.are_you_sure.warning'
         end
         if options[:model].nil? then
           options[:model]= make_model(obj.class.name)
         end
-        if options[:count].nil? then
-          options[:count]=1
-        end
-        options[:method] = :delete    
-        html = "<td class='link'>"+ 
-          tlink_to("destroy", obj,
-            options)+
-          '</td>'
+        #if options[:count].nil? then
+          #options[:count]=1
+        #end
+        options[:method] = :delete   
+        a= tlink_to("destroy", obj, options) 
+        debugger
+        html = wrap_in_html_container(a, html_container, 'link')
      end
     html.html_safe
   end
-
+  
+  def wrap_in_html_container html, container, klass='link'
+    return  "<" + container + " class='" + klass +"'>" +html +"</" +container +">"
+  end
+  
+   
   def link_new url, resource, options={}
      html = " "
      #debugger
@@ -102,15 +108,17 @@ module ButtonLinkHelper
   end
   # creates a link to the index page of the resource
   # @todo needs to have url optional param added
+  # usage: <%=link_menu(:languages)%>
   def link_menu(resource, options={})
-    html=' '
+    html= ' '
     if permitted_to? :index, make_resource(resource) then
       if resource.is_a? Symbol then
         model_plural = resource.to_s
       else
         model= make_model( resource).pluralize  
       end
-      html = "<li class='menuItem'>" + link_to(tmenu(model_plural), eval(model_plural + "_path"), options) + "</li>"
+       a = link_to(tmenu(model_plural), eval(model_plural + "_path"), options) 
+       html = wrap_in_html_container a, 'li', 'menuItem'
     end
     #ebugger
     return html.html_safe
@@ -119,6 +127,7 @@ module ButtonLinkHelper
   # works also for person - people
   # returns :course_types
   def make_resource x
+    #debugger
     if x.is_a? Symbol then
       return x
     else
