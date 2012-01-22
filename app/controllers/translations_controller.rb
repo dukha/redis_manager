@@ -96,10 +96,10 @@ class TranslationsController < ApplicationController
       if TranslationRedis.save_multiple translations_redis then 
         reload_dev_new()
         
-        tflash('create_relationaldb_redis', :success, {:code=>@translation0.dot_key_code + ' ' + @translation1.dot_key_code + ' ' + @translation2.dot_key_code})
+        tflash('create_relationaldb_redis', :success, {:code=>@translation0.dot_key_code + (@translation1.nil? ? ' ' : ' ' + @translation1.dot_key_code) + (@translation2.nil? ? ' ' : ' ' + @translation2.dot_key_code)})
       else
         # We need to delete the records from the rdb here
-        tflash('create_relationaldb_redis', :warning, {:code=>@translation0.dot_key_code + ' ' + @translation1.dot_key_code + ' ' + @translation2.dot_key_code})
+        tflash('create_relationaldb_redis', :warning, {:code=>@translation0.dot_key_code + (@translation1.nil? ? ' ' : ' ' + @translation1.dot_key_code) + (@translation2.nil? ? ' ' : ' ' + @translation2.dot_key_code)})
       end  
     end
     render "dev_new"  
