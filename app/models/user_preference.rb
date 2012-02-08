@@ -15,6 +15,7 @@ class UserPreference < ActiveRecord::Base
   def self.current_user_id
     return 1
   end
+  
   def self.language_iso_code
     return UserPreference.find(current_user_id).translation_language.iso_code
   end

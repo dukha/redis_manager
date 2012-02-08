@@ -1,5 +1,5 @@
 module ButtonLinkHelper
- 
+ include Search
   # emit html for n link headers
   def link_header n
     html = " "

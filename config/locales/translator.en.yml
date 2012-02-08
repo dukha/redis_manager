@@ -41,6 +41,7 @@ en:
       #new_translation: New English Translation
   menus:
     translations: Translations
+    translator_index: Translate in Table
     #translation_uploads: Translation Uploads
     #translation_file_lines: English Translation
     calmapps: Calm Applications
@@ -109,6 +110,7 @@ en:
       translation:
         dot_key_code: Key
         translation: Translation
+        iso_code: Language
       calmapp_version:
         calmapp_id: Calm App
         major_version: Major Version

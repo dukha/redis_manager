@@ -1,6 +1,9 @@
 module SearchHelper
+   def all_operators
+     %w(eq str_eq not_eq str_not_eq matches does_not_match gt gte gte_date lt lte lte_date in not_in str_in str_not_in is_null not_null)
+   end
    def all_operators translated = nil
-       ar = %w(eq not_eq matches does_not_match gt gte gte_date lt lte lte_date in not_in is_null not_null) 
+       ar = all_operators 
       if translated then
         return translate_operators ar 
       else 
@@ -35,6 +38,7 @@ module SearchHelper
         return ar  
       end
     end
+=begin   
     def operators_to_options array#, options={}
       texts = translate_operators array
       values= array
@@ -47,7 +51,7 @@ module SearchHelper
       }
       return options.html_safe
     end 
-    
+=end    
      def operators_2_options array#, options={}
       texts = translate_operators array
       values= array
@@ -55,13 +59,13 @@ module SearchHelper
       i=0
       array.each{|op| 
         options.push([texts[i], values[i]])
-        i=+1
+        i += 1
       }
       return options
     end
       
     def string_operators translated = nil
-      ar = %w(eq not_eq matches does_not_match in not_in is_null not_null)
+      ar = %w(eq not_eq begins_with ends_with matches does_not_match in not_in is_null not_null)
       if translated then
         return translate_operators ar 
       else 
@@ -71,12 +75,13 @@ module SearchHelper
     
     def translate_operators ar
        arx=[]
+       #debugger
        ar.each{|op| arx.push(I18n.t("commons.search.operators." +op))}
        return arx
     end
     
     def squeel_operator op
-      operators = {"eq"=>"==", "not_eq"=>"!=", "matches"=>"=~", "does_not_match"=>"!~", "gt"=>">", "gte"=>">=", "lt"=>"<", "lte"=>"<=", "in"=>">>", "not_in"=>"<<", "is_null"=>"== nil", "not_null"=>"!= nil"}
+      operators = {"eq"=>"==", "not_eq"=>"!=", "matches"=>"=~", "does_not_match"=>"!~", "gt"=>">", "gte"=>">=", "lt"=>"<", "lte"=>"<=", "in"=>">>", "not_in" => "<<", "is_null" => "== nil", "not_null"=>"!= nil"}
       return operators[op]
     end
 =begin    

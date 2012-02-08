@@ -20,7 +20,7 @@ class CalmappVersion < ActiveRecord::Base
   attr_accessible   :calmapp_id, :major_version, :version_status_id, :redis_database, :language_ids, :new_redis_db
   
   belongs_to :calmapp #, :class_name => "Application", :foreign_key => "calmapp_id"
-  belongs_to :version_status #, :class_name => "VersionStatus", :foreign_key=>"version_status_id"
+  
   has_one :redis_database
   
  

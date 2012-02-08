@@ -1,7 +1,7 @@
 <%= semantic_form_for(@redis_database) do |f| %>
   
   
-	<% f.inputs do %>
+	<%= f.inputs do %>
            <%= f.input :calmapp_version_id, :as=>:select,:collection=> CalmappVersion.all.collect {|p| [ p.calmapp_name_with_version, p.id ]} %>
 				   <%= f.input :redis_instance_id,  :include_blank=>false, :as=>:select,:collection=> RedisInstance.all.collect {|p| [ p.host, p.id ]} %>
            <%= f.input :redis_db_index%>

@@ -1,7 +1,7 @@
 <%=theading('write_to_database', :model=> "redis_database", :count=>1 )%>
 
 
-<%= semantic_form_for @upload, @redis_database, :url => to_redis_path(@upload)   do |u| %>
+<%= semantic_form_for @upload, :url => to_redis_path(@upload)   do |u| %>
  <%= u.inputs do %>
   <%= u.input  :upload_file_name, :as=>:string, :input_html => {:disabled => true }%>
   <%=semantic_fields_for @redis_database do |rdb| %>

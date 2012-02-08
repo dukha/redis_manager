@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<script type="text/javascript"> 
+  $().ready(function(){
+    $('.best_in_place').best_in_place();
+  });
+</script>
+
+<p>
+  <b>Dot Key Code</b>
+  <%= @translation.dot_key_code%>
+</p>
+<p>
+  <b>Translation</b>
+  <%= best_in_place @translation, :translation, :path => translation_path(@translation.id), :type=> :input, :ok_button => "ok", :cancel_button => "cancel", :nil=>"Click to edit" %><!--< %= @translation.translation%> -->
+</p>
+
+
+
+
+<%= link_to 'Edit', edit_translation_path(@translation) %> |
+<%= link_to 'Back', translations_path %>

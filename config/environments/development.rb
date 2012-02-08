@@ -26,5 +26,8 @@ RedisManager::Application.configure do
   config.assets.compress = false
   # 3.1 Expands the lines which load the assets
   config.assets.debug = true
+  
+ 
+  
 end
 

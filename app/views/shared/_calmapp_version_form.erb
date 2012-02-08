@@ -1,4 +1,4 @@
-<%=semantic_fields_for(@calmapp_version, @redis_database) do |version| %>
+<%=semantic_fields_for(@calmapp_version) do |version| %>
         <%= version.input :major_version %>
         <%= version.input :version_status_id, :required=>true, :include_blank=>false, :as =>:select, :collection=> VersionStatus.all.collect {|p| [ p.status, p.id ]}  %>
         <%= version.input :add_languages,   :as=>:boolean%>

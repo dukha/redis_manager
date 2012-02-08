@@ -1,0 +1,124 @@
+<script>
+  $(document).ready(function() {
+    var table = $('#translations-table').dataTable( 
+      { "bPaginate": true, //allows the number per page box top RH +next prev buttons
+        "bLengthChange": true,
+        "bFilter": true, // search box
+        "bSort": true,  //column header search
+        "bInfo": true,  // x of y entries
+        "bAutoWidth": true,  //??
+        "aaSorting": [[ 0, "desc" ]], // array of arrays column_index, asc | desc
+        "aoColumnDefs": [
+                        { "bSearchable": true, "bVisible": true, "aTargets": [ 1 ] } //column 1 is visible and searchable (default settings: illustration only) 
+                    ] ,
+        "bStateSave": true, // current view of this table to be save in cookie for a reselect
+        "iCookieDuration": 120, // Cookie will be saved for 120 secs   
+         "sScrollX": "100px", //horizonal scrolling % px em ok here too
+        "sScrollXInner": "110%", //forcing width to be wider than scroll
+        "bScrollCollapse": true,   //no scrolling if not needed   
+        "sScrollY": "200px",  
+        
+        "oLanguage": {
+            "sLengthMenu": "Display _MENU_ records per page",
+            "sZeroRecords": "Nothing found - sorry",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+            "sInfoEmpty": "Showing 0 to 0 of 0 records",
+            "sInfoFiltered": "(filtered from _MAX_ total records)"
+        }, //internationalisation, here showing different English wording
+        
+        "aoColumnDefs": [
+            {
+                "fnRender": function ( oObj ) {
+                    return oObj.aData[0] +' '+ oObj.aData[1];
+                },
+                "aTargets": [ 0 ]
+            }
+           ], //render a column differently e.g date format
+           
+         "aLengthMenu": [[10, 25, 50, -1], [10, "Some", "Many", "All"]] //cutomise the number of records shown   
+      }
+    );
+    var keys = new KeyTable( {
+        "table": document.getElementById('translations-table'),
+         "datatable": table
+    } );
+    /* Apply a return key event to each cell in the table using jEditable*/
+    keys.event.action( null, null, function (nCell) {
+    /* Block KeyTable from performing any events while jEditable is in edit mode */
+    keys.block = true;
+    
+    /* Initialise the Editable instance for this table */
+    $(nCell).editable( function (sVal) {
+      /* Submit function (local only) - unblock KeyTable */
+      keys.block = false;
+      return sVal;
+    }, { 
+      "onblur": 'submit', 
+      "onreset": function(){ 
+        /* Unblock KeyTable, but only after this 'esc' key event has finished. Otherwise
+         * it will 'esc' KeyTable as well
+         */
+        setTimeout( function () {keys.block = false;}, 0); 
+      }
+    } );
+    
+    /* Dispatch click event to go into edit mode - Saf 4 needs a timeout... */
+    setTimeout( function () { $(nCell).click(); }, 0 );
+  } );
+  } );
+
+</script>
+<%=theading("editable_listing", :model=>"translation", :count=>10) %>
+<!-- < % if Translation.count==0 then %>
+  < %=t($MS + "no_records_found")%><br/>
+< %  else %> -->
+<%full_key_display='none'%>
+<%wrapped_key_display='table_cell'%>
+<%short_key_display='table-cell'%>
+<% if Language.count==0 then %>
+  <%=t($MS + "no_records_found")%><br/>
+<%  else %>
+<%= twill_paginate %>
+<table class="display" id= "translations-table">
+  
+  <thead class="dataheader">
+
+    
+
+    <th class ="dataheader" style="display:<%=full_key_display%>;"> <%=tlabel('dot_key_code', 'translation') %></th>
+    <th class ="dataheader" style="display:<%=wrapped_key_display%>;"><%=tlabel('dot_key_code', 'translation') %></th>
+    <th class ="dataheader" style="display:<%=short_key_display%>;" ><%=tlabel('dot_key_code', 'translation') %></th>
+
+    <th class ="dataheader"><%=tlabel('translation', 'translation') %></th>
+
+    <!-- <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    -->
+  </thead>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<tbody>
+<% @translations.each do |translation| %>
+
+  <tr>
+  
+      
+
+  
+      <td  style="display:<%=full_key_display%>;"><%= translation.dot_key_code %></td>
+      <td class="<%= cell_class %>" style="display:<%=wrapped_key_display%>;"><%= dot_key_code_wrapped(translation.dot_key_code) %></td>
+      <td class="<%= cell_class %>" style="display:<%=short_key_display%>; "><%= dot_key_code_last_key(translation.dot_key_code) %></td>
+      <td><%= translation.translation %></td>
+
+  
+    
+  <!-- <td class="< %= link_cell_class %>">< %= tlink_to  'edit', edito_translation_path + '?dot_key_code_no_lang=' +dot_key_code_no_lang(translation.dot_key_code) %></td> -->
+    <!-- <td class="< %= link_cell_class %>">< %= tlink_to 'destroy',  translation , :confirm => 'delete.are_you_sure', :model => "translation", :value=>('Index: '+ translation.dot_key), :method => :delete %></td> -->
+  </tr>
+<% end %>
+</tbody>
+</table>
+<%= twill_paginate %>
+<%end%>

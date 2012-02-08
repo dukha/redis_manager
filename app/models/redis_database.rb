@@ -16,6 +16,7 @@ class RedisDatabase < ActiveRecord::Base
   #validates :with => RedisDbValidator2
   belongs_to :calmapp_version
   belongs_to :redis_instance
+  belongs_to :version_status
   has_many :uploads_redis_databases
   has_many :uploads, :through => :uploads_redis_databases
   validates :calmapp_version_id, :existence => true

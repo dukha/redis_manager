@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   #include TranslationsHelper
   
   include Exceptions
+  include Search
   protect_from_forgery
   before_filter  :set_locale
   #rescue_from ActiveRecord::RecordInvalid, :with => :record_invalid
@@ -118,10 +119,11 @@ end
         #{exception.message}\n#{exception.clean_backtrace.join( "\n" )}\n\n" )
         #render :text => "An internal error occurred. Sorry for inconvenience", :status => :internal_server_error
     end
-end
+  end
 =begin
  def record_invalid(exception)
     flash[:error] = exception.message + " " + exception.record.to_s
   end
 =end
 end
+

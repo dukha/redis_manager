@@ -30,13 +30,17 @@ en:
         in: In
         not_in: Not in
         eq: Equals
-        not_eq: Not Equals
+        not_eq: Not Equal To
         not_null: Is not empty
         is_null: Is empty
         before_something: Before %{something}
         after_something: After %{something}
         and: and
-        or: or  
+        or: or
+        str_eq: Equals
+        str_not_eq: Not Equal To  
+        begins_with: Begins with
+        ends_with: Ends with
     error:
       one: "%{count} error"
       other: "%{count} errors"
@@ -142,6 +146,8 @@ en:
       user: Edit User   
     listing:
       heading: "%{model}"
+    editable_listing:
+      heading: "View or Edit %{model}"  
     
     home:
       heading: Home - Whiteboard

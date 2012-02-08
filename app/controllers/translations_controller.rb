@@ -17,11 +17,53 @@ class TranslationsController < ApplicationController
       format.html
     end
   end
- 
+  def update
+    #debugger
+    @translation = Translation.find params[:id]
+
+  respond_to do |format|
+    if @translation.update_attributes(params[:translation])
+      format.html { redirect_to(@translation, :notice => 'Translation was successfully updated.') }
+      format.json { respond_with_bip(@translation) }
+    else
+      format.html { render :action => "edit" }
+      format.json { respond_with_bip(@translation) }
+    end
+  end
+  end
 
   def index
-     #@translation_redises = TranslationRedis.find(@redis_connection, @language_id).paginate(:page => params[:page], :per_page=>25)  #Translation.all
-     # We now do all our primary io via activerecord/postgres and only publish to redis....
+    #@translation_redises = TranslationRedis.find(@redis_connection, @language_id).paginate(:page => params[:page], :per_page=>25)  #Translation.all
+    # We now do all our primary io via activerecord/postgres and only publish to redis....
+   
+    # to work with best_in_place to edit in the index html table we need to work with eager loading 
+    # so that we can reference @translations as an array @transaltions[1] etc in the erb page
+    # Thus use to use will_paginate we eagerly load, giving an array by using .all 
+    # The array will still paginate provided we have will_paginate/array
+    # messy but it works!! 
+    searchable_attr = Translation.searchable_attr
+    criteria=criterion_list(searchable_attr)
+  
+    operators=operator_list(searchable_attr, criteria)
+  
+    sortable_attr=Translation.sortable_attr
+    sorting=sort_list(sortable_attr)
+  
+    require 'will_paginate/array'
+    
+    # Fix this when we get devise
+    current_user = UserPreference.current_user_id
+    # We need current_user for auth
+    @translations = Translation.search(current_user, criteria, operators, sorting).paginate(:page => params[:page], :per_page=>25) 
+    #puts "@translations: " + @translations.first.dot_key_code
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @translations }
+    end
+  end
+  # contains a table that is editable
+  def editable_list
+    debugger
      @translations = Translation.paginate(:page => params[:page], :per_page=>25) 
     #puts "@translations: " + @translations.first.dot_key_code
     respond_to do |format|
@@ -29,7 +71,7 @@ class TranslationsController < ApplicationController
       format.xml  { render :xml => @translations }
     end
   end
-
+  
   def edit
   end
 
@@ -106,7 +148,14 @@ class TranslationsController < ApplicationController
  
   end
   
-  def update
+  def show
+    debugger
+    @translation = Translation.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @translation }
+    end
   end
 
   def destroy

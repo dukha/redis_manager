@@ -71,6 +71,11 @@ gem "redis" #, :git => "git://github.com/ezmobius/redis-rb.git"
 # for 3.1
 gem 'execjs'
 gem 'therubyracer'
+# in place editing
+gem 'best_in_place'
+
+# for doing searches with criteria. Replaces meta_where for rails 3.1
+gem 'squeel'
 
 group :development, :test do
   gem 'rspec-rails', '2.0.0'
@@ -86,7 +91,7 @@ group :development, :test do
     # rspec advises not to install autotest-rails (but says nothing about autotest-rails-pure). rspec advises only autotest
   gem 'autotest-rails-pure','4.1.2'
   # test server for rspec
-  gem 'spork'
+  gem 'spork', '~> 0.9.0'
 
   # will document model according to migrations (actually according to schema)
   #gem 'annotate-models', '1.0.4'

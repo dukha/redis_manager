@@ -1,10 +1,80 @@
+<script type="text/javascript">
+//This script  handles showing and hiding selection criteria
+  $().ready(function(){
+    //Set the initila text of the button
+    $("#showHideCriteria").html(criteriaVisibleText);
+    if( <%= @translations.count==0 %>){
+      toggleCriteria();
+    }
+    
+    $("#showHideCriteria").click(function(){
+      //alert("Test");
+      
+      toggleCriteria();
+      
+    }); //end click
+  });//end ready
+  var   criteriaHiddenText = "<%=t($FA +'show_something', :something=>t($SC))%>";
+  var   criteriaVisibleText = "<%=t($FA +'hide_something', :something=>t($SC))%>";
+  function toggleCriteria(){
+    
+    if($("#criteria").is(':visible')){ 
+        $("#showHideCriteria").html(criteriaHiddenText);
+    }else{
+        $("#showHideCriteria").html(criteriaVisibleText);
+        console.log("show");
+    }
+    // toggle has to be after setting button text otherwise is(':visible') will not work properly
+    $("#criteria").slideToggle('slow');  
+  }
+  
+</script>
+<script type="text/javascript"> 
+//This script sets up inplace editing
+  $().ready(function(){
+    $('.best_in_place').best_in_place();
+  });
+</script>
 <%=theading("listing", :model=>"translation", :count=>10) %>
-<!-- < % if Translation.count==0 then %>
-  < %=t($MS + "no_records_found")%><br/>
-< %  else %> -->
+
 <%full_key_display='none'%>
 <%wrapped_key_display='table_cell'%>
 <%short_key_display='table-cell'%>
+
+<button id="showHideCriteria" type='button'>x</button>
+<div id='criteria' class="criteria" >
+  <!-- Use form_tag here because we are not going to work with a model. form_tag doesn't work with formtastic either -->
+  <%= form_tag translations_path, :method => 'get', :class=>'formtastic' do %>
+    <%= hidden_field_tag :direction, params[:direction] %>
+    <%= hidden_field_tag :sort, params[:sort] %>
+    
+    <fieldset class="inputs"><ol>
+    <li class="string optional" id="translation_language_id_input"><label for="criterion_language_id", class="criteria-label" ><%=tlabel("iso_code", "translation")%></label>
+         <%=select_tag(  :operator_iso_code, options_for_select(operators_2_options(equal_operator), params[:operator_iso_code]),{:include_blank=> false,:class=>'criteria-operators-select', :readonly=>true} )%> 
+         <!-- < %=text_field_tag( :criterion_language_id, params[:criterion_language_id])%> -->
+         <%=select_tag( :criterion_iso_code, options_from_collection_for_select(Language.all, "iso_code","name", params[:criterion_iso_code]), {:include_blank=> false})%>  
+    </li>  
+     <li class="string optional" id="translation_dot_key_code_input"><label for="criterion_dot_key_code", class="criteria-label" ><%=tlabel("dot_key_code", "translation")%></label>
+         <%=select_tag(  :operator_dot_key_code, options_for_select(operators_2_options(Translation.search_dot_key_code_operators), params[:operator_dot_key_code]),{:include_blank=> true,:class=>'criteria-operators-select', :readonly=>true} )%> 
+         
+         <%=text_field_tag( :criterion_dot_key_code, params[:criterion_dot_key_code])%>   
+    </li> 
+     <li class="string optional" id="translation_translation_input"><label for="criterion_translation", class="criteria-label" ><%=tlabel("translation", "translation")%></label>
+         <%=select_tag(  :operator_translation, options_for_select(operators_2_options(Translation.search_translation_operators), params[:operator_translation]),{:include_blank=> true,:class=>'criteria-operators-select', :readonly=>true} )%> 
+         <%=text_field_tag( :criterion_translation, params[:criterion_translation])%>   
+    </li>
+    
+     </ol> 
+   </fieldset>  
+      <%= submit_tag "Search", :name => nil %>
+    
+  <%end%>
+
+</div>
+<!-- < % if Translation.count==0 then %>
+  < %=t($MS + "no_records_found")%><br/>
+< %  else %> -->
+
 <%= twill_paginate %>
 <table class="data">
   <tr class="dataheader">
@@ -25,6 +95,8 @@
   
 <% cell_class = "data" %>
 <% link_cell_class="link"%>  
+<% editable_cell_class = "best_in_place"%>
+<!-- < % i = 0 %>  -->
 <% @translations.each do |translation| %>
 
   <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
@@ -35,13 +107,15 @@
       <td class="<%= cell_class%>" style="display:<%=full_key_display%>;"><%= translation.dot_key_code %></td>
       <td class="<%= cell_class %>" style="display:<%=wrapped_key_display%>;"><%= dot_key_code_wrapped(translation.dot_key_code) %></td>
       <td class="<%= cell_class %>" style="display:<%=short_key_display%>; "><%= dot_key_code_last_key(translation.dot_key_code) %></td>
-      <td class="<%= cell_class %>"><%= translation.translation %></td>
-
+<!-- It seems like best_in_place needs to work with an instance variable so we need to make things a bit more complicated here below-->
+      <td><%= best_in_place translation, :translation, :path => translation_path(translation.id), :type=> :input, :ok_button=>"ok", :cancel_button=>"cancel", :nil=>"Click to edit"  %></td>
+      
   
     
   <!-- <td class="< %= link_cell_class %>">< %= tlink_to  'edit', edito_translation_path + '?dot_key_code_no_lang=' +dot_key_code_no_lang(translation.dot_key_code) %></td> -->
     <!-- <td class="< %= link_cell_class %>">< %= tlink_to 'destroy',  translation , :confirm => 'delete.are_you_sure', :model => "translation", :value=>('Index: '+ translation.dot_key), :method => :delete %></td> -->
   </tr>
+  <!-- >< % i+=1%> -->
 <% end %>
 </table>
 <%= twill_paginate %>

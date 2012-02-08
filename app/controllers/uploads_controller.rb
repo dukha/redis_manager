@@ -100,7 +100,9 @@ class UploadsController < ApplicationController
     #@translation_names =  Translation.all
 
   end
-
+  def file_to_db
+    @upload = Upload.find(params[:id])
+  end
   def file_to_redis
      #translation_upload_id = params[:id]
      #translation_id = params[:translation_id]

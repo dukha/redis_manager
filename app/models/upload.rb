@@ -10,8 +10,12 @@ class Upload < ActiveRecord::Base
   validates :language_id, :existence => true
   validates_attachment_presence :upload
 
-
-
+=begin
+  def save
+    super
+    write_file_to_db
+  end
+=end
   has_attached_file :upload, #:styles => { :iso_code => "en" },
      :url => "/uploads/upload/:id/:style/:basename.:extension",
      :path => ":rails_root/public/uploads/uploads/:id/:basename.:extension"
@@ -21,21 +25,27 @@ class Upload < ActiveRecord::Base
   end
   #@@test_hash = Hash.new
   #@redis = Redis.new(:db=>0)
-
+  def write_file_to_db 
+    @data_hash = Hash.new
+    debugger
+    file = File.new upload.path
+    parse_file_to_db file
+  end
   def write_to_redis redis_db=nil
-    @@data_hash = Hash.new
+    @data_hash = Hash.new
     debugger
     file = File.new upload.path
     parse_file_to_db file
     if redis_db then
       redis = Redis.new( :db=> redis_db.redis_db_index, :password=>redis_db.password, :port=>redis_db.port, :host=> redis_db.host)
-      @@data_hash.each{ |key, value|
+      @data_hash.each{ |key, value|
         redis.set(key, value)
       }
     end
   end
 
   def parse_file_to_db file
+  puts "start"
   listener = Psych::TreeBuilder.new
   parser   = Psych::Parser.new  listener
   parser.parse file
@@ -43,7 +53,8 @@ class Upload < ActiveRecord::Base
   dot_key_values_map = Hash.new
   dot_key_stack = Array.new
   anchors= Hash.new
-  traverse_yaml( tree)  #, dot_key_stack,  Hash.new, dot_key_values_map,anchors, nil )
+  puts "before traverse"
+  return traverse_yaml( tree)  #, dot_key_stack,  Hash.new, dot_key_values_map,anchors, nil )
   #debugger
   #puts @@data_hash.to_s
   end
@@ -75,13 +86,17 @@ class Upload < ActiveRecord::Base
  > puts dot_key_values_map.to_s
 =end
 def  traverse_yaml( node, dot_key_stack=Array.new, dot_key_values_map = nil,  container=Hash.new, anchors = Hash.new, in_sequence=nil )
+  puts node.to_s
+ 
   scalar_content =false
   node.children.each { |child|
+    debugger
     if child.is_a? Psych::Nodes::Stream then
       map = Hash.new
       traverse_yaml( child, dot_key_stack, dot_key_values_map, map,anchors, nil)
     elsif child.is_a? Psych::Nodes::Document then
       map = Hash.new
+      puts child
       traverse_yaml(  child, dot_key_stack, dot_key_values_map, map, anchors, nil)
     elsif child.is_a? Psych::Nodes::Mapping then
       map= Hash.new
@@ -169,13 +184,13 @@ def  traverse_yaml( node, dot_key_stack=Array.new, dot_key_values_map = nil,  co
       write_translation_to_hash(dot_key, array.to_s) #, false, child.anchor)
     end
   }
-  return
+  return container
   end
 
   
   def write_translation_to_hash(key, translation ) #, translatable=true, anchor_or_alias=nil, tag=nil)
     #@redis.set(key, translation)
-    @@data_hash.store(key, translation)
+    @data_hash.store(key, translation)
   end
   def format_leading_zeros(num)
     return "%03d"  % num
