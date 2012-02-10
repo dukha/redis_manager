@@ -1,0 +1,15 @@
+<%= semantic_form_for(@user_work) do |f| %>
+  <!-- should only be called by the user himself. Adding a new user should autmatically add an empty user_work record -->
+  
+	<% f.inputs do %>
+           <%= f.input :user_id, :input_html=>{:disabled=>true}%>
+				   <%= f.input :translation_language_id,  :include_blank=>true, :as=>:select,:collection=> Language.all.collect {|p| [ p.name, p.id ]} %>
+           <%= f.input :current_redis_database%>
+	<% end %>
+
+
+	<%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+<% end %>
+

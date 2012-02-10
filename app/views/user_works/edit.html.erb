@@ -1,0 +1,6 @@
+<%=theading("edit", :model=>"user_work", :count=>1 )%>
+<!-- AT the moment uses user.id=1 but must be changed when login code is added -->
+<%= render 'form' %>
+
+<%= tlink_to('new_model', new_user_work_path, :model=>'user_work', :count=>1) %> |
+<%= tlink_to "back", uuser_works_path %>

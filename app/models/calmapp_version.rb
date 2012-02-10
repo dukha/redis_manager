@@ -1,40 +1,26 @@
-# == Schema Information
-# Schema version: 20110918232413
-#
-# Table name: calmapp_versions
-#
-#  id                :integer         not null, primary key
-#  calmapp_id        :integer         not null
-#  major_version     :integer         not null
-#  version_status_id :integer         not null
-#  created_at        :datetime
-#  updated_at        :datetime
-#
-
 class CalmappVersion < ActiveRecord::Base
   #require 'validations'
   include Validations
   #languages available is a virtual attribute to allow languages_available to be used in the new form
   # :add_languages, :new_redis_db are virtual attributes for the user to indicate that a languages and redis database are to be added at the same time as a new version
   attr_accessor :languages_available, :add_languages, :new_redis_db
-  attr_accessible   :calmapp_id, :major_version, :version_status_id, :redis_database, :language_ids, :new_redis_db
+  attr_accessible   :calmapp_id, :version,  :redis_database, :language_ids, :new_redis_db
   
   belongs_to :calmapp #, :class_name => "Application", :foreign_key => "calmapp_id"
   
   has_one :redis_database
   
  
-  validates  :major_version,  :presence=>true
-  validates :major_version, :numericality=> {:only_integer=>true, :allow_nil =>true}
-  validates :version_status_id, :presence=>true
+  validates  :version,  :presence=>true
+  validates :version, :numericality=> {:only_integer=>false, :allow_nil =>true}
+  
   validates :calmapp_id, :presence=>true
 
   has_many :calmapp_versions_languages, :dependent => :destroy
   has_many :languages , :through => :calmapp_versions_languages
-
-  validates :version_status_id, :existence => true
-  
   validates :calmapp_id, :existence=>true
+  
+  
   
 
 =begin
@@ -54,7 +40,7 @@ class CalmappVersion < ActiveRecord::Base
   
   # return a concatenation of name and version suitable for display
   def calmapp_name_with_version
-    return calmapp_name + " version " + major_version.to_s
+    return calmapp_name + " version " + version.to_s
   end
   def name
     return calmapp_name_with_version
@@ -76,3 +62,15 @@ class CalmappVersion < ActiveRecord::Base
     #end
   end
 end
+
+# == Schema Information
+#
+# Table name: calmapp_versions
+#
+#  id         :integer         not null, primary key
+#  calmapp_id :integer         not null
+#  version    :integer         not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+

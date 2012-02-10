@@ -56,3 +56,14 @@ end
 
 
 
+
+# == Schema Information
+#
+# Table name: redis_instances
+#
+#  id       :integer         not null, primary key
+#  host     :string(255)     not null
+#  port     :integer         not null
+#  password :string(255)     not null
+#
+

@@ -11,10 +11,10 @@ RedisManager::Application.routes.draw do
    resources :whiteboards
    resources :calmapps
    resources :calmapp_versions
-   resources :version_statuses
+   resources :release_statuses
    resources :redis_databases
    resources :redis_instances
-   resources :user_preferences, :only=>[:edit, :show]
+   resources :user_works, :only=>[:edit, :show]
    resources :translations #, :except=>:show#, :only=> [:new, :index]
    match "translations/dev_new" => "translations#dev_new", :as => "dev_new_translation"
    match "translations/dev_create" => "translations#dev_create", :as => "dev_create_translation"

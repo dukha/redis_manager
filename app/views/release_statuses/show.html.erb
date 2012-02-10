@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Status:</b>
+  <%= @release_status.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_release_status_path(@release_status) %> |
+<%= link_to 'Back', release_statuses_path %>

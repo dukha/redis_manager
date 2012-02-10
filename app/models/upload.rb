@@ -3,8 +3,8 @@ class Upload < ActiveRecord::Base
   attr_accessible :language_id, :upload, :description #, :translation
   
   belongs_to :language
-  has_many :uploads_redis_databases
-  has_many :redis_databases, :through => :uploads_redis_databases
+  #has_many :uploads_redis_databases
+  #has_many :redis_databases, :through => :uploads_redis_databases
 
   validates :language_id,  :presence=>true
   validates :language_id, :existence => true

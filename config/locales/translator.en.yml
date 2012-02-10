@@ -21,7 +21,7 @@ en:
       filter: Filter
     hints:
       calmapp_version:
-        major_version: Enter the major version here. This is an integer, 1,2,3 or 4 etc
+        version: Enter the major version here. This is an integer, 1,2,3 or 4 etc
         add_languages: If this checkbox is not checked then no language will be written to the database
       calmapp:
         name: Enter the application name.
@@ -51,7 +51,7 @@ en:
     redis_databases: Redis Databases
     redis_instances: Redis Instances
     languages: Translation Languages
-    version_statuses: Version Statuses
+    release_statuses: Release Statuses
     translations: Translations
     translation_parameters: Translation Parameters
     developers: Developers
@@ -73,9 +73,9 @@ en:
       upload:
         one: Upload
         other: Uploads
-      version_status:
-        one: Application Version Status
-        other: Application Version Statuses
+      release_status:
+        one: Release Status
+        other: Release Statuses
       calmapp_version:
         one: Calm Application Version
         other: Calm Application Versions
@@ -113,8 +113,8 @@ en:
         iso_code: Language
       calmapp_version:
         calmapp_id: Calm App
-        major_version: Major Version
-        version_status_id: Version Status
+        version: Version
+        release_status_id: Release Status
         languages: Languages Selected
         languages_available: Languages Available
       redis_database:

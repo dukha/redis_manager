@@ -1,26 +1,16 @@
-# == Schema Information
-#
-# Table name: redis_databases
-#
-#  id                 :integer         not null, primary key
-#  calmapp_version_id :integer         not null
-#  redis_instance_id  :integer
-#  redis_db_index     :integer         not null
-#  created_at         :datetime
-#  updated_at         :datetime
-#
-
-
 class RedisDatabase < ActiveRecord::Base
   include Validations
   #validates :with => RedisDbValidator2
   belongs_to :calmapp_version
   belongs_to :redis_instance
-  belongs_to :version_status
-  has_many :uploads_redis_databases
-  has_many :uploads, :through => :uploads_redis_databases
-  validates :calmapp_version_id, :existence => true
+  belongs_to :release_status
+  #has_many :uploads_redis_databases
+  #has_many :uploads, :through => :uploads_redis_databases
+  validates :calmapp_version_id, :existence => true, :presence=>true
   validates :redis_db_index, :presence=>true
+  
+  validates :release_status_id, :presence=>true, :existence=>true
+  #validates :release_status_id, :existence=>true
   #validates :calmapp_version_id,:presence=>true
   #validates :host,:presence=>true
   #validates :port, :presence => true
@@ -143,4 +133,18 @@ end
 
 
 
+
+
+# == Schema Information
+#
+# Table name: redis_databases
+#
+#  id                 :integer         not null, primary key
+#  calmapp_version_id :integer         not null
+#  redis_instance_id  :integer
+#  redis_db_index     :integer         not null
+#  release_status_id  :integer         not null
+#  created_at         :datetime
+#  updated_at         :datetime
+#
 

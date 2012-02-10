@@ -1,13 +1,13 @@
 log=Logger.new(STDOUT)
-UserPreference.delete_all
-UploadsRedisDatabase.delete_all 
+UserWork.delete_all
+#UploadsRedisDatabase.delete_all 
 RedisDatabase.delete_all
 RedisInstance.delete_all
 CalmappVersion.delete_all
 Calmapp.delete_all
 Language.delete_all
 Whiteboard.delete_all
-VersionStatus.delete_all
+ReleaseStatus.delete_all
 WhiteboardType.delete_all
 
 
@@ -18,10 +18,10 @@ userWBType = WhiteboardType.create(:name_english=>"user", :translation_code=>"us
 log.info("Whiteboard Type data inserted successfully.")
 
 
-vs_dev = VersionStatus.create!(:status => "development")
-VersionStatus.create!(:status => "test")
-VersionStatus.create!(:status => "production")
-log.info("Version Status data inserted successfully.")
+vs_dev = ReleaseStatus.create!(:status => "development")
+ReleaseStatus.create!(:status => "test")
+ReleaseStatus.create!(:status => "production")
+log.info("Release Status data inserted successfully.")
 
 
 Whiteboard.create!(:whiteboard_type_id=> systemWBType.id, :info=>"Translator application under development." )
@@ -40,14 +40,14 @@ log.info("Calm applications inserted")
 
 # delete or change below once login is added
 
-reg_v = CalmappVersion.create!(:calmapp_id => reg.id, :major_version => 4, :version_status_id => vs_dev.id)
+reg_v = CalmappVersion.create!(:calmapp_id => reg.id, :version => 4)
 log.info("Calm application version inserted")
 
 ri = RedisInstance.create!(:host=>"localhost", :password => '123456', :port => '6379')
 log.info("Redis instance inserted")
 
-rdb = RedisDatabase.create!(:calmapp_version_id => reg_v.id, :redis_instance_id => ri.id, :redis_db_index => 1)
+rdb = RedisDatabase.create!(:calmapp_version_id => reg_v.id, :redis_instance_id => ri.id, :redis_db_index => 1, :release_status_id => vs_dev.id)
 log.info("Redis database inserted")
 
-UserPreference.create!(:user_id=>1, :translation_language_id => en.id, :current_redis_database_id=> rdb.id)
-log.info("User preferences inserted")
+UserWork.create!(:user_id=>1, :translation_language_id => en.id, :current_redis_database_id=> rdb.id)
+log.info("User workss inserted")

@@ -1,0 +1,14 @@
+drop table translations ;
+drop table calmapp_versions_languages;
+drop table redis_databases;
+drop table calmapp_versions;
+drop table uploads_redis_databases;
+drop table calmapps;
+drop table redis_instances;
+drop table uploads;
+drop table user_works ;
+drop table whiteboards ;                  
+drop table languages;
+drop table whiteboard_types ;
+drop table release_statuses ;
+delete from schema_migrations;

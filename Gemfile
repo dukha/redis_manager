@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.3'
 
 # postgresql connector
-gem 'pg', '~>0.12.1'
+gem 'pg', '~>0.12.2'
 
 # layout of all forms
 gem 'formtastic'#, '1.2.3'

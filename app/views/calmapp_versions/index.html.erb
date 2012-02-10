@@ -8,9 +8,9 @@
 
     <th class ="dataheader"><%=tlabel('calmapp_id',  'calmapp_version') %></th>
 
-    <th class ="dataheader"><%=tlabel('major_version','calmapp_version') %></th>
+    <th class ="dataheader"><%=tlabel('version','calmapp_version') %></th>
 
-    <th class ="dataheader"><%=tlabel('version_status_id', 'calmapp_version') %></th>
+    <th class ="dataheader"><%=tlabel('release_status_id', 'calmapp_version') %></th>
 
     <th class="linkheader"></th>
     <th class="linkheader"></th>
@@ -27,11 +27,11 @@
       <td class="<%= cell_class %>"><%= Calmapp.find(calmapp_version.calmapp_id).name %></td>
 
   
-      <td class="<%= cell_class %>"><%= calmapp_version.major_version %></td>
+      <td class="<%= cell_class %>"><%= calmapp_version.version %></td>
 
   
       
-      <td class="<%= cell_class %>"><%=VersionStatus.find(calmapp_version.version_status_id).status %></td>
+      <td class="<%= cell_class %>"><%=VersionStatus.find(calmapp_version.release_status_id).status %></td>
   
     
     <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_calmapp_version_path(calmapp_version) %></td>
