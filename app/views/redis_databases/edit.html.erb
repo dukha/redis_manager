@@ -1,4 +1,5 @@
 <%=theading("edit", :model=>"redis_database", :count=>1 )%>
-<%= render 'form' %>
+<!-- %= render 'form' % -->
+<%= render 'form', :locals => {:state =>"edit"} %>
 <%= tlink_to('new_model', new_redis_database_path, :model=> 'redis_database', :count=>1) %> |
 <%= tlink_to( "back", redis_databases_path) %>

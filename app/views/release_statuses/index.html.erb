@@ -1,5 +1,5 @@
 <%=theading("listing", :model=>"release_status", :count=>10 )%>
-<% if VersionStatus.count==0 then %>
+<% if ReleaseStatus.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
 <%= twill_paginate %>

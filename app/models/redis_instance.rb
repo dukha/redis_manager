@@ -20,7 +20,8 @@
   :password
   :logger
 =end
-
+# todo Add max number of permitted redis databases as an attr. 
+# This must be set first in redis.conf for the instance
 class RedisInstance < ActiveRecord::Base
   
   include Validations
@@ -30,6 +31,7 @@ class RedisInstance < ActiveRecord::Base
   validates :host,:presence=>true
   validates :port, :presence => true
   validates :password, :presence=>true
+  validates :max_databases, :presence=>true
   
   # a generalised validation for the record. Checks the attributes to see if it can connect to the instance
   validates  :host, :redis_instance => true
@@ -47,6 +49,13 @@ class RedisInstance < ActiveRecord::Base
     end
     return calmapp_version.language_ids.include? language
   end
+  
+  def unused_redis_database_indexes() 
+    ar = (1..(max_databases - 1)).to_a
+    RedisDatabase.select{redis_db_index}.each{ |ri| ar.delete(ri.redis_db_index)}
+    return ar
+  end
+  
   private
     def default_values
       self.port ||= 6379

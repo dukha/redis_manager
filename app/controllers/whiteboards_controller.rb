@@ -3,7 +3,7 @@ class WhiteboardsController < ApplicationController
   include TranslationsHelper
   # GET /whiteboards
   # GET /whiteboards.xml
-  #before_filter :authenticate_user!
+  before_filter :authenticate_user!
   # almost replaced with global handler
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
 

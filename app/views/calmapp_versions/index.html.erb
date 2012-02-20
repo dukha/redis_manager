@@ -10,7 +10,7 @@
 
     <th class ="dataheader"><%=tlabel('version','calmapp_version') %></th>
 
-    <th class ="dataheader"><%=tlabel('release_status_id', 'calmapp_version') %></th>
+    
 
     <th class="linkheader"></th>
     <th class="linkheader"></th>
@@ -31,7 +31,7 @@
 
   
       
-      <td class="<%= cell_class %>"><%=VersionStatus.find(calmapp_version.release_status_id).status %></td>
+      
   
     
     <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_calmapp_version_path(calmapp_version) %></td>

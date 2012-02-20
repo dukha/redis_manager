@@ -26,14 +26,18 @@ en:
       calmapp:
         name: Enter the application name.
         new_version: If this checkbox is not checked then no version will be written to the database
-        new_redis_db: If this checkbox is not checked then no redis database will be written to the database.
+        new_redis_dev_db: If this checkbox is not checked then no redis database will be written to the database. You will still need to add test and production redis databases later.
       redis_database:
-        redis_db_index: This is the integer that is the database. Only 1 database per version. Leave the checkbox unchecked if not sure about the database index.
-      redis_database:
+        redis_db_index: "This is the integer that represents the database. Only 1 database per version. Do not enter data if not sure about the database index."
+        calmapp_version_id: "Choose the corect application and version carefully"
+        release_status_id: "The status of the the translation database that you are adding: 'development' will only be used by developers for English. 'test' will be used by most translators. 'production will be a copy of test to be used by users."
+        redis_instance_id: "Choose computer ip address on which the redis server is running that you want to use."
+      redis_instance:  
+        max_databases: Each instance has a maximum number of databases. It is set in redis.conf. Don't put anything here that is not already.in redis.conf
         host: Enter the technical name of the computer where the Redis database server is running
         port: Enter the computer port number used by the Redis database.
         password: Enter the actual password for this Redis Instance. If you don't know it then don't add a new record or change an exisitng password.
-        
+        description: User Friendly name to indentify the host.
     actions:
       create_and_upload: Create and Upload
       to_redis: Write to Database
@@ -102,7 +106,7 @@ en:
         other: User Preferences
     attributes:
       calmapp:
-        new_redis_db: Add Redis Database
+        new_redis_dev_db: Add Redis Developers Database
         new_version: Add First Version
       translation_parameter:
         language_id: Language
@@ -114,7 +118,7 @@ en:
       calmapp_version:
         calmapp_id: Calm App
         version: Version
-        release_status_id: Release Status
+        
         languages: Languages Selected
         languages_available: Languages Available
       redis_database:
@@ -122,10 +126,13 @@ en:
         calmapp_version_id: Calm App Version
         redis_instance_id: Redis Instance
         redis_database: Redis Database
+        release_status_id: Release Status
       redis_instance:
         port: Linux Port
         host: Computer with Database
         password: Password
+        max_databases: Maximum Permitted Databases
+        description: Description
       language:
         name: Translation Language
       upload:

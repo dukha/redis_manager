@@ -9,8 +9,9 @@
     
 
     <th class ="dataheader"><%=tlabel('host', 'redis_instance') %></th>
-
+    <th class ="dataheader"><%=tlabel('description', 'redis_instance') %></th>
     <th class ="dataheader"><%=tlabel('port', 'redis_instance') %></th>
+    <th class ="dataheader"><%=tlabel('max_databases', 'redis_instance') %></th>
 
     <th class="linkheader"></th>
     <th class="linkheader"></th>
@@ -26,14 +27,16 @@
   
       
 
-  
-      <td class="<%= cell_class %>"><%= t(redis_instance.host) %></td>
+      <td class="<%= cell_class %>"><%= redis_instance.host %></td>
+      <td class="<%= cell_class %>"><%= redis_instance.description %></td>
       <td class="<%= cell_class %>"><%= redis_instance.port %></td>
+      <td class="<%= cell_class %>"><%= redis_instance.max_databases %></td>
 
   
     
     <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_redis_instance_path(redis_instance) %></td>
-    <td class="<%= link_cell_class %>"><%= tlink_to 'destroy',  redis_instance , :confirm => 'delete.are_you_sure', :model => "redis_instance", :value=>('Index: '+ redis_instance.host), :method => :delete %></td>
+    <!-- < td class="< %= link_cell_class % >">< %= tlink_to 'destroy',  redis_instance , :confirm => 'delete.are_you_sure', :model => "redis_instance", :value=>('Index: '+ redis_instance.host), :method => :delete % ></td> -->
+    <%=link_destroy redis_instance, :redis_instances %>
   </tr>
 <% end %>
 </table>

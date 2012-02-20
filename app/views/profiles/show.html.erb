@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+
+<p>
+  <b>Name:</b>
+  <%= @profile.name %>
+</p>
+
+
+<p>
+  <b>Roles:</b>
+  <%= @profile.display %>
+</p>
+
+
+<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%= link_to t("formtastic.actions.back"), profiles_path %>

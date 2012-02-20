@@ -1,0 +1,22 @@
+<p class="pageheading"><%= t("headings.listing.heading", :model=>t($ARM + "permission", :count=>2) )%>&nbsp;<%= t("commons.for_user", :user=> @user.username) %></p>
+  <%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+    <th class="dataheader"><%= t($ARA+'permission.location') %></th>
+    <th class="dataheader"><%= t($ARA+'permission.profile') %></th>
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+  <%cell_class = "data" %>
+  <% link_cell_class="link" %>
+  </tr>
+  <%= @permissions.each do |permission| %>
+    <tr class ='<%=cycle('dataeven', 'dataodd')%>'>
+      <td class ='<%= cell_class%>'><%= permission.organisation %></td>
+      <td class ='<%= cell_class%>'><%= permission.profile.name %></td>
+      <td class ='<%= link_cell_class%>'><%= tlink_to  'edit', edit_permission_path(@user, permission) %></td>
+      <td class ='<%= link_cell_class%>'><%= tlink_to  'destroy', permission_path(@user, permission),{ :confirm => 'delete.are_you_sure',:model =>  "permission", :count=>1, :method => :delete} %></td>
+    </tr>
+  <%end%>  
+</table>
+<br/>
+<%= link_to t('headings.new.heading', :model=> t($ARM + 'permission', :count=>1)), new_permission_path %>

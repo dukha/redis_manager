@@ -1,6 +1,6 @@
 <%=semantic_fields_for(@calmapp_version) do |version| %>
         <%= version.input :version %>
-        <%= version.input :release_status_id, :required=>true, :include_blank=>false, :as =>:select, :collection=> VersionStatus.all.collect {|p| [ p.status, p.id ]}  %>
+        
         <%= version.input :add_languages,   :as=>:boolean%>
 
 <script language="javascript" type="text/javascript">
@@ -54,6 +54,6 @@
                 </tr>
        </table>
        <%if ! @redis_database.nil? then %>
-         <%= version.input :new_redis_db, :as=>:boolean %>
+         <%= version.input :new_redis_dev_db, :as=>:boolean %>
        <%end%>
      <%end%>

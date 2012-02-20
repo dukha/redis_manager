@@ -1,10 +1,159 @@
 <%= semantic_form_for(@redis_database) do |f| %>
-  
-  
+  <script type="text/javascript">
+  /**
+   * This script allows the proper editing of redis instance and redis database index
+   * Since we are not following Mr Codd here we need complex js to ensure that the index is permitted
+   * for that instance of redis (within the max number of databases) and that the index that is chosen is not
+   * being used by another app version.
+   * If the user is in an edit situation then and changes instance and then changes back to the original instance then the
+   * same database is still used.
+   * If the user wants to change the index of a database then he must delete the first database (use delete function in the index)
+   * and recreate a new database.
+   * 
+   * The data is cleared from a redis database on insert of a new database from this form.
+   * It is not a big deal if a redis database is lost as the data will always be publishable from the postgres db.
+   * redis db 0 is used to store admin info: 
+   */
+  var redisDatabaseIndex = '#redis_database_redis_db_index';
+  var redisInstanceSelect ='#redis_database_redis_instance_id';
+	var selectDbIndex = '#redis_database_redis_db_index'; //"select[name='redis-database[redis_db_index]']";
+	var selectDbIndexAllOptions =selectDbIndex + ">option";
+	var dbIndex = -1;
+	var instanceId = -1;
+	$(document).ready(function(){
+	  $(redisInstanceSelect).change(function(){
+	    console.log( "change1");
+	    checkDbIndex('instancechange');
+	    populateDbIndexSelect();
+	    //console.log( "dbIndex " + dbIndex);
+	  });
+	  //In an edit situation, we preserve the original instande and db, so that we can put it back if the user changes his mind
+	  dbIndex = $(redisDatabaseIndex).val();
+	  instanceId = $(redisInstanceSelect).val(); 
+	  checkDbIndex('');
+    
+    if( $('#status').val() == 'new' ){
+        populateDbIndexSelect(); 
+    }
+	  //console.log( 'status =' +$('#status').val() + 'xx ready');
+	  //console.log("ready");
+	});
+	
+	function isRedisInstanceSelected(){
+	  return $(redisInstanceSelect + " option:selected").text()!="";
+	}
+	
+	function checkDbIndex(type){
+	  if($('#status').val() == 'edit'){
+	    if(isRedisInstanceSelected()){
+	      if( type== 'instancechange'){
+    	    disableDbIndex(false);
+    	    //console.log( "if disable from status edit"  );
+  	    }else{
+  	      disableDbIndex(true);
+  	    }
+	    }else{
+	      disableDbIndex(true);
+	    }
+	  }else{ 
+	    //This is status new
+  	  if(isRedisInstanceSelected()){
+  	      //console.log( "if enable");
+          disableDbIndex(false);
+          $(redisDatabaseIndex).val("");
+      }else{
+          disableDbIndex(true);
+          //console.log( "else disable"  );
+      }
+    }
+	}
+	
+	function disableDbIndex(disable){
+	  $(redisDatabaseIndex).prop('disabled', disable);
+	}   
+	
+	function populateDbIndexSelect(){
+	  var unusedIndexArray = null;
+	  //var redisInstanceId '';
+	  console.log($(redisInstanceSelect).val() + "xxx");
+	  //if($(selectDbIndex).length==0){
+	    //console.log(" select box doesn't exist");
+	  //}else{
+	  $(selectDbIndexAllOptions).remove();  
+	  console.log( "options removed");
+	  if(isRedisInstanceSelected()){  
+	    //console.log("instance_selected");
+	    if( $(redisInstanceSelect).val()){
+	       console.log("instance has val");
+	       var redisInstanceId= $(redisInstanceSelect).val();
+	       console.log("instance_id = " + redisInstanceId );
+	       $.ajax( {
+                       url:        "<%= unused_redis_dbs_path %>",
+                       async : false,
+                       type:       "GET", 
+                       dataType:   "json",
+                       data:       {redis_instance_id : redisInstanceId   },
+                       complete:    function() {
+                                       //This function is not needed
+                                    },
+                       success:    function(data, textStatus, xhr)   {
+                                        unusedIndexArray = data
+                                        console.log("data = " +data);
+                                    },
+                      error:      function(request, status, error) {
+                                    //This callback will handle errors on the server but not errors in the success callback
+                                    //@todo put the reponse text in a web page
+                                    alert(request.responseText);
+                                  },
+                     });//end ajax
+                     //console.log(unusedIndexArray.class());
+                     
+                     if($('#status').val()=='edit'){
+                       console.log("edit: arry " + unusedIndexArray + ' dbIndex ' +dbIndex); 
+                       unusedIndexArray.splice(0,0,dbIndex);
+                       console.log(' new array ' + unusedIndexArray);
+                     }
+                     unusedIndexArray.splice(0,0,'');
+	       $.each(unusedIndexArray, function( intIndex, objValue ){
+ 
+        // Create a new LI HTML element out of the
+        // current value (in the iteration) and then
+        // add this value to the list.
+        //console.log("options " + objValue);
+        $(selectDbIndex).append($( "<option ></option>" ).val(objValue).html(objValue));
+        //); 
+               }//end function
+	       );//end each
+	        //We must be caredul to set the index back to what it was if the user sets the same instance again
+	       if($(redisInstanceSelect).val()==instanceId){
+               $(redisDatabaseIndex).val(dbIndex);
+               disableDbIndex(true);
+         }else{
+            $(redisDatabaseIndex).val('');
+         }
+	      }//end val 
+	    }else{
+	      
+	    }//end selected
+	    
+	    //return unusedIndexArray;
+	  }//end populate
+	
+	</script>
+	<% if locals[:state] == "new" then %>
+	  <input type='hidden' id= "status" value= 'new'/>
+	<% elsif locals[:state] == "edit" then %>
+	  <input type='hidden' id= "status" value= 'edit'/>
+	<%end%>
 	<%= f.inputs do %>
            <%= f.input :calmapp_version_id, :as=>:select,:collection=> CalmappVersion.all.collect {|p| [ p.calmapp_name_with_version, p.id ]} %>
-				   <%= f.input :redis_instance_id,  :include_blank=>false, :as=>:select,:collection=> RedisInstance.all.collect {|p| [ p.host, p.id ]} %>
-           <%= f.input :redis_db_index%>
+				   <%= f.input :release_status_id, :required=>true, :include_blank=>false, :as =>:select, :collection=> ReleaseStatus.all.collect {|p| [ p.status, p.id ]}  %>
+				   <%= f.input :redis_instance_id,  :include_blank=>true, :as=>:select,:collection=> RedisInstance.all.collect {|p| [ p.host, p.id ]} %>
+           <!-- % if @redis_database.redis_db_index.nil? then %> -->
+             <%= f.input :redis_db_index, :as=> :select, :collection=>[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] %>
+             <!-- %= f.input :redis_db_index ,  :input_html=>{:name=>"redis-database[redis_db_index]"}
+           < %end%> -->
+           <!--,:collection=> RedisInstance.unused_databases()-->
 				     
 				  
 		

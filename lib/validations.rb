@@ -187,4 +187,13 @@ module Validations
         end
      end
   end
+=begin
+  
+  #This class can't be found inside of validations.rb ???
+  class SubOrganisationValidator < ActiveModel::Validator
+    def validate(aLocation)
+      aLocation.errors[:parent] << "Sub organisations are not permitted" unless aLocation.allow_organisation_ancestor?
+    end
+  end
+=end 
 end

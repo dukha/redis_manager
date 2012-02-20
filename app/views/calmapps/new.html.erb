@@ -9,12 +9,12 @@
   var versionCb =  "#calmapp_new_version";
   var languagesCbListItem ="#calmapp_version_add_languages_input";
   var languagesCb = "#calmapp_version_add_languages"
-  var redisDbCbListItem = "#calmapp_version_new_redis_db_input";
-  var redisDbCb = "#calmapp_version_new_redis_db";
+  var redisDbCbListItem = "#calmapp_version_new_redis_dev_db_input";
+  var redisDbCb = "#calmapp_version_new_redis_dev_db";
 
   var versionFieldsIds = ["#calmapp_version_version_input", "#calmapp_version_release_status_id_input",languagesCbListItem,redisDbCbListItem]; //, "#calmapp_version_add_languages_input", "#languagesTable", "#calmapp_new_redis_db_input"];
   var languagesFieldsIds = [ "#languagesTable"];
-  var redisDbFieldsIds = [ "#redis_database_redis_db_index_input", "#redis_database_redis_instance_id_input"];
+  var redisDbFieldsIds = [ "#redis_database_redis_db_index_input", "#redis_database_redis_instance_id_input", "#redis_database_release_status_id_input"];
   
   $(document).ready(function(){
     $(versionCb).click(function(){

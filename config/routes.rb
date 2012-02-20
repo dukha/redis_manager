@@ -2,10 +2,26 @@ RedisManager::Application.routes.draw do
  
 
   #resources :redis_admins
-
+ 
  
 
   scope "(/:locale)" do
+   resources :profiles
+
+   # root will check permission and if ok redirect to whiteboards
+   #root :to => "whiteboards#index"
+   root :to => "permissions#select" 
+   
+   scope "/auth_user/:user_id" do
+      resources :permissions
+      match '/permissions_select' => 'permissions#select',      :as => :permissions_select
+      match '/set_permission/:id' => 'permissions#set_current', :as => :set_permission
+   end
+   
+   match '/auth_user/set_permission_by_ajax' => 'permissions#set_current_by_ajax', :as => :set_permission_by_ajax
+   match '/users_select' => 'users#select',      :as => :users_select
+    
+   devise_for :users
    resources :languages
    resources :whiteboard_types
    resources :whiteboards
@@ -14,6 +30,7 @@ RedisManager::Application.routes.draw do
    resources :release_statuses
    resources :redis_databases
    resources :redis_instances
+   match 'unused_redis_database_indexes' => 'redis_instances#unused_redis_database_indexes', :as => 'unused_redis_dbs'
    resources :user_works, :only=>[:edit, :show]
    resources :translations #, :except=>:show#, :only=> [:new, :index]
    match "translations/dev_new" => "translations#dev_new", :as => "dev_new_translation"
@@ -30,7 +47,7 @@ RedisManager::Application.routes.draw do
    #get "calmapps/all_in_one_new/" => "calmapps#all_in_one_new", :as => "all_in_one_new"
    #get "calmapps/all_in_one_create" => "calmapps#all_in_one_create"
    #match "upload"
-   root :to => "whiteboards#index"
+   
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,17 @@
+<%= semantic_form_for(@permission) do |f| %>
+  <!--%%= error_count_display @< %=singular_table_name%>, t("actions.save", :model=> t($ARM + "< %=singular_table_name%>", :count=>1) ) %> -->
+
+<%= params %>
+  <!-- %%= error_list @singular_table_name %> -->
+  
+	<%= f.inputs do %>
+	    <%=f.input :user_id, :as => :hidden %>
+	    <%=f.input :organisation, :as => :select, :collection => current_user.current_organisation.accessible_organisations %>
+            <%= f.input :profile %>
+	<% end %>	
+	<%= f.buttons do %>
+      <%= f.commit_button  %>    
+  <% end %>
+	
+	<% end %>
+

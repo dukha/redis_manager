@@ -1,6 +1,6 @@
 <!-- only by superuser -->
 <%=theading("listing", :model=>"user_work", :count=>10) %>
-<% if UserPreference.count==0 then %>
+<% if UserWork.count==0 then %>
   <%=t($MS + "no_records_found")%><br/>
 <%  else %>
 <%= twill_paginate %>

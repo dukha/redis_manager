@@ -29,7 +29,7 @@
         <ul class="menu">
            <li><%= tlink_to("translations", translations_path, :category=>:menu) %></li>
            <!-- This should url should become edit_user_preference_path(current_user.id) when we get the login working -->
-           <li><%= tlink_to("translation_parameters", edit_user_preference_path(1), :category=>:menu) %></li>
+           <li><%= tlink_to("translation_parameters", edit_user_work_path(1), :category=>:menu) %></li>
            <!-- ><li>< %= tlink_to("translator_index", translators_index_path, :category=>:menu) %></li> -->
 				</ul>
       </div>
@@ -38,7 +38,7 @@
         <ul class="menu">
            <li><%= tlink_to("developers_new_translation", dev_new_translation_path, :category=>:menu) %></li>
            <!-- This should url should become edit_user_preference_path(current_user.id) when we get the login working -->
-           <li><%= tlink_to("translation_parameters", edit_user_preference_path(1), :category=>:menu) %></li>
+           <li><%= tlink_to("translation_parameters", edit_user_work_path(1), :category=>:menu) %></li>
 				</ul>
       </div>
       <div>
@@ -48,7 +48,7 @@
 				  
           <%end%>
 					<li><%= tlink_to("whiteboard_types", whiteboard_types_path, :category=>:menu) %></li>
-          <li><%= tlink_to("version_statuses", release_statuses_path, :category=>:menu) %></li>
+          <li><%= tlink_to("release_statuses", release_statuses_path, :category=>:menu) %></li>
 					
 				</ul>
       </div>
@@ -63,6 +63,7 @@
         <li><%= tlink_to("redis_instances", redis_instances_path, :category=>:menu) %></li>
         <li><%= tlink_to("redis_databases", redis_databases_path, :category=>:menu) %></li>
         <li><%= tlink_to("uploads", uploads_path, :category=>:menu) %></li>
+        <%=link_menu(:profiles)%>
         <% if false then %>
         <li><%= tlink_to("redis_admins", redis_admins_path, :category=>:menu) %></li>
         <%end%>

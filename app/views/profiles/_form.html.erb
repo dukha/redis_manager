@@ -1,0 +1,17 @@
+<%= semantic_form_for(@profile) do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name, :label=>t($ARA + "profile.name")%>
+    <%= layout_check_boxes(@profile) %>
+    <!-- <% Profile.available_roles.each do |role| %>
+      <div class="role_checkbox">
+        <%= check_box_tag "profile[roles][]", role, @profile.roles.include?( role) %>
+        <%= label_tag role, t("."+role.to_s) %>
+        Role: <%=role%>
+        .+role.to_s: <%=t("."+role.to_s)%>
+      </div>
+    <%end%> -->
+  <%end%>      
+  <%= f.buttons do %>
+    <%= f.commit_button %>
+  <%end%> 
+<%end%>     

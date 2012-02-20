@@ -12,16 +12,16 @@ class UserWork < ActiveRecord::Base
   
 
   # This method will need to be changed once devise is added
-  def self.current_user_id
-    return 1
-  end
+  #def self.current_user_id
+    #return 1
+  #end
   
   def self.language_iso_code
-    return UserWork.find(current_user_id).translation_language.iso_code
+    return UserWork.find(current_user.id).translation_language.iso_code
   end
   
   def self.redis_database
-    return UserWork.find(current_user_id).current_redis_database
+    return UserWork.find(current_user.id).current_redis_database
   end
   
   def self.calmapp_version

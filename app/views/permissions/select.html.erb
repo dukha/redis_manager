@@ -1,0 +1,29 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "permission", :count=>2) )%></p>
+
+<table class="data">
+  <tr class="dataheader">
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @permissions.each do |permission| %>
+
+  <tr class = "<%= cell_class  %>" >
+    <td class="<%= cell_class %>">
+
+      <%= link_to permission , set_permission_path(@user,permission) %>
+
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<!--
+<br />
+params <%= params %>
+-->

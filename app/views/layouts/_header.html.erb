@@ -24,12 +24,12 @@
       <% if user_signed_in? %>  
      
 
-        <form method="get" action="/users/sign_out"  class="button_to_fake" id='signout'>
+        <!--<form method="get" action="/users/sign_out"  class="button_to_fake" id='signout'>
           <div><input type="submit" value=<%=t($FA + "sign_out")%> id="signoutbutton"/>
           <input name="authenticity_token" type="hidden" value="w6vNLpWrzKTDWsn5XgKbt/HNQE89f3N1jezG8CdTo40=" />
           </div>
-        </form>
-      
+        </form> -->
+      <%= button_to t($FA + 'sign_out', :username=>current_user.username), destroy_user_session_path, :method => :delete ,:form_class => "button_to_fake", :id => 'signout', :confirm => 'Are you sure?' %>
       <% end %>  
          <% @languages=Language.all %>
       <!-- the select below is disabled until devise is added. Delete when devise is added. -->

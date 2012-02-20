@@ -52,7 +52,7 @@ class TranslationsController < ApplicationController
     require 'will_paginate/array'
     
     # Fix this when we get devise
-    current_user = UserPreference.current_user_id
+   # current_user = UserWork.current_user_id
     # We need current_user for auth
     @translations = Translation.search(current_user, criteria, operators, sorting).paginate(:page => params[:page], :per_page=>25) 
     #puts "@translations: " + @translations.first.dot_key_code
@@ -87,7 +87,7 @@ class TranslationsController < ApplicationController
       @translation0 = Translation.new
       @translation0.dot_key_code = params[:translation][:dot_key_code0]
       @translation0.translation = params[:translation][:translation0]
-      @translation0.calmapp_version_id = UserPreference.calmapp_version.id
+      @translation0.calmapp_version_id = UserWork.calmapp_version.id
        #@translation_redis0 = TranslationRedis.new(@translation0.dot_key_code, @translation0.translation)
       #if @translation0.save then
        #  result0 = :success
@@ -102,7 +102,7 @@ class TranslationsController < ApplicationController
       @translation1 = Translation.new
       @translation1.dot_key_code = params[:translation][:dot_key_code1]
       @translation1.translation = params[:translation][:translation1]
-      @translation1.calmapp_version_id = UserPreference.calmapp_version.id
+      @translation1.calmapp_version_id = UserWork.calmapp_version.id
       #@translation_redis1 = TranslationRedis.new(@translation1.dot_key_code, @translation1.translation)
       #if @translation1.save then
          #result1 = :success
@@ -116,7 +116,7 @@ class TranslationsController < ApplicationController
       @translation2 = Translation.new
       @translation2.dot_key_code = params[:translation][:dot_key_code2]
       @translation2.translation = params[:translation][:translation2]
-      @translation2.calmapp_version_id = UserPreference.calmapp_version.id
+      @translation2.calmapp_version_id = UserWorke.calmapp_version.id
        #@translation_redis2 = TranslationRedis.new(@translation2.dot_key_code, @translation2.translation)
        #if @translation2.save then
          #result2 = :success

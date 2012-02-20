@@ -1,0 +1,33 @@
+<p class="pageheading"><%=t("headings.listing.heading", :model=>t($ARM + "profile", :count=>2) )%></p>
+
+<%= twill_paginate %>
+<table class="data">
+  <tr class="dataheader">
+
+    <th class ="dataheader"><%=t($ARA+'profile.name') %></th>
+
+    <th class="linkheader"></th>
+    <th class="linkheader"></th>
+    
+  </tr>
+
+  
+<% cell_class = "data" %>
+<% link_cell_class="link"%>  
+<% @profiles.each do |profile| %>
+
+  <tr class = "<%= cycle('dataeven', 'dataodd') %>" >
+  
+      <td class="<%= cell_class %>"><%= profile.name %></td>
+
+  
+    
+    <td class="<%= link_cell_class %>"><%= tlink_to  'edit', edit_profile_path(profile) %></td>
+    <td class="<%= link_cell_class %>"><%= tlink_to('destroy',  profile ,{:confirm => 'delete.are_you_sure', :model => "profile", :count=>1, :method => :delete}) %></td>
+  </tr>
+<% end %>
+</table>
+<%= twill_paginate %>
+
+<br />
+<%= link_new new_profile_path, :profiles  %> 

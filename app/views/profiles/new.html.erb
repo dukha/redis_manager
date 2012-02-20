@@ -1,0 +1,4 @@
+<p class="pageheading"><%= t("headings.new.heading", :model=>t($ARM + "profile", :count=>1))%></p>
+<%= render 'form' %>
+<%= link_new new_profile_path, :profiles  %> |
+<%= link_to t("formtastic.actions.back"), profiles_path %>

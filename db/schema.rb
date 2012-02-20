@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208050652) do
+ActiveRecord::Schema.define(:version => 201202532356043) do
 
   create_table "calmapp_versions", :force => true do |t|
     t.integer  "calmapp_id", :null => false
@@ -48,6 +48,31 @@ ActiveRecord::Schema.define(:version => 20120208050652) do
   add_index "languages", ["iso_code"], :name => "iu_languages_iso_code", :unique => true
   add_index "languages", ["name"], :name => "iu_languages_name", :unique => true
 
+  create_table "locations", :force => true do |t|
+    t.string   "name",             :null => false
+    t.string   "type",             :null => false
+    t.integer  "parent_id"
+    t.string   "translation_code"
+    t.string   "fqdn"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "permissions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "organisation_id", :null => false
+    t.integer  "profile_id",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "profiles", :force => true do |t|
+    t.text     "roles"
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "redis_databases", :force => true do |t|
     t.integer  "calmapp_version_id", :null => false
     t.integer  "redis_instance_id"
@@ -58,9 +83,11 @@ ActiveRecord::Schema.define(:version => 20120208050652) do
   end
 
   create_table "redis_instances", :force => true do |t|
-    t.string  "host",     :null => false
-    t.integer "port",     :null => false
-    t.string  "password", :null => false
+    t.string  "host",          :null => false
+    t.integer "port",          :null => false
+    t.string  "password",      :null => false
+    t.integer "max_databases"
+    t.string  "description"
   end
 
   add_index "redis_instances", ["host", "port"], :name => "iu_redis_instances_host_port", :unique => true
@@ -69,6 +96,11 @@ ActiveRecord::Schema.define(:version => 20120208050652) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "tests", :id => false, :force => true do |t|
+    t.integer "id",                  :null => false
+    t.string  "name", :limit => nil, :null => false
   end
 
   create_table "translations", :force => true do |t|
@@ -102,6 +134,26 @@ ActiveRecord::Schema.define(:version => 20120208050652) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "username",               :default => "", :null => false
+    t.string   "email",                  :default => ""
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "actual_name"
+    t.integer  "current_permission_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "whiteboard_types", :force => true do |t|
     t.string   "name_english"

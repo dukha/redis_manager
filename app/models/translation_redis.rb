@@ -13,9 +13,9 @@ class TranslationRedis
   def self.all
     #redis_database = session[]
     #language=
-    redis= UserPreference.redis_database.connect
+    redis= UserWork.redis_database.connect
     arr = Array.new
-    search = (UserPreference.language_iso_code ? (UserPreference.language_iso_code + "*") : "*"  )
+    search = (UserWork.language_iso_code ? (UserWork.language_iso_code + "*") : "*"  )
     redis.key '*'.each do |k|
       arr.push  TranslationRedis.new(k, redis.get( k))
     end
@@ -47,7 +47,7 @@ class TranslationRedis
      dot_key='*' if dot_key.nil?
 
      #if dot_key.index('*') then
-     keys = redis_connection.keys(UserPreference.language_iso_code + '.' + dot_key)
+     keys = redis_connection.keys(UserWork.language_iso_code + '.' + dot_key)
      #end
      translations = []
      if keys.empty? and !dot_key.index('*') then
@@ -154,7 +154,7 @@ class TranslationRedis
    #Returns the current Redis database (an instance of Redis)
     def connect
       #if ! redis_connection then
-      @redis_connection= UserPreference.redis_database.connect
+      @redis_connection= UserWork.redis_database.connect
       #end
       @redis_connection
     end

@@ -1,9 +1,11 @@
 <%=semantic_fields_for(@redis_database) do |db| %>
         
      <!--   <%= db.input :calmapp_version_id, :as=>:select,:collection=> CalmappVersion.all.collect {|p| [ p.calmapp_name_with_version, p.id ]} %>  -->
+        <%=db.input :release_status_id,  :include_blank=>false, :as=>:select,:collection=> ReleaseStatus.where{status == 'development'}.collect {|p| [ p.status, p.id ]}%>
         <%= db.input :redis_instance_id,  :include_blank=>false, :as=>:select,:collection=> RedisInstance.all.collect {|p| [ p.host, p.id ]} %>
         <%= db.input :redis_db_index %>  
      <!--   < %= db.semantic_errors :redis_db_index%>
 < %= db.semantic_errors :host%>
 < %= db.semantic_errors :port%> -->
+    
 <%end%>

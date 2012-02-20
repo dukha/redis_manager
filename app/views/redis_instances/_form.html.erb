@@ -1,12 +1,14 @@
 <%= semantic_form_for(@redis_instance) do |f| %>
   
   
-	<% f.inputs do %>
+	<%= f.inputs do %>
            
 				     
 				   <%= f.input :host  %>
+				   <%= f.input :description  %>
            <%= f.input :port  %>
-           <%= f.input :password,  :as => :password%>
+           <%= f.input :max_databases %>
+           <%= f.input :password,  :as => :string%>
 		
 	<% end %>
 

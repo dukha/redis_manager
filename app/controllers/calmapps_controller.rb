@@ -72,7 +72,14 @@ class CalmappsController < ApplicationController
   def new   
     @calmapp = Calmapp.new
     @calmapp_version = CalmappVersion.new
-    @redis_database = RedisDatabase.new
+    #statuses = ReleaseStatus.all
+    @redis_database=RedisDatabase.new
+    @redis_database.release_status_id = ReleaseStatus.where{status=='development'}.limit(1)[0].id
+    #statuses.each{|s|
+      #rdb= RedisDatabase.new
+      #rdb.release_status_id=s.id
+      #@redis_databases << rdb
+    #}
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @calmapp }
@@ -89,7 +96,7 @@ class CalmappsController < ApplicationController
       if params[:calmapp_version][:add_languages] != '0' then
         @languages = params[:calmapp_version][:language_ids].collect{|li| Language.find(li)}
       end
-      if params[:calmapp_version][:new_redis_db] != '0' then
+      if params[:calmapp_version][:new_redis_dev_db] != '0' then
         @redis_database = RedisDatabase.new(params[:redis_database])
       else
         @redis_database =nil

@@ -11,7 +11,7 @@ gem 'formtastic'#, '1.2.3'
 gem 'nifty-generators', '0.4.6'
 
 # authentication
-gem 'devise', '~>1.4.7' # needs to go to 1.2.1 but waiting until we know how to do step 2 of upgrade
+gem 'devise', '~>2.0.0' 
 
 #xml parser
 gem 'nokogiri', '1.5.0'
@@ -78,7 +78,7 @@ gem 'best_in_place'
 gem 'squeel'
 
 group :development, :test do
-  gem 'rspec-rails', '2.0.0'
+  gem 'rspec-rails', '2.8.0'
   # webrat or capybara can be used to simulate a browser. rspec doesn't care which one.
   gem 'capybara', :git =>'git://github.com/jnicklas/capybara.git'
   #gem 'webrat','0.7.3'

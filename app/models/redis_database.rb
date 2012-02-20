@@ -22,7 +22,28 @@ class RedisDatabase < ActiveRecord::Base
 
   
   @connection=nil
-
+  def save!
+    if new_record?
+      state='new'
+    end
+    super
+    new_record state
+  end
+  def save
+    if new_record?
+      state='new'
+    end
+    super
+    new_record state
+  end 
+  def new_record state
+    if state=='new' then
+      redis = connect
+      redis.flushdb
+      temp_redis = Redis.new :db=> 0, :password=> redis_instance.password, :host=> redis_instance.host, :port=> redis_instance.port 
+      temp_redis.set name, redis_db_index
+    end
+  end
   def name
     return CalmappVersion.find(calmapp_version_id).name + " / Redis Database Index: " + redis_db_index.to_s
   end
@@ -73,6 +94,8 @@ class RedisDatabase < ActiveRecord::Base
   def password
     return redis_instance.password
   end
+  
+  
 =begin
   # This method takes a key and value, for example from redis and puts it into container, in a form readily converted to yaml
   def emit_1_dot_key_value(dot_key, val, container)

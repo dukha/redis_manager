@@ -3,8 +3,8 @@ class CalmappVersion < ActiveRecord::Base
   include Validations
   #languages available is a virtual attribute to allow languages_available to be used in the new form
   # :add_languages, :new_redis_db are virtual attributes for the user to indicate that a languages and redis database are to be added at the same time as a new version
-  attr_accessor :languages_available, :add_languages, :new_redis_db
-  attr_accessible   :calmapp_id, :version,  :redis_database, :language_ids, :new_redis_db
+  attr_accessor :languages_available, :add_languages, :new_redis_dev_db
+  attr_accessible   :calmapp_id, :version,  :redis_database, :language_ids, :new_redis_dev_db
   
   belongs_to :calmapp #, :class_name => "Application", :foreign_key => "calmapp_id"
   

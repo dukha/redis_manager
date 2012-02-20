@@ -93,5 +93,14 @@ class RedisInstancesController < ApplicationController
     end
   end
 
+  def unused_redis_database_indexes
+    puts  "unused_redis_database_indexes"
+    debugger
+    ri = RedisInstance.find(params[:redis_instance_id])
+    data = ri.unused_redis_database_indexes()
+    if request.xhr?
+      render :json => data
+    end 
   
+  end  
 end

@@ -3,7 +3,7 @@
 	<%= f.inputs do %>
 				   <%= f.input :calmapp_id, :as=>:select,:collection=> Calmapp.all.collect {|p| [ p.name, p.id ]}      %>
 				   <%= f.input :version  %>
-				   <%= f.input :release_status_id, :as=>:select,:collection=> VersionStatus.all.collect {|p| [ p.status, p.id ]}    %>
+				   <%= f.input :release_status_id, :as=>:select,:collection=> ReleaseStatus.all.collect {|p| [ p.status, p.id ]}    %>
 		      
 	<% end %>	
 	<%= f.buttons do %>

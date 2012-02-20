@@ -102,4 +102,6 @@ class RedisDatabasesController < ApplicationController
     @file = File.new params[:file]
     @redis_database.redis_to_yaml @file
   end
+  
+  
 end

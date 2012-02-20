@@ -54,7 +54,7 @@ en:
         confirm_password: Enter password again
     actions:
       sign_in: &fa_si Sign In
-      sign_out: &fa_so Sign Out
+      sign_out: &fa_so Sign Out %{username}
       show: Show
       hide: Hide
       edit: Edit
